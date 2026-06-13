@@ -3,6 +3,7 @@ import { Space_Grotesk } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 import { routing } from '@/i18n/routing';
 import '../globals.css';
 import Nav from '@/components/layout/Nav';
@@ -46,9 +47,19 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') ?? `/${locale}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://hmwebsites.de';
+  const alternateLocale = locale === 'de' ? 'en' : 'de';
+  const alternatePath = pathname.replace(new RegExp(`^/${locale}`), `/${alternateLocale}`);
+  const defaultPath = pathname.replace(new RegExp(`^/${locale}`), '/de');
+
   return (
     <html lang={locale} className={`${spaceGrotesk.variable}`}>
       <head>
+        <link rel="alternate" hrefLang={locale} href={`${siteUrl}${pathname}`} />
+        <link rel="alternate" hrefLang={alternateLocale} href={`${siteUrl}${alternatePath}`} />
+        <link rel="alternate" hrefLang="x-default" href={`${siteUrl}${defaultPath}`} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
