@@ -1,5 +1,5 @@
-/* BRAND-KIT-OPEN: replace font import with self-hosted brand font files when kit is delivered */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+/* Font is loaded via next/font/google in app/[locale]/layout.tsx */
+/* BRAND-KIT-OPEN: replace with self-hosted brand font files when kit is delivered */
 @import "tailwindcss";
 
 @theme {
