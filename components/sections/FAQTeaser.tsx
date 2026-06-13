@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,22 +13,76 @@ interface FAQTeaserProps {
   locale: 'de' | 'en';
 }
 
-const FAQ_PREVIEW_DE = [
-  'Was macht HM Websites?',
-  'Werden die Websites wirklich von KI-Agenten gebaut?',
-  'Welche Technologie nutzt ihr?',
-];
+const PREVIEW_INDICES = [0, 1, 3];
 
-const FAQ_PREVIEW_EN = [
-  'What does HM Websites do?',
-  'Are the websites really built by AI agents?',
-  'What technology do you use?',
-];
+function FAQTeaserItem({ question, answer, index }: { question: string; answer: string; index: number }) {
+  const [open, setOpen] = useState(false);
+  const answerRef = useRef<HTMLDivElement>(null);
+
+  const toggle = () => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!open) {
+      setOpen(true);
+      if (!prefersReduced && answerRef.current) {
+        gsap.from(answerRef.current, {
+          height: 0,
+          opacity: 0,
+          duration: 0.35,
+          ease: 'power2.out',
+        });
+      }
+    } else {
+      if (!prefersReduced && answerRef.current) {
+        gsap.to(answerRef.current, {
+          height: 0,
+          opacity: 0,
+          duration: 0.25,
+          ease: 'power2.in',
+          onComplete: () => setOpen(false),
+        });
+      } else {
+        setOpen(false);
+      }
+    }
+  };
+
+  return (
+    <div className="faqt-reveal border-b border-[rgba(255,255,255,0.08)]">
+      <button
+        onClick={toggle}
+        className="w-full flex items-center justify-between gap-6 py-5 text-left group"
+        aria-expanded={open}
+        aria-controls={`faqt-answer-${index}`}
+      >
+        <p className="text-[17px] lg:text-[18px] text-[#F5F5F0] group-hover:text-[#E8FF47] transition-colors duration-200">
+          {question}
+        </p>
+        <span
+          className={`flex-shrink-0 w-6 h-6 flex items-center justify-center text-[#E8FF47] text-[20px] transition-transform duration-300 ${open ? 'rotate-45' : ''}`}
+          aria-hidden="true"
+        >
+          +
+        </span>
+      </button>
+
+      {open && (
+        <div
+          ref={answerRef}
+          id={`faqt-answer-${index}`}
+          className="pb-5 pr-10"
+        >
+          <p className="text-[#9CA3AF] leading-relaxed text-[16px] lg:text-[17px]">{answer}</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function FAQTeaser({ locale }: FAQTeaserProps) {
   const t = useTranslations('faqTeaser');
+  const tFaq = useTranslations('faq');
   const sectionRef = useRef<HTMLElement>(null);
-  const questions = locale === 'de' ? FAQ_PREVIEW_DE : FAQ_PREVIEW_EN;
 
   useGSAP(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -57,14 +111,13 @@ export default function FAQTeaser({ locale }: FAQTeaserProps) {
         <h2 className="faqt-reveal display-h2 mb-12">{t('h2')}</h2>
 
         <div className="space-y-0 mb-12">
-          {questions.map((q, i) => (
-            <div
-              key={i}
-              className="faqt-reveal border-b border-[rgba(255,255,255,0.08)] py-5 flex items-center justify-between gap-4"
-            >
-              <p className="text-[17px] lg:text-[18px] text-[#F5F5F0]">{q}</p>
-              <span className="text-[#E8FF47] flex-shrink-0 text-[20px]">+</span>
-            </div>
+          {PREVIEW_INDICES.map((itemIndex, i) => (
+            <FAQTeaserItem
+              key={itemIndex}
+              question={tFaq(`items.${itemIndex}.q`)}
+              answer={tFaq(`items.${itemIndex}.a`)}
+              index={i}
+            />
           ))}
         </div>
 

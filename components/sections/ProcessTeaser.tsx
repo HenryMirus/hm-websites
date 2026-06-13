@@ -15,6 +15,7 @@ interface ProcessTeaserProps {
 
 export default function ProcessTeaser({ locale }: ProcessTeaserProps) {
   const t = useTranslations('processTeaser');
+  const tProcess = useTranslations('process');
   const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(() => {
@@ -63,7 +64,7 @@ export default function ProcessTeaser({ locale }: ProcessTeaserProps) {
                 className="pt-reveal flex items-center gap-6 border border-[rgba(255,255,255,0.08)] rounded-[4px] px-6 py-4"
               >
                 <span className="text-[#E8FF47] font-700 text-[20px] leading-none">{num}</span>
-                <div className="flex-1 h-[1px] bg-[rgba(255,255,255,0.06)]" />
+                <span className="text-[#F5F5F0] text-[16px] font-500">{tProcess(`steps.${i}.title`)}</span>
               </div>
             ))}
           </div>
