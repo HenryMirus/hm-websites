@@ -1,0 +1,156 @@
+/* BRAND-KIT-OPEN: replace font import with self-hosted brand font files when kit is delivered */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* === COLOUR TOKENS === */
+  /* BRAND-KIT-OPEN: replace --color-accent with exact brand hex when kit is delivered */
+  --color-canvas: #0A0A0A;
+  --color-surface: #111111;
+  --color-surface-2: #1A1A1A;
+  --color-text-primary: #F5F5F0;
+  --color-text-secondary: #9CA3AF;
+  --color-accent: #E8FF47; /* BRAND-KIT-OPEN: provisional amber-yellow — MUST be replaced */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-scrim: rgba(0, 0, 0, 0.6);
+
+  /* === TYPOGRAPHY TOKENS === */
+  /* BRAND-KIT-OPEN: replace --font-display with brand font family when kit is delivered */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+
+  /* === SPACING (8dp grid) === */
+  --spacing-section-mobile: 6rem; /* 96px */
+  --spacing-section-desktop: 8rem; /* 128px */
+}
+
+/* === BASE RESET === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #0A0A0A;
+  color: #F5F5F0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* === TYPOGRAPHY SCALE === */
+.display-hero {
+  font-size: clamp(56px, 12vw, 120px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  font-family: var(--font-display);
+}
+
+.display-h2 {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  font-family: var(--font-display);
+}
+
+.display-h3 {
+  font-size: clamp(22px, 4vw, 40px);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  font-family: var(--font-display);
+}
+
+.label-overline {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9CA3AF;
+}
+
+/* === LAYOUT UTILITIES === */
+.container-site {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-site {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.section-pad {
+  padding-top: var(--spacing-section-mobile);
+  padding-bottom: var(--spacing-section-mobile);
+}
+
+@media (min-width: 1024px) {
+  .section-pad {
+    padding-top: var(--spacing-section-desktop);
+    padding-bottom: var(--spacing-section-desktop);
+  }
+}
+
+/* === HAIRLINE BORDERS === */
+.border-hairline {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* === ACCENT UTILITIES === */
+.text-accent {
+  color: #E8FF47; /* BRAND-KIT-OPEN */
+}
+
+.border-accent {
+  border-color: #E8FF47; /* BRAND-KIT-OPEN */
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* === CLIP PATH ANIMATION RESET === */
+.clip-reveal {
+  clip-path: inset(0 0 100% 0);
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
