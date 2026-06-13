@@ -46,15 +46,9 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
-  const alternateLocale = locale === 'de' ? 'en' : 'de';
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://hmwebsites.de';
-
   return (
     <html lang={locale} className={`${spaceGrotesk.variable}`}>
       <head>
-        <link rel="alternate" hrefLang={locale} href={`${siteUrl}/${locale}`} />
-        <link rel="alternate" hrefLang={alternateLocale} href={`${siteUrl}/${alternateLocale}`} />
-        <link rel="alternate" hrefLang="x-default" href={`${siteUrl}/de`} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
@@ -65,9 +59,15 @@ export default async function LocaleLayout({
         />
       </head>
       <body className="bg-[#0A0A0A] text-[#F5F5F0] min-h-screen flex flex-col antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#E8FF47] focus:text-[#0A0A0A] focus:font-semibold focus:rounded"
+        >
+          {locale === 'de' ? 'Zum Hauptinhalt springen' : 'Skip to main content'}
+        </a>
         <NextIntlClientProvider messages={messages}>
           <Nav locale={locale as 'de' | 'en'} />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1">{children}</main>
           <Footer />
           <CookieBanner />
         </NextIntlClientProvider>

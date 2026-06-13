@@ -61,11 +61,12 @@
       "impressum": "Impressum",
       "datenschutz": "Datenschutz"
     },
-    "copyright": "© 2025 HM Websites"
+    "copyright": "© 2026 HM Websites"
   },
   "cookies": {
     "text": "Wir nutzen nur essenzielle Cookies sowie anonyme Statistiken, um die Website zu verbessern.",
     "accept": "Akzeptieren",
+    "decline": "Ablehnen",
     "settings": "Einstellungen"
   },
   "services": {

@@ -61,11 +61,12 @@
       "impressum": "Imprint",
       "datenschutz": "Privacy"
     },
-    "copyright": "© 2025 HM Websites"
+    "copyright": "© 2026 HM Websites"
   },
   "cookies": {
     "text": "We use only essential cookies and anonymous analytics to improve this site.",
     "accept": "Accept",
+    "decline": "Decline",
     "settings": "Settings"
   },
   "services": {

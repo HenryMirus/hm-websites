@@ -22,6 +22,11 @@ export default function CookieBanner() {
     setVisible(false);
   };
 
+  const decline = () => {
+    localStorage.setItem('hm-cookie-consent', 'declined');
+    setVisible(false);
+  };
+
   if (!visible) return null;
 
   return (
@@ -47,10 +52,10 @@ export default function CookieBanner() {
           {t('accept')}
         </button>
         <button
-          onClick={() => setVisible(false)}
+          onClick={decline}
           className="flex-1 border border-[rgba(255,255,255,0.12)] text-[#9CA3AF] text-[13px] px-4 py-2.5 rounded-[4px] hover:border-[rgba(255,255,255,0.3)] transition-colors duration-200"
         >
-          {t('settings')}
+          {t('decline')}
         </button>
       </div>
     </div>
