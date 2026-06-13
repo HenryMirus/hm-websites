@@ -94,11 +94,11 @@
       {
         "number": "04",
         "title": "Zweisprachig & von KI-Agenten gebaut",
-        "body": "DE/EN von Anfang an — mit Sprachumschalter und korrektem hreflang. Entwickelt von einem Team aus KI-Agenten: schneller im Aufbau, konsistent in der Qualität, gehostet und ausgeliefert über Hostinger.",
+        "body": "DE/EN von Anfang an — mit Sprachumschalter und korrektem hreflang. Entwickelt von einem Team aus KI-Agenten: schneller im Aufbau, konsistent in der Qualität, gehostet und ausgeliefert über Vercel.",
         "tags": ["DE/EN", "hreflang", "KI-gebaut"]
       }
     ],
-    "techStrip": "Next.js / React · GSAP Motion · Schema.org · DE/EN (hreflang) · Hosting über Hostinger · Antwort in 48 h"
+    "techStrip": "Next.js / React · GSAP Motion · Schema.org · DE/EN (hreflang) · Hosting über Vercel · Antwort in 48 h"
   },
   "process": {
     "eyebrow": "Prozess",
@@ -123,7 +123,7 @@
       {
         "number": "04",
         "title": "Launch",
-        "body": "Wir testen auf allen Geräten, optimieren die Performance und schalten live — gehostet über Hostinger."
+        "body": "Wir testen auf allen Geräten, optimieren die Performance und schalten live — gehostet über Vercel."
       }
     ]
   },
@@ -146,7 +146,7 @@
       },
       {
         "q": "Welche Technologie nutzt ihr?",
-        "a": "Wir entwickeln mit Next.js und React, animieren mit GSAP und hosten über Hostinger."
+        "a": "Wir entwickeln mit Next.js und React, animieren mit GSAP und hosten über Vercel."
       },
       {
         "q": "Sind die Websites zweisprachig?",
@@ -184,7 +184,7 @@
   },
   "impressum": {
     "h1": "Impressum",
-    "content": "**Angaben gemäß § 5 TMG**\n\nHM Websites\nHenry Mirus\nPantaleonstr. 20\n53567 Buchholz\nDeutschland\n\n**Kontakt**\nTelefon: +49 015750126303\nE-Mail: mrs.hrny@gmail.com\n\n**Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:**\nHenry Mirus, Anschrift wie oben.\n\n**Haftung für Inhalte**\nDie Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.\n\n**Haftung für Links**\nUnser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen.\n\n**Urheberrecht**\nDie durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors."
+    "content": "**Angaben gemäß § 5 TMG**\n\nHM Websites\nHenry Mirus\nPantaleonstr. 20\n53567 Buchholz\nDeutschland\n\n**Kontakt**\nTelefon: +49 015750126303\nE-Mail: mrs.hrny@gmail.com\n\n**Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:**\nHenry Mirus, Anschrift wie oben.\n\n**Haftung für Inhalte**\nDie Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.\n\n**Haftung für Links**\nUnser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen.\n\n**Urheberrecht**\nDie durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors.\n\n**Streitschlichtung**\nDie Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr\nUnsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
   },
   "datenschutz": {
     "h1": "Datenschutzerklärung",
@@ -203,7 +203,7 @@
       },
       {
         "title": "4. Hosting",
-        "body": "Diese Website wird über Hostinger gehostet. Die Verarbeitung erfolgt auf Servern in der EU. Die Datenschutzerklärung von Hostinger gilt ergänzend."
+        "body": "Diese Website wird über Vercel, Inc. (340 Pine Street, Suite 701, San Francisco, CA 94104, USA) gehostet. Vercel verarbeitet Verbindungsdaten (IP-Adresse, Browser, Zeitstempel) auf Servern in der EU (Frankfurt/Amsterdam) gemäß Art. 6 Abs. 1 lit. f DSGVO. Vercel ist nach dem EU-US Data Privacy Framework zertifiziert. Weitere Informationen finden Sie in der Datenschutzerklärung von Vercel unter vercel.com/legal/privacy-policy."
       },
       {
         "title": "5. Webanalyse (GA4, anonymisiert)",
@@ -230,7 +230,7 @@
     },
     "services": {
       "title": "Leistungen — HM Websites Webdesign Agentur",
-      "description": "Individuelles Webdesign, GSAP Motion, Next.js Entwicklung, SEO & GAIO. Von KI-Agenten gebaut, gehostet über Hostinger."
+      "description": "Individuelles Webdesign, GSAP Motion, Next.js Entwicklung, SEO & GAIO. Von KI-Agenten gebaut, gehostet über Vercel."
     },
     "process": {
       "title": "Prozess — So entsteht Ihre Website",

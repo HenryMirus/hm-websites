@@ -94,11 +94,11 @@
       {
         "number": "04",
         "title": "Bilingual & built by AI agents",
-        "body": "DE/EN from the start — with a language switcher and correct hreflang. Built by a team of AI agents: faster to build, consistent in quality, hosted and shipped via Hostinger.",
+        "body": "DE/EN from the start — with a language switcher and correct hreflang. Built by a team of AI agents: faster to build, consistent in quality, hosted and shipped via Vercel.",
         "tags": ["DE/EN", "hreflang", "AI-built"]
       }
     ],
-    "techStrip": "Next.js / React · GSAP motion · Schema.org · DE/EN (hreflang) · Hosting via Hostinger · 48h reply"
+    "techStrip": "Next.js / React · GSAP motion · Schema.org · DE/EN (hreflang) · Hosting via Vercel · 48h reply"
   },
   "process": {
     "eyebrow": "Process",
@@ -123,7 +123,7 @@
       {
         "number": "04",
         "title": "Launch",
-        "body": "We test on every device, optimise performance and go live — hosted via Hostinger."
+        "body": "We test on every device, optimise performance and go live — hosted via Vercel."
       }
     ]
   },
@@ -146,7 +146,7 @@
       },
       {
         "q": "What technology do you use?",
-        "a": "We build with Next.js and React, animate with GSAP, and host via Hostinger."
+        "a": "We build with Next.js and React, animate with GSAP, and host via Vercel."
       },
       {
         "q": "Are the websites bilingual?",
@@ -184,7 +184,7 @@
   },
   "impressum": {
     "h1": "Imprint",
-    "content": "**Information pursuant to § 5 TMG**\n\nHM Websites\nHenry Mirus\nPantaleonstr. 20\n53567 Buchholz\nGermany\n\n**Contact**\nPhone: +49 015750126303\nEmail: mrs.hrny@gmail.com\n\n**Responsible for content per § 55(2) RStV:**\nHenry Mirus, address as above.\n\n**Liability for content**\nThe contents of our pages have been created with the utmost care. However, we cannot guarantee the accuracy, completeness or timeliness of the content.\n\n**Liability for links**\nOur offering contains links to external third-party websites, over whose content we have no influence and for which we can assume no liability.\n\n**Copyright**\nThe content and works created by the site operators on these pages are subject to German copyright law. Reproduction, processing, distribution and any kind of exploitation outside the limits of copyright law require the written consent of the respective author."
+    "content": "**Information pursuant to § 5 TMG**\n\nHM Websites\nHenry Mirus\nPantaleonstr. 20\n53567 Buchholz\nGermany\n\n**Contact**\nPhone: +49 015750126303\nEmail: mrs.hrny@gmail.com\n\n**Responsible for content per § 55(2) RStV:**\nHenry Mirus, address as above.\n\n**Liability for content**\nThe contents of our pages have been created with the utmost care. However, we cannot guarantee the accuracy, completeness or timeliness of the content.\n\n**Liability for links**\nOur offering contains links to external third-party websites, over whose content we have no influence and for which we can assume no liability.\n\n**Copyright**\nThe content and works created by the site operators on these pages are subject to German copyright law. Reproduction, processing, distribution and any kind of exploitation outside the limits of copyright law require the written consent of the respective author.\n\n**Dispute Resolution**\nThe European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr\nOur email address can be found above in the imprint. We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board."
   },
   "datenschutz": {
     "h1": "Privacy Policy",
@@ -203,7 +203,7 @@
       },
       {
         "title": "4. Hosting",
-        "body": "This website is hosted via Hostinger. Processing takes place on servers in the EU. Hostinger's privacy policy applies in addition."
+        "body": "This website is hosted via Vercel, Inc. (340 Pine Street, Suite 701, San Francisco, CA 94104, USA). Vercel processes connection data (IP address, browser, timestamp) on servers in the EU (Frankfurt/Amsterdam) pursuant to Art. 6(1)(f) GDPR. Vercel is certified under the EU-US Data Privacy Framework. Further information is available in Vercel's privacy policy at vercel.com/legal/privacy-policy."
       },
       {
         "title": "5. Web analytics (GA4, anonymised)",
@@ -230,7 +230,7 @@
     },
     "services": {
       "title": "Services — HM Websites Web Design Agency",
-      "description": "Custom web design, GSAP motion, Next.js development, SEO & GAIO. Built by AI agents, hosted via Hostinger."
+      "description": "Custom web design, GSAP motion, Next.js development, SEO & GAIO. Built by AI agents, hosted via Vercel."
     },
     "process": {
       "title": "Process — How Your Website Is Made",
