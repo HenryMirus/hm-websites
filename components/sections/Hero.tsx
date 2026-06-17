@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { siteConfig } from "@/lib/site.config";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -46,7 +47,7 @@ export function Hero() {
       className="flex min-h-screen flex-col items-center justify-center px-6 text-center"
     >
       <p className="hero-eyebrow mb-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-accent">
-        HM Websites · v2
+        {siteConfig.shortName}
       </p>
       <h1 className="hero-title max-w-3xl text-5xl font-bold leading-tight text-brand-primary md:text-7xl">
         Clean-sheet redesign in progress

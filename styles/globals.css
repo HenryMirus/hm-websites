@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 /*
- * Brand tokens — placeholder values for the v2 scaffold.
- * The final palette is defined in the design-token phase of the redesign.
+ * Brand colour tokens (--color-*) are injected onto <html> at render time from
+ * lib/site.config.ts (siteConfig.brand) — this file stays generic so a new
+ * project never edits CSS for colour. The fallbacks below only apply if the
+ * config injection is ever absent. Font fallback lives here.
  */
 :root {
   --color-primary: #0f172a;

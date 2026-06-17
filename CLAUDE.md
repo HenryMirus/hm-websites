@@ -25,22 +25,37 @@ v2 is approved for launch.
 
 ## 2. Tech stack (decided — do not change without a CTO decision + DB log)
 
-| Layer            | Choice                                  | Notes |
-| ---------------- | --------------------------------------- | ----- |
-| Framework        | **Next.js 14.2.x** (App Router)         | Pinned to 14, not 16. |
-| Language         | **TypeScript** (strict)                 | No `any`, no `ts-ignore`. |
-| Styling          | **Tailwind CSS v3.4** + CSS custom props | Brand tokens via `:root` vars. |
-| Scroll / timeline animation | **GSAP 3** + ScrollTrigger + `@gsap/react` `useGSAP()` | Owns in-page choreography. |
-| Page transitions | **Framer Motion**                       | Simple route fade/slide only. |
-| Lint / format    | ESLint (`next/core-web-vitals`) + Prettier | `prettier-plugin-tailwindcss`. |
-| Deployment       | **Vercel** (region `fra1`)              | `vercel.json` committed. |
-| Package manager  | **pnpm 9**                              | Do not mix npm/yarn lockfiles. |
-| Database         | **Supabase** — only when a phase needs persistence | Not wired yet. |
+| Layer                       | Choice                                                 | Notes                          |
+| --------------------------- | ------------------------------------------------------ | ------------------------------ |
+| Framework                   | **Next.js 14.2.x** (App Router)                        | Pinned to 14, not 16.          |
+| Language                    | **TypeScript** (strict)                                | No `any`, no `ts-ignore`.      |
+| Styling                     | **Tailwind CSS v3.4** + CSS custom props               | Brand tokens via `:root` vars. |
+| Scroll / timeline animation | **GSAP 3** + ScrollTrigger + `@gsap/react` `useGSAP()` | Owns in-page choreography.     |
+| Page transitions            | **Framer Motion**                                      | Simple route fade/slide only.  |
+| Lint / format               | ESLint (`next/core-web-vitals`) + Prettier             | `prettier-plugin-tailwindcss`. |
+| Deployment                  | **Vercel** (region `fra1`)                             | `vercel.json` committed.       |
+| Package manager             | **pnpm 9**                                             | Do not mix npm/yarn lockfiles. |
+| Database                    | **Supabase** — only when a phase needs persistence     | Not wired yet.                 |
 
 Decision authority: stack/library/tool/architecture changes are CTO calls and
 **must** be logged via a DB Agent sub-issue (`INSERT project_decisions`).
 
 ---
+
+## 2b. This is also HM's reusable starter — keep it adaptable
+
+Board directive (HMW-177): this scaffold doubles as the **reusable, adaptable
+starter for future HM projects**. Hold that line as the site grows:
+
+- **One adaptation point:** all per-project identity + brand lives in
+  `lib/site.config.ts` (name, locale, description, url, `brand` colour tokens).
+  Brand tokens are injected as CSS custom properties on `<html>` in
+  `app/layout.tsx` and map 1:1 to Tailwind `brand.*` utilities.
+- **Components and CSS stay generic.** Never hard-code a client name, colour, or
+  locale in a component or in `globals.css` — lift it into `site.config.ts`.
+- New-project workflow and checklist: see `TEMPLATE.md`.
+- Future: extract into a standalone `hm-websites-starter` template repo once v2
+  ships (tracked as a follow-up issue).
 
 ## 3. Folder structure
 
@@ -61,12 +76,14 @@ Path alias: `@/*` → repo root (see `tsconfig.json`).
 ## 4. Animation conventions (HM standard — non-negotiable)
 
 Every page ships with, at minimum:
+
 1. **Hero entrance** timeline on load (staggered fade/slide-in).
 2. **Scroll-triggered reveal** on every content section.
 3. **Hover states** on all interactive elements.
 4. **Page transition** between routes (Framer Motion).
 
 GSAP rules:
+
 - Always `gsap.registerPlugin(ScrollTrigger)`.
 - Use `useGSAP()` from `@gsap/react` with a `{ scope }` ref — it handles
   context cleanup and kills ScrollTriggers on unmount automatically.
