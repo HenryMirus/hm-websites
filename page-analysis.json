@@ -1,0 +1,194 @@
+{
+  "headings": [
+    {
+      "tag": "H1",
+      "text": "\n                  KI Agentur.\n                  Made in Germany.\n                ",
+      "fontSize": "100px",
+      "fontWeight": "700",
+      "color": "rgb(226, 232, 240)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H2",
+      "text": "\n                Wie sichtbar ist deinUnternehmen für KI?\n              ",
+      "fontSize": "40px",
+      "fontWeight": "700",
+      "color": "rgb(226, 232, 240)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "LLM Visibility Check",
+      "fontSize": "20px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "Voller Report freischalten",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "color": "rgb(0, 240, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "Bestätigungs-E-Mail gesendet!",
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H2",
+      "text": "\n                  AI SolutionsCreativeSystems.\n                ",
+      "fontSize": "56px",
+      "fontWeight": "700",
+      "color": "rgb(226, 232, 240)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H2",
+      "text": "\n                Unsere DreiSäulen.\n              ",
+      "fontSize": "56px",
+      "fontWeight": "700",
+      "color": "rgb(226, 232, 240)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  KI Strategie",
+      "fontSize": "20px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  System & Build",
+      "fontSize": "20px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  Distribution & Scaling",
+      "fontSize": "20px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H2",
+      "text": "\n                  ServiceProtocol.\n                ",
+      "fontSize": "56px",
+      "fontWeight": "700",
+      "color": "rgb(226, 232, 240)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  LLM Visibility",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  AI Branding",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  AI Content",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  AI Automation",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  Distribution",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "\n                  AI Workshops",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "AI Content Workflowfür E-Commerce.",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H2",
+      "text": "\n                Unser KIÖkosystem.\n              ",
+      "fontSize": "56px",
+      "fontWeight": "700",
+      "color": "rgb(226, 232, 240)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    },
+    {
+      "tag": "H3",
+      "text": "KI Beratung",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "color": "rgb(255, 255, 255)",
+      "fontFamily": "\"Space Grotesk\", sans-serif"
+    }
+  ],
+  "buttons": [
+    "Services",
+    "Analysieren",
+    "Freischalten",
+    "Neue Domain prüfen",
+    "Anmelden →",
+    "Akzeptieren\n      Ablehnen",
+    "Akzeptieren",
+    "Ablehnen",
+    "Zurück"
+  ],
+  "fonts": [
+    "Times",
+    "\"Space Grotesk\", sans-serif",
+    "\"Courier New\", monospace",
+    "Arial",
+    "\"Space Grotesk\", -apple-system, sans-serif"
+  ],
+  "colorSamples": [
+    "rgb(0, 0, 0)",
+    "rgb(226, 232, 240)",
+    "rgb(2, 6, 23)",
+    "rgb(0, 0, 238)",
+    "rgb(148, 163, 184)",
+    "rgb(0, 240, 255)",
+    "rgb(168, 85, 247)",
+    "rgb(245, 158, 11)",
+    "rgb(255, 255, 255)",
+    "rgb(100, 116, 139)"
+  ]
+}
