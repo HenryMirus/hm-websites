@@ -74,12 +74,10 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
         className="absolute top-0 right-0 bottom-0 w-[52%] hidden lg:block pointer-events-none"
         style={{ y: blob1Y }}
       >
-        <img
-          src="/hero-bg.png"
-          alt=""
-          aria-hidden="true"
-          className="w-full h-full object-cover object-center"
-        />
+        <picture className="absolute inset-0">
+          <source srcSet="/hero-bg.webp" type="image/webp" />
+          <img src="/hero-bg.png" alt="" aria-hidden className="w-full h-full object-cover object-center" />
+        </picture>
         {/* Left gradient fade — blends image into page bg */}
         <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/60 to-transparent" />
         {/* Top & bottom fades */}
@@ -102,7 +100,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
       >
         <div className="font-display font-bold text-3xl text-accent">+32%</div>
         <div className="font-mono text-[11px] text-text-dim mt-0.5">
-          {lang === "de" ? "mehr Kundenanfragen" : "more inquiries"}
+          {getText(t.hero.floating.stat1Label, lang)}
         </div>
       </motion.div>
 
@@ -115,12 +113,12 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
         <div className="flex items-center gap-2 mb-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-slow" />
           <span className="font-mono text-[10px] text-green-400/80">
-            {lang === "de" ? "Projekt live" : "Project live"}
+            {getText(t.hero.floating.live, lang)}
           </span>
         </div>
         <div className="font-display font-bold text-xl text-primary">14 Tage</div>
         <div className="font-mono text-[11px] text-text-muted">
-          {lang === "de" ? "Ø bis zum Launch" : "avg. to launch"}
+          {getText(t.hero.floating.avg, lang)}
         </div>
       </motion.div>
 

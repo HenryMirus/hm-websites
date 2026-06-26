@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { t, getText, Lang } from "@/lib/translations";
 import TypewriterText from "./TypewriterText";
@@ -51,6 +52,58 @@ function SpotlightCard({
       )}
       {children}
     </div>
+  );
+}
+
+function InfoTooltip({ text }: { text: string }) {
+  const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => { setMounted(true); }, []);
+
+  const show = () => {
+    if (btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setPos({ x: rect.left + rect.width / 2, y: rect.top - 8 });
+    }
+    setVisible(true);
+  };
+
+  return (
+    <>
+      <button
+        ref={btnRef}
+        onMouseEnter={show}
+        onMouseLeave={() => setVisible(false)}
+        onFocus={show}
+        onBlur={() => setVisible(false)}
+        type="button"
+        className="ml-0.5 w-3.5 h-3.5 rounded-full border border-text-muted/50 text-text-muted hover:border-primary hover:text-primary transition-colors inline-flex items-center justify-center flex-shrink-0 cursor-help"
+        aria-label="Mehr Infos"
+      >
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+          <circle cx="4" cy="4" r="3.2" stroke="currentColor" strokeWidth="0.9" />
+          <path d="M4 3.5v2.2" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" />
+          <circle cx="4" cy="2.3" r="0.45" fill="currentColor" />
+        </svg>
+      </button>
+      {mounted && visible && createPortal(
+        <div
+          className="pointer-events-none fixed z-[99999] w-52 bg-surface border border-border rounded-xl px-3 py-2.5 text-xs text-text-dim shadow-[0_4px_24px_rgba(0,0,0,0.45)] leading-relaxed"
+          style={{
+            left: pos.x,
+            top: pos.y,
+            transform: "translate(-50%, calc(-100% - 6px))",
+          }}
+        >
+          {text}
+          <span className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 block w-2.5 h-2.5 bg-surface border-r border-b border-border rotate-45" />
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
 
@@ -154,7 +207,12 @@ export default function ServicesSection({ lang }: ServicesSectionProps) {
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-primary shrink-0">
                           <path d="M2.5 7l3 3 6-6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        {getText(f, lang)}
+                        <span className="flex items-center gap-1 min-w-0">
+                          {getText(f, lang)}
+                          {"tooltip" in f && f.tooltip && (
+                            <InfoTooltip text={getText(f.tooltip as { de: string; en: string }, lang)} />
+                          )}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -170,7 +228,7 @@ export default function ServicesSection({ lang }: ServicesSectionProps) {
                         service.highlight ? "text-primary hover:text-white" : "text-text-muted hover:text-primary"
                       }`}
                     >
-                      {lang === "de" ? "Anfragen" : "Inquire"}
+                      {getText(t.services.inquire, lang)}
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                         <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -190,23 +248,17 @@ export default function ServicesSection({ lang }: ServicesSectionProps) {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mt-10 relative rounded-2xl overflow-hidden border border-border"
         >
-          <img
-            src="/services-visual.png"
-            alt={lang === "de" ? "Website, KI & Software Visualisierung" : "Website, AI & Software visualization"}
-            className="w-full object-cover"
-            style={{ maxHeight: "320px" }}
-          />
+          <picture>
+            <source srcSet="/services-visual.webp" type="image/webp" />
+            <img src="/services-visual.png" alt={getText(t.services.imageAlt, lang)} width={1440} height={320} className="w-full object-cover" style={{ maxHeight: "320px" }} loading="lazy" />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-bg/30 via-transparent to-bg/30" />
           <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-8">
-            {[
-              lang === "de" ? "Website & SEO" : "Website & SEO",
-              lang === "de" ? "KI & Chatbot" : "AI & Chatbot",
-              lang === "de" ? "Custom Software" : "Custom Software",
-            ].map((label) => (
-              <div key={label} className="flex items-center gap-2 bg-bg/70 backdrop-blur-md border border-border rounded-full px-4 py-1.5">
+            {t.services.imageLabels.map((item) => (
+              <div key={item.de} className="flex items-center gap-2 bg-bg/70 backdrop-blur-md border border-border rounded-full px-4 py-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="font-mono text-xs text-text-dim">{label}</span>
+                <span className="font-mono text-xs text-text-dim">{getText(item, lang)}</span>
               </div>
             ))}
           </div>

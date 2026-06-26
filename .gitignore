@@ -25,9 +25,6 @@ npm-debug.log*
 *.png
 *.jpeg
 *.jpg
-*.webp
-page-analysis.json
-Todo.md
 
 # Claude Code / Playwright logs
 .claude/

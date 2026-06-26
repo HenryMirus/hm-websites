@@ -190,7 +190,7 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                             className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
                           />
                           <span>
-                            {lang === "de" ? "Wird gesendet..." : "Sending..."}
+                            {getText(t.contact.form.sending, lang)}
                           </span>
                         </>
                       ) : (

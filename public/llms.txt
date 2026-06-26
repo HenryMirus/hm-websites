@@ -1,0 +1,64 @@
+# HM Labs
+
+> HM Labs ist ein Ein-Mann-Betrieb von Henry Mirus aus Deutschland. Ich baue High-Converting Websites, KI-Integrationen und maßgeschneiderte Software für kleine und mittelständische Unternehmen (KMU) — ohne Agentur-Overhead, zum Festpreis, in 14 Tagen live.
+
+Meine Arbeit richtet sich an Handwerker, Steuerberater, Logistiker, Gastronomen und andere KMU, die ihre Kundenzahl erhöhen und manuelle Arbeit durch KI automatisieren möchten. Ich arbeite direkt mit dem Inhaber — kein Projektmanager, kein Zwischenhändler.
+
+## Kontakt & Standort
+
+- E-Mail: hello@hm-ai.de
+- Standort: Deutschland
+- Antwortzeit: innerhalb von 24 Stunden
+- Website: https://hm-ai.de
+
+## Leistungen
+
+- [Websites](https://hm-ai.de/#services): High-Converting Websites mit KI-Chatbot, Mobile-first Design, SEO-Optimierung und Core Web Vitals. Fertig in 14 Tagen. Kostet zwischen 2.500 und 8.000 € (Festpreis).
+- [KI-Integration](https://hm-ai.de/#services): Einbindung von KI in bestehende Prozesse — Kundenkommunikation, Angebotserstellung, Terminbuchung, CRM-Integration. Durchschnittliche Ersparnis: 3 Stunden pro Tag.
+- [Software & SaaS](https://hm-ai.de/#services): Maßgeschneiderte Web-Apps und interne Tools, die repetitive Arbeit automatisieren und mit dem Unternehmen skalieren.
+
+## Prozess
+
+1. Kostenlose Analyse (30 Min.) — Verständnis des Geschäftsmodells, der Kunden und Wachstumshebel
+2. Umsetzung (1–4 Wochen) — Design, Entwicklung und KI-Integration in agilen 2-Wochen-Sprints
+3. Launch & Wachstum — Go-live, Monitoring und kontinuierliche Optimierung
+
+## Referenzprojekte
+
+- Sanitär & Heizung GmbH: Neue Website mit KI-Chatbot der Anfragen qualifiziert und Termine bucht — führte zu deutlich mehr Kundenanfragen
+- Steuerberatungskanzlei: KI-System beantwortet Voranfragen und klassifiziert Mandanten — 60 % weniger Telefonaufwand
+- Logistik-Dienstleister: Automatisiertes Angebots-Tool — Angebotserstellung von 45 Minuten auf 2 Minuten reduziert
+
+## Technologie-Stack
+
+- Frontend: Next.js 15, React 19, TypeScript, Tailwind CSS, Framer Motion
+- Backend & Daten: Supabase, PostgreSQL, pgvector, Drizzle ORM, Stripe, Resend
+- KI & Agenten: Claude API (Anthropic), Vercel AI SDK, LangGraph, OpenAI Embeddings, RAG
+- Automatisierung: n8n, Trigger.dev, GitHub Actions, Claude Agent SDK
+- Infrastruktur: Vercel, Hetzner VPS, Cloudflare, Docker, Coolify
+- Analytics: Posthog, Plausible, Google Tag Manager
+
+## Preise & Konditionen
+
+- Festpreis (kein Stundensatz): Websites ab 2.500 €, KI-Integrationen und Web-Apps individuell
+- Keine Mindestlaufzeit, keine Knebelverträge
+- DSGVO-konform, EU-gehostet
+- Lieferzeit: Standard-Website in 14 Tagen, komplexere Projekte in 4–8 Wochen
+
+## Häufige Fragen
+
+**Was kostet eine Website?** Zwischen 2.500 und 8.000 € als Festpreis — vor dem Start bekannt.
+
+**Wie lange dauert ein Projekt?** Eine Standard-Website ist in 14 Tagen live. KI-Integrationen und Web-Apps dauern 4–8 Wochen.
+
+**Brauche ich technisches Vorwissen?** Nein. Ich erkläre alles verständlich — kein Fachjargon.
+
+**Was passiert nach dem Launch?** Hosting, Updates, Monitoring und Optimierungen sind inklusive. Kein Alleinlassen.
+
+**Bin ich nach dem Projekt gebunden?** Nein. Keine Mindestlaufzeiten, kein Lock-in.
+
+**Übernimmst du auch SEO?** SEO ist in jede Website eingebaut. Für laufendes Content-Marketing empfehle ich spezialisierte Partner.
+
+## Über Henry Mirus
+
+Henry Mirus ist Entwickler und KI-Spezialist mit Sitz in Deutschland. Er arbeitet direkt mit Inhabern kleiner und mittelständischer Unternehmen — ohne Projektmanager dazwischen, ohne Templates, ohne versteckte Kosten. Jede Lösung wird von Grund auf für das jeweilige Unternehmen entwickelt.

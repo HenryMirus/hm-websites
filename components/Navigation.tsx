@@ -41,13 +41,10 @@ export default function Navigation({ lang, setLang, onOpenWizard }: NavigationPr
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-3">
-          <img
-            src="/hm-labs-logo-v3.png"
-            alt="HM Labs"
-            width={36}
-            height={36}
-            className="rounded-lg"
-          />
+          <picture>
+            <source srcSet="/hm-labs-logo-v3.webp" type="image/webp" />
+            <img src="/hm-labs-logo-v3.png" alt="HM Labs" width={36} height={36} className="rounded-lg" />
+          </picture>
           <span className="font-display font-bold text-text-primary text-lg tracking-tight">
             HM <span className="text-primary">Labs</span>
           </span>

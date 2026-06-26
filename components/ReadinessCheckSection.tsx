@@ -129,16 +129,12 @@ export default function ReadinessCheckSection({ lang, onOpenWizard }: ReadinessC
             </p>
 
             <div className="space-y-3">
-              {[
-                { icon: <IconFree />, de: "Kostenlos & ohne Anmeldung", en: "Free & no signup needed" },
-                { icon: <IconInstant />, de: "Sofortiges, persönliches Ergebnis", en: "Instant, personalized result" },
-                { icon: <IconRecommend />, de: "Konkrete Handlungsempfehlungen", en: "Concrete recommendations" },
-              ].map((item) => (
-                <div key={item.de} className="flex items-center gap-3">
+              {[<IconFree />, <IconInstant />, <IconRecommend />].map((icon, i) => (
+                <div key={i} className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                    {item.icon}
+                    {icon}
                   </div>
-                  <span className="text-text-dim text-sm">{lang === "de" ? item.de : item.en}</span>
+                  <span className="text-text-dim text-sm">{getText(t.readinessCheck.features[i], lang)}</span>
                 </div>
               ))}
             </div>
@@ -175,21 +171,19 @@ export default function ReadinessCheckSection({ lang, onOpenWizard }: ReadinessC
                       transition={{ duration: 0.25 }}
                     >
                       <div className="font-mono text-xs text-primary/60 tracking-widest mb-4">
-                        {lang === "de" ? "5 FRAGEN · 2 MINUTEN" : "5 QUESTIONS · 2 MINUTES"}
+                        {getText(t.readinessCheck.introLabel, lang)}
                       </div>
                       <h3 className="font-display font-bold text-2xl text-text-primary mb-3">
-                        {lang === "de" ? "Bereit loszulegen?" : "Ready to start?"}
+                        {getText(t.readinessCheck.introTitle, lang)}
                       </h3>
                       <p className="text-text-dim text-sm mb-8 leading-relaxed">
-                        {lang === "de"
-                          ? "Beantworte 5 kurze Fragen und finde heraus wie gut dein Unternehmen für die KI-Ära aufgestellt ist."
-                          : "Answer 5 quick questions and find out how well your business is positioned for the AI era."}
+                        {getText(t.readinessCheck.introDesc, lang)}
                       </p>
                       <button
                         onClick={() => setPhase("questions")}
                         className="w-full bg-primary hover:bg-primary/90 transition-colors text-white font-semibold py-3.5 rounded-xl flex items-center justify-center gap-2"
                       >
-                        {lang === "de" ? "Check starten" : "Start check"}
+                        {getText(t.readinessCheck.startBtn, lang)}
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                           <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
@@ -213,7 +207,7 @@ export default function ReadinessCheckSection({ lang, onOpenWizard }: ReadinessC
                           onClick={reset}
                           className="font-mono text-xs text-text-muted hover:text-text-dim transition-colors"
                         >
-                          {lang === "de" ? "Neu starten" : "Restart"}
+                          {getText(t.readinessCheck.restart, lang)}
                         </button>
                       </div>
 
@@ -297,7 +291,7 @@ export default function ReadinessCheckSection({ lang, onOpenWizard }: ReadinessC
                         onClick={reset}
                         className="w-full text-text-muted hover:text-text-dim text-sm transition-colors py-2"
                       >
-                        {lang === "de" ? "Nochmal versuchen" : "Try again"}
+                        {getText(t.readinessCheck.tryAgain, lang)}
                       </button>
                     </motion.div>
                   )}

@@ -43,7 +43,10 @@ export default function Footer({ lang }: FooterProps) {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <img src="/hm-labs-logo-v3.png" alt="HM Labs" width={28} height={28} className="rounded-md" />
+              <picture>
+                <source srcSet="/hm-labs-logo-v3.webp" type="image/webp" />
+                <img src="/hm-labs-logo-v3.png" alt="HM Labs" width={28} height={28} className="rounded-md" loading="lazy" />
+              </picture>
               <span className="font-display font-bold text-text-primary">
                 HM <span className="text-primary">Labs</span>
               </span>

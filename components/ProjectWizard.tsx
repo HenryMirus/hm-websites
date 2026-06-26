@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lang } from "@/lib/translations";
+import { t, Lang } from "@/lib/translations";
 
 type Lang_ = Lang;
 
@@ -32,133 +32,51 @@ function Icon({ d, d2 }: { d: string; d2?: string }) {
   );
 }
 
+// Icons are defined locally — text labels come from t.wizard.steps
 const STEPS: Step[] = [
   {
     id: "service",
-    question: { de: "Was suchen Sie?", en: "What are you looking for?" },
-    sub: { de: "Wählen Sie, was am besten zu Ihrem Vorhaben passt.", en: "Choose what best fits your needs." },
+    question: t.wizard.steps[0].question,
+    sub: t.wizard.steps[0].sub,
     choices: [
-      {
-        id: "website",
-        label: { de: "Neue Website, die Kunden bringt", en: "A website that brings customers" },
-        icon: <Icon d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10" />,
-      },
-      {
-        id: "ai",
-        label: { de: "KI-Chatbot & Automatisierung", en: "AI chatbot & automation" },
-        icon: <Icon d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4zM10 8v2M14 8v2M7 14h10M7 18h7" d2="M5 12H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-2" />,
-      },
-      {
-        id: "software",
-        label: { de: "Eigene Software / App", en: "Custom software / app" },
-        icon: <Icon d="M16 18l6-6-6-6M8 6l-6 6 6 6" />,
-      },
-      {
-        id: "bundle",
-        label: { de: "Website + KI – das Komplettpaket", en: "Website + AI – the full package" },
-        icon: <Icon d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />,
-      },
+      { id: "website",  label: t.wizard.steps[0].choices[0], icon: <Icon d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10" /> },
+      { id: "ai",       label: t.wizard.steps[0].choices[1], icon: <Icon d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4zM10 8v2M14 8v2M7 14h10M7 18h7" d2="M5 12H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-2" /> },
+      { id: "software", label: t.wizard.steps[0].choices[2], icon: <Icon d="M16 18l6-6-6-6M8 6l-6 6 6 6" /> },
+      { id: "bundle",   label: t.wizard.steps[0].choices[3], icon: <Icon d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /> },
     ],
   },
   {
     id: "industry",
-    question: { de: "In welcher Branche sind Sie tätig?", en: "What industry are you in?" },
+    question: t.wizard.steps[1].question,
     choices: [
-      {
-        id: "trades",
-        label: { de: "Handwerk & lokale Dienste", en: "Trades & local services" },
-        icon: <Icon d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />,
-      },
-      {
-        id: "consulting",
-        label: { de: "Beratung, Recht & Steuer", en: "Consulting, legal & tax" },
-        icon: <Icon d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />,
-      },
-      {
-        id: "health-retail",
-        label: { de: "Gesundheit, Handel & Gastronomie", en: "Health, retail & hospitality" },
-        icon: <Icon d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />,
-      },
-      {
-        id: "realestate-other",
-        label: { de: "Immobilien, Bau & andere", en: "Real estate, construction & other" },
-        icon: <Icon d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z" d2="M5.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />,
-      },
+      { id: "trades",           label: t.wizard.steps[1].choices[0], icon: <Icon d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /> },
+      { id: "consulting",       label: t.wizard.steps[1].choices[1], icon: <Icon d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /> },
+      { id: "health-retail",    label: t.wizard.steps[1].choices[2], icon: <Icon d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /> },
+      { id: "realestate-other", label: t.wizard.steps[1].choices[3], icon: <Icon d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z" d2="M5.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" /> },
     ],
   },
   {
     id: "problem",
-    question: { de: "Was ist Ihr größtes Problem?", en: "What is your biggest problem?" },
+    question: t.wizard.steps[2].question,
     choices: [
-      {
-        id: "no-visibility",
-        label: { de: "Zu wenig Anfragen & Sichtbarkeit", en: "Too few inquiries & visibility" },
-        icon: <Icon d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" d2="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />,
-      },
-      {
-        id: "weak-website",
-        label: { de: "Meine Website ist veraltet / bringt nichts", en: "My website is outdated / ineffective" },
-        icon: <Icon d="M22 12h-4l-3 9L9 3l-3 9H2" />,
-      },
-      {
-        id: "manual-work",
-        label: { de: "Zu viel manuelle Arbeit im Alltag", en: "Too much repetitive manual work" },
-        icon: <Icon d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />,
-      },
-      {
-        id: "clear-project",
-        label: { de: "Ich habe bereits eine konkrete Idee", en: "I already have a concrete idea" },
-        icon: <Icon d="M9 18h6M10 22h4M12 2l-2 6h-4l3.5 2.5L8 16l4-2.5 4 2.5-1.5-5.5L18 8h-4L12 2z" />,
-      },
+      { id: "no-visibility", label: t.wizard.steps[2].choices[0], icon: <Icon d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" d2="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" /> },
+      { id: "weak-website",  label: t.wizard.steps[2].choices[1], icon: <Icon d="M22 12h-4l-3 9L9 3l-3 9H2" /> },
+      { id: "manual-work",   label: t.wizard.steps[2].choices[2], icon: <Icon d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" /> },
+      { id: "clear-project", label: t.wizard.steps[2].choices[3], icon: <Icon d="M9 18h6M10 22h4M12 2l-2 6h-4l3.5 2.5L8 16l4-2.5 4 2.5-1.5-5.5L18 8h-4L12 2z" /> },
     ],
   },
   {
     id: "size",
-    question: { de: "Wie groß ist Ihr Unternehmen?", en: "How large is your company?" },
-    sub: { de: "Damit ich das passende Angebot für Sie vorbereiten kann.", en: "So I can prepare the right proposal for you." },
+    question: t.wizard.steps[3].question,
+    sub: t.wizard.steps[3].sub,
     choices: [
-      {
-        id: "solo",
-        label: { de: "Nur ich (Freelancer / Gründer)", en: "Just me (freelancer / founder)" },
-        icon: <Icon d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />,
-      },
-      {
-        id: "small",
-        label: { de: "2–10 Mitarbeiter", en: "2–10 employees" },
-        icon: <Icon d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />,
-      },
-      {
-        id: "medium",
-        label: { de: "11–50 Mitarbeiter", en: "11–50 employees" },
-        icon: <Icon d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" d2="M9 22V12h6v10" />,
-      },
-      {
-        id: "large",
-        label: { de: "50+ Mitarbeiter", en: "50+ employees" },
-        icon: <Icon d="M2 20h20M4 20V10l8-6 8 6v10M10 20v-6h4v6" />,
-      },
+      { id: "solo",   label: t.wizard.steps[3].choices[0], icon: <Icon d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" /> },
+      { id: "small",  label: t.wizard.steps[3].choices[1], icon: <Icon d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /> },
+      { id: "medium", label: t.wizard.steps[3].choices[2], icon: <Icon d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" d2="M9 22V12h6v10" /> },
+      { id: "large",  label: t.wizard.steps[3].choices[3], icon: <Icon d="M2 20h20M4 20V10l8-6 8 6v10M10 20v-6h4v6" /> },
     ],
   },
 ];
-
-const ANSWER_LABELS: Record<string, { de: string; en: string }> = {
-  website: { de: "Neue Website", en: "New website" },
-  ai: { de: "KI & Automatisierung", en: "AI & automation" },
-  software: { de: "Eigene Software", en: "Custom software" },
-  bundle: { de: "Website + KI Paket", en: "Website + AI bundle" },
-  trades: { de: "Handwerk & Dienste", en: "Trades & services" },
-  consulting: { de: "Beratung, Recht & Steuer", en: "Consulting, legal & tax" },
-  "health-retail": { de: "Gesundheit / Handel", en: "Health / retail" },
-  "realestate-other": { de: "Immobilien & andere", en: "Real estate & other" },
-  "no-visibility": { de: "Zu wenig Sichtbarkeit", en: "Too little visibility" },
-  "weak-website": { de: "Schwache Website", en: "Weak website" },
-  "manual-work": { de: "Zu viel Handarbeit", en: "Too much manual work" },
-  "clear-project": { de: "Konkrete Idee vorhanden", en: "Concrete idea" },
-  solo: { de: "Solo / Freelancer", en: "Solo / freelancer" },
-  small: { de: "2–10 Mitarbeiter", en: "2–10 employees" },
-  medium: { de: "11–50 Mitarbeiter", en: "11–50 employees" },
-  large: { de: "50+ Mitarbeiter", en: "50+ employees" },
-};
 
 /* ─────────────────────────────────────────────
    Animation variants
@@ -242,9 +160,9 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
 
   function validate(): boolean {
     const e: Partial<ContactForm> = {};
-    if (!contact.name.trim()) e.name = lang === "de" ? "Bitte Name eingeben" : "Please enter your name";
+    if (!contact.name.trim()) e.name = l(t.wizard.ui.validationName);
     if (!contact.email.trim() || !/\S+@\S+\.\S+/.test(contact.email))
-      e.email = lang === "de" ? "Bitte gültige E-Mail eingeben" : "Please enter a valid email";
+      e.email = l(t.wizard.ui.validationEmail);
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -260,9 +178,9 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
       if (id) wizardAnswers[s.id] = id;
     });
 
-    const subject = STEPS.map((s, i) => {
+    const subject = STEPS.map((_s, i) => {
       const id = answers[i];
-      return id ? l(ANSWER_LABELS[id] ?? { de: id, en: id }) : null;
+      return id ? l(t.wizard.answerLabels[id as keyof typeof t.wizard.answerLabels] ?? { de: id, en: id }) : null;
     }).filter(Boolean).join(" · ");
 
     try {
@@ -347,7 +265,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                         <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                      {lang === "de" ? "Zurück" : "Back"}
+                      {l(t.wizard.ui.back)}
                     </motion.button>
                   )}
                 </AnimatePresence>
@@ -356,7 +274,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                   <span className="font-mono text-[11px] text-text-muted tracking-wider">
                     {step < totalSteps
                       ? `${step + 1} / ${totalSteps}`
-                      : lang === "de" ? "Fast fertig" : "Almost done"}
+                      : l(t.wizard.ui.almostDone)}
                   </span>
                 )}
               </div>
@@ -452,12 +370,10 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                   >
                     <div className="mb-5">
                       <h2 className="font-display font-bold text-2xl text-text-primary mb-1">
-                        {lang === "de" ? "Fast fertig — wie erreiche ich Sie?" : "Almost done — how can I reach out to you?"}
+                        {l(t.wizard.ui.contactHeadline)}
                       </h2>
                       <p className="text-text-dim text-sm">
-                        {lang === "de"
-                          ? "Ich melde mich innerhalb von 24 Stunden mit konkreten nächsten Schritten."
-                          : "I'll get back to you within 24 hours with concrete next steps."}
+                        {l(t.wizard.ui.contactSub)}
                       </p>
                     </div>
 
@@ -466,7 +382,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                       {STEPS.map((_, i) => {
                         const id = answers[i];
                         if (!id) return null;
-                        const label = ANSWER_LABELS[id];
+                        const label = t.wizard.answerLabels[id as keyof typeof t.wizard.answerLabels];
                         return (
                           <span key={i} className="font-mono text-[11px] bg-primary/10 text-primary border border-primary/20 rounded-md px-2 py-0.5">
                             {label ? l(label) : id}
@@ -481,7 +397,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                           <input
                             ref={firstInputRef}
                             type="text"
-                            placeholder={lang === "de" ? "Ihr Name *" : "Your name *"}
+                            placeholder={l(t.wizard.ui.namePlaceholder)}
                             value={contact.name}
                             onChange={(e) => setContact((c) => ({ ...c, name: e.target.value }))}
                             className={`w-full bg-bg border rounded-xl px-3.5 py-3 text-text-primary placeholder:text-text-muted text-sm outline-none focus:border-primary transition-colors ${
@@ -493,7 +409,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                         <div>
                           <input
                             type="email"
-                            placeholder={lang === "de" ? "E-Mail *" : "Email *"}
+                            placeholder={l(t.wizard.ui.emailPlaceholder)}
                             value={contact.email}
                             onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
                             className={`w-full bg-bg border rounded-xl px-3.5 py-3 text-text-primary placeholder:text-text-muted text-sm outline-none focus:border-primary transition-colors ${
@@ -506,7 +422,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
 
                       <input
                         type="text"
-                        placeholder={lang === "de" ? "Unternehmen (optional)" : "Company (optional)"}
+                        placeholder={l(t.wizard.ui.companyPlaceholder)}
                         value={contact.company}
                         onChange={(e) => setContact((c) => ({ ...c, company: e.target.value }))}
                         className="w-full bg-bg border border-border rounded-xl px-3.5 py-3 text-text-primary placeholder:text-text-muted text-sm outline-none focus:border-primary transition-colors"
@@ -514,9 +430,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
 
                       <textarea
                         rows={3}
-                        placeholder={lang === "de"
-                          ? "Was ist Ihre größte Herausforderung gerade? (optional)"
-                          : "What's your biggest challenge right now? (optional)"}
+                        placeholder={l(t.wizard.ui.messagePlaceholder)}
                         value={contact.message}
                         onChange={(e) => setContact((c) => ({ ...c, message: e.target.value }))}
                         className="w-full bg-bg border border-border rounded-xl px-3.5 py-3 text-text-primary placeholder:text-text-muted text-sm outline-none focus:border-primary transition-colors resize-none"
@@ -531,7 +445,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                           <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                         ) : (
                           <>
-                            {lang === "de" ? "Jetzt kostenloses Gespräch anfragen" : "Request free consultation"}
+                            {l(t.wizard.ui.submitBtn)}
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                               <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
@@ -540,9 +454,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                       </button>
 
                       <p className="text-center text-text-muted text-[11px]">
-                        {lang === "de"
-                          ? "Kein Spam. Keine Verpflichtung. Antwort innerhalb 24h."
-                          : "No spam. No commitment. Response within 24h."}
+                        {l(t.wizard.ui.noSpam)}
                       </p>
                     </form>
                   </motion.div>
@@ -571,14 +483,12 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                     </motion.div>
 
                     <h2 className="font-display font-bold text-2xl text-text-primary mb-2">
-                      {lang === "de" ? "Danke, " : "Thanks, "}
+                      {l(t.wizard.ui.successTitle)}
                       {contact.name.split(" ")[0]}!
                     </h2>
 
                     <p className="text-text-dim text-sm leading-relaxed max-w-xs mb-4">
-                      {lang === "de"
-                        ? "Ihre Anfrage ist eingegangen. Ich melde mich innerhalb von 24 Stunden mit einem konkreten nächsten Schritt."
-                        : "Your inquiry has been received. I'll get back to you within 24 hours with a concrete next step."}
+                      {l(t.wizard.ui.successMsg)}
                     </p>
 
                     <a
@@ -590,13 +500,13 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
 
                     <div className="w-full border-t border-border pt-6 space-y-2">
                       <p className="font-mono text-xs text-text-muted uppercase tracking-wider mb-3">
-                        {lang === "de" ? "Ihre Angaben" : "Your answers"}
+                        {l(t.wizard.ui.yourAnswers)}
                       </p>
                       <div className="flex flex-wrap gap-1.5 justify-center">
-                        {STEPS.map((s, i) => {
+                        {STEPS.map((_s, i) => {
                           const id = answers[i];
                           if (!id) return null;
-                          const label = ANSWER_LABELS[id];
+                          const label = t.wizard.answerLabels[id as keyof typeof t.wizard.answerLabels];
                           return (
                             <span key={i} className="font-mono text-[11px] bg-primary/8 text-primary border border-primary/15 rounded-md px-2 py-0.5">
                               {label ? l(label) : id}
@@ -610,7 +520,7 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                       onClick={onClose}
                       className="mt-6 text-text-muted hover:text-text-dim transition-colors text-sm"
                     >
-                      {lang === "de" ? "Schließen" : "Close"}
+                      {l(t.wizard.ui.close)}
                     </button>
                   </motion.div>
                 )}

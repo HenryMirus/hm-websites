@@ -76,44 +76,36 @@ export default function AboutSection({ lang }: AboutSectionProps) {
                     transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
                   />
                   <div className="w-24 h-24 rounded-2xl overflow-hidden border border-primary/25 shadow-xl shadow-primary/15">
-                    <img
-                      src="/henry-portrait-new.png"
-                      alt="Henry M."
-                      className="w-full h-full object-cover object-top"
-                    />
+                    <picture>
+                      <source srcSet="/henry-portrait-new.webp" type="image/webp" />
+                      <img src="/henry-portrait-new.png" alt="Henry Mirus, KI-Entwickler" width={96} height={96} className="w-full h-full object-cover object-top" loading="lazy" />
+                    </picture>
                   </div>
                 </div>
                 <div>
                   <h3 className="font-display font-semibold text-xl text-text-primary">Henry M.</h3>
                   <p className="text-text-dim text-sm mt-1">
-                    {lang === "de" ? "Entwickler · KI-Experte · Unternehmer" : "Developer · AI Expert · Entrepreneur"}
+                    {getText(t.about.subtitle, lang)}
                   </p>
                   <div className="flex items-center gap-1.5 mt-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-slow" />
                     <span className="font-mono text-[11px] text-green-400/70">
-                      {lang === "de" ? "Verfügbar für neue Projekte" : "Available for new projects"}
+                      {getText(t.about.available, lang)}
                     </span>
                   </div>
                 </div>
               </div>
               <p className="text-text-dim text-sm leading-relaxed">
-                {lang === "de"
-                  ? "Ich kombiniere technische Expertise mit unternehmerischem Denken — und baue Lösungen, die wirklich funktionieren, nicht nur gut aussehen."
-                  : "I combine technical expertise with entrepreneurial thinking — and build solutions that actually work, not just look good."}
+                {getText(t.about.bioCard, lang)}
               </p>
             </div>
 
             {/* Quick stats */}
             <div className="grid grid-cols-2 gap-4">
-              {[
-                { val: "10+", label: lang === "de" ? "Projekte" : "Projects" },
-                { val: "14 Tage", label: lang === "de" ? "Ø Launch-Zeit" : "Avg. launch time" },
-                { val: "100%", label: lang === "de" ? "Direkte Kommunikation" : "Direct communication" },
-                { val: "24h", label: lang === "de" ? "Antwortzeit" : "Response time" },
-              ].map((s, i) => (
+              {t.about.stats.map((s, i) => (
                 <div key={i} className="bg-surface border border-border rounded-xl p-4 text-center">
                   <div className="font-display font-bold text-2xl text-text-primary">{s.val}</div>
-                  <div className="text-text-dim text-xs mt-1">{s.label}</div>
+                  <div className="text-text-dim text-xs mt-1">{getText(s.label, lang)}</div>
                 </div>
               ))}
             </div>

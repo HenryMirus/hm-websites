@@ -9,104 +9,17 @@ interface LifecycleSectionProps {
   lang: Lang;
 }
 
-const STAGES = [
-  {
-    num: "01",
-    color: "#4F7FFF",
-    name: { de: "Sichtbarkeit", en: "Visibility" },
-    problemHeadline: { de: "Du wirst nicht gefunden.", en: "You're not being found." },
-    problemDesc: {
-      de: "Konkurrenten ranken oben, deine Website wirkt veraltet — Interessenten springen ab, bevor sie anrufen.",
-      en: "Competitors rank above you, your website looks outdated — prospects bounce before they call.",
-    },
-    module: { de: "High-Converting Website", en: "High-Converting Website" },
-    moduleDesc: {
-      de: "SEO-optimierte Website mit KI-Chatbot, Core Web Vitals <1s und Mobile-first Design. Live in 14 Tagen.",
-      en: "SEO-optimized website with AI chatbot, Core Web Vitals <1s, and mobile-first design. Live in 14 days.",
-    },
-    metric: { de: "Live in 14 Tagen", en: "Live in 14 days" },
-  },
-  {
-    num: "02",
-    color: "#FF4D6A",
-    name: { de: "Erstanfrage", en: "First Inquiry" },
-    problemHeadline: { de: "Besucher kommen — und gehen.", en: "Visitors come — and leave." },
-    problemDesc: {
-      de: "Kein Chatbot, kein klares CTA. Interessenten gehen zur Konkurrenz, du erfährst es Tage später.",
-      en: "No chatbot, no clear CTA. Prospects go to competitors, you find out days later.",
-    },
-    module: { de: "KI-Chatbot & Lead-System", en: "AI Chatbot & Lead System" },
-    moduleDesc: {
-      de: "24/7-Chatbot qualifiziert Anfragen, sammelt Kontaktdaten und bucht Termine — vollautomatisch.",
-      en: "24/7 chatbot qualifies inquiries, collects contact data, and books appointments — fully automated.",
-    },
-    metric: { de: "24/7 Erreichbarkeit", en: "24/7 availability" },
-  },
-  {
-    num: "03",
-    color: "#10B981",
-    name: { de: "Kommunikation", en: "Communication" },
-    problemHeadline: { de: "Mails stapeln sich, Anfragen gehen unter.", en: "Emails pile up, inquiries get lost." },
-    problemDesc: {
-      de: "Lange Antwortzeiten frustrieren Kunden. Das Team verbringt Stunden mit Copy-Paste statt echter Arbeit.",
-      en: "Long response times frustrate clients. The team spends hours on copy-paste instead of real work.",
-    },
-    module: { de: "Kommunikations-Automatisierung", en: "Communication Automation" },
-    moduleDesc: {
-      de: "KI beantwortet Voranfragen, klassifiziert Kunden und bereitet Gesprächsgrundlagen vor — in Sekunden.",
-      en: "AI answers initial inquiries, classifies clients, and prepares conversation foundations — in seconds.",
-    },
-    metric: { de: "Antwortzeit < 2 Min.", en: "Response time < 2 min." },
-  },
-  {
-    num: "04",
-    color: "#F59E0B",
-    name: { de: "Angebot & Abschluss", en: "Offer & Close" },
-    problemHeadline: { de: "Angebote erstellen dauert Stunden.", en: "Creating quotes takes hours." },
-    problemDesc: {
-      de: "Jedes Mal von vorne: Preise recherchieren, formatieren, versenden. Fehler passieren, Aufträge gehen verloren.",
-      en: "Start from scratch every time: research prices, format, send. Errors happen, orders get lost.",
-    },
-    module: { de: "KI-Angebotsgenerator", en: "AI Quote Generator" },
-    moduleDesc: {
-      de: "Von der Kundenanfrage zum fertigen Angebot in unter 2 Minuten — mit deinen Preisen und deinem Layout.",
-      en: "From customer inquiry to finished quote in under 2 minutes — with your prices and your layout.",
-    },
-    metric: { de: "30 Min → 2 Min", en: "30 min → 2 min" },
-  },
-  {
-    num: "05",
-    color: "#8B5CF6",
-    name: { de: "Lieferung", en: "Delivery" },
-    problemHeadline: { de: "Kunden fragen ständig nach dem Status.", en: "Clients constantly ask about status." },
-    problemDesc: {
-      de: "Projekt-Tracking per Excel und E-Mail. Das Team verliert den Überblick, Kunden werden ungeduldig.",
-      en: "Project tracking via Excel and email. The team loses overview, clients get impatient.",
-    },
-    module: { de: "Kunden-Portal & Projekt-App", en: "Client Portal & Project App" },
-    moduleDesc: {
-      de: "Maßgeschneiderte Web-App: Kunden sehen Echtzeit-Status, das Team koordiniert alles an einem Ort.",
-      en: "Custom web app: clients see real-time status, the team coordinates everything in one place.",
-    },
-    metric: { de: "Keine Status-Mails mehr", en: "No more status emails" },
-  },
-  {
-    num: "06",
-    color: "#06B6D4",
-    name: { de: "Wiederkehr", en: "Recurrence" },
-    problemHeadline: { de: "Einmal-Kunden, die nie wiederkommen.", en: "One-time clients who never return." },
-    problemDesc: {
-      de: "Kein Follow-up-System, keine Kundenpflege. Teure Neukundenakquise statt günstiger Wiederholungsaufträge.",
-      en: "No follow-up system, no client retention. Expensive new client acquisition instead of cheap repeat orders.",
-    },
-    module: { de: "Wiederkehr-Automatisierung", en: "Recurrence Automation" },
-    moduleDesc: {
-      de: "Automatische Follow-up-Sequenzen, Kundenpflege und Upsell-Kampagnen — dein stilles Verkaufsteam.",
-      en: "Automatic follow-up sequences, client retention, and upsell campaigns — your silent sales team.",
-    },
-    metric: { de: "Mehr Folgeaufträge", en: "More repeat orders" },
-  },
-];
+// Non-translatable stage metadata (color, number) — text lives in t.lifecycle.stages
+const STAGE_META = [
+  { num: "01", color: "#4F7FFF" },
+  { num: "02", color: "#FF4D6A" },
+  { num: "03", color: "#10B981" },
+  { num: "04", color: "#F59E0B" },
+  { num: "05", color: "#8B5CF6" },
+  { num: "06", color: "#06B6D4" },
+] as const;
+
+const STAGES = STAGE_META.map((meta, i) => ({ ...meta, ...t.lifecycle.stages[i] }));
 
 // ── Stage UI Mockups ──────────────────────────────────────────────────────────
 
@@ -543,7 +456,7 @@ export default function LifecycleSection({ lang }: LifecycleSectionProps) {
                       className="font-mono text-[11px] px-2.5 py-1 rounded-full border"
                       style={{ color: stage.color, borderColor: `${stage.color}40`, backgroundColor: `${stage.color}12` }}
                     >
-                      {lang === "de" ? "Problem" : "Problem"} {stage.num}
+                      {getText(t.lifecycle.mockup.problem, lang)} {stage.num}
                     </motion.span>
                   </div>
 
@@ -565,7 +478,7 @@ export default function LifecycleSection({ lang }: LifecycleSectionProps) {
                   <div className="flex items-center gap-3 mb-6">
                     <div className="flex-1 h-px bg-[#1E1E2E]" />
                     <span className="font-mono text-xs text-text-muted">
-                      {lang === "de" ? "Dein Modul" : "Your module"}
+                      {getText(t.lifecycle.mockup.yourModule, lang)}
                     </span>
                     <div className="flex-1 h-px bg-[#1E1E2E]" />
                   </div>
@@ -620,7 +533,7 @@ export default function LifecycleSection({ lang }: LifecycleSectionProps) {
                 <div className="w-full max-w-sm">
                   <div className="font-mono text-[10px] text-text-muted mb-3 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: stage.color }} />
-                    {lang === "de" ? "Live-Vorschau" : "Live preview"}
+                    {getText(t.lifecycle.mockup.livePreview, lang)}
                   </div>
                   <MockupComponent lang={lang} />
                   {/* Trust signals */}

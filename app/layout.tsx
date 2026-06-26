@@ -105,7 +105,10 @@ const jsonLd = {
     {
       "@type": "Person",
       "@id": `${SITE_URL}/#founder`,
-      name: "Henry M.",
+      name: "Henry Mirus",
+      givenName: "Henry",
+      familyName: "Mirus",
+      alternateName: "Henry M.",
       jobTitle: "KI-Entwickler & Unternehmer",
       worksFor: { "@id": `${SITE_URL}/#business` },
       url: SITE_URL,
@@ -177,6 +180,22 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text: "SEO-Optimierung ist in jede Website eingebaut. Für laufendes Content-Marketing oder Ads empfehle ich spezialisierte Partner — ich konzentriere mich auf das was ich am besten kann.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Kann ich meine bestehende Website behalten?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit dir und empfehle, was wirklich besser ist — nicht was teurer ist.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Wie läuft die Zusammenarbeit ab?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Erstgespräch → Angebot → Umsetzung in 2-Wochen-Sprints → Launch. Du siehst Fortschritte live, bevor alles fertig ist. Direkte Kommunikation, kein Ticket-System.",
           },
         },
       ],

@@ -106,7 +106,7 @@ export default function ProcessSection({ lang, onOpenWizard }: ProcessSectionPro
             onClick={onOpenWizard}
             className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 transition-colors text-white font-semibold px-7 py-3.5 rounded-xl shadow-lg shadow-primary/20"
           >
-            {lang === "de" ? "Jetzt Projekt anfragen →" : "Start your project →"}
+            {getText(t.process.projectCta, lang)}
           </button>
         </motion.div>
       </div>

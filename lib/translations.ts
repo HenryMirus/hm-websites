@@ -1,6 +1,14 @@
 export type Lang = "de" | "en";
 
+// ─── Translation object ────────────────────────────────────────────────────────
+// Single source of truth for all visible text on the site.
+// Each leaf is { de: "...", en: "..." } — use getText(obj, lang) to resolve.
+// Sections mirror the component names they belong to.
+
 export const t = {
+
+  // ─── Navigation ──────────────────────────────────────────────────────────────
+  // Navigation links + top-right CTA button
   nav: {
     services: { de: "Leistungen", en: "Services" },
     process: { de: "Ablauf", en: "Process" },
@@ -9,6 +17,10 @@ export const t = {
     contact: { de: "Kontakt", en: "Contact" },
     cta: { de: "Kostenlos beraten", en: "Free consultation" },
   },
+
+  // ─── Hero Section ─────────────────────────────────────────────────────────────
+  // Main headline (3 lines), subtext, two CTA buttons, stats row,
+  // and the three floating badge overlays on the right side.
   hero: {
     tag: { de: "Für den Mittelstand · Für KMUs", en: "For SMBs · For mid-market" },
     line1: { de: "Mehr Kunden", en: "More Clients" },
@@ -26,7 +38,16 @@ export const t = {
     stat2: { de: "mehr Kundenanfragen", en: "more client inquiries" },
     stat3val: { de: "14 Tage", en: "14 days" },
     stat3: { de: "bis zum Go-live", en: "until go-live" },
+    // Floating badge overlays (top-right decorative cards in hero)
+    floating: {
+      stat1Label: { de: "mehr Kundenanfragen", en: "more inquiries" },
+      live: { de: "Projekt live", en: "Project live" },
+      avg: { de: "Ø bis zum Launch", en: "avg. to launch" },
+    },
   },
+
+  // ─── Trust Bar ───────────────────────────────────────────────────────────────
+  // Scrolling marquee below hero — label + industry pills
   trust: {
     label: { de: "Vertrauen von Unternehmen aus", en: "Trusted by businesses in" },
     industries: [
@@ -42,6 +63,10 @@ export const t = {
       { de: "Produktion", en: "Manufacturing" },
     ],
   },
+
+  // ─── Services Section ─────────────────────────────────────────────────────────
+  // Section tag, headline, subtext, three service cards.
+  // Also: "Anfragen" link on each card and the visual showcase image labels.
   services: {
     tag: { de: "// Service Protocol", en: "// Service Protocol" },
     headline: { de: "Drei Dinge die ich baue", en: "Three things I build" },
@@ -49,6 +74,15 @@ export const t = {
       de: "Kein Template, kein Agentur-Overhead. Du bekommst eine Lösung die auf dein Unternehmen zugeschnitten ist.",
       en: "No templates, no agency overhead. You get a solution built specifically for your business.",
     },
+    // "Anfragen" / "Inquire" link at the bottom of each service card
+    inquire: { de: "Anfragen", en: "Inquire" },
+    // Alt text and pill labels for the visual showcase image
+    imageAlt: { de: "Website, KI & Software Visualisierung", en: "Website, AI & Software visualization" },
+    imageLabels: [
+      { de: "Website & SEO", en: "Website & SEO" },
+      { de: "KI & Chatbot", en: "AI & Chatbot" },
+      { de: "Custom Software", en: "Custom Software" },
+    ],
     items: [
       {
         tag: { de: "SVC_01", en: "SVC_01" },
@@ -59,8 +93,20 @@ export const t = {
         },
         features: [
           { de: "KI-Chatbot inkludiert", en: "AI chatbot included" },
-          { de: "Mobile-first Design", en: "Mobile-first design" },
-          { de: "SEO & Core Web Vitals", en: "SEO & Core Web Vitals" },
+          {
+            de: "Mobile-first Design", en: "Mobile-first design",
+            tooltip: {
+              de: "Deine Website wird zuerst für Smartphones gebaut — dort surfen 70% aller Nutzer. Auf Desktop läuft sie genauso sauber.",
+              en: "Your website is built for smartphones first — where 70% of users browse. It works just as cleanly on desktop.",
+            },
+          },
+          {
+            de: "SEO & Core Web Vitals", en: "SEO & Core Web Vitals",
+            tooltip: {
+              de: "SEO sorgt dafür, dass Google dich bei relevanten Suchen anzeigt. Core Web Vitals misst wie schnell & stabil deine Seite lädt — beides beeinflusst dein Ranking direkt.",
+              en: "SEO ensures Google shows you for relevant searches. Core Web Vitals measures page speed & stability — both directly affect your ranking.",
+            },
+          },
           { de: "Fertig in 14 Tagen", en: "Ready in 14 days" },
         ],
         metric: { de: "Ø +32% Anfragen", en: "Avg. +32% inquiries" },
@@ -75,7 +121,13 @@ export const t = {
         },
         features: [
           { de: "Chatbots & Automatisierung", en: "Chatbots & automation" },
-          { de: "E-Mail & CRM-Integration", en: "Email & CRM integration" },
+          {
+            de: "E-Mail & CRM-Integration", en: "Email & CRM integration",
+            tooltip: {
+              de: "CRM = deine digitale Kundenverwaltung (z.B. HubSpot, Salesforce). Die KI verbindet sich damit und pflegt neue Kontakte & Anfragen automatisch ein.",
+              en: "CRM = digital customer management (e.g. HubSpot, Salesforce). The AI connects to it and automatically logs new contacts & inquiries.",
+            },
+          },
           { de: "Angebots-Generierung", en: "Quote generation" },
           { de: "24/7 Kundenkontakt", en: "24/7 customer contact" },
         ],
@@ -91,18 +143,41 @@ export const t = {
         },
         features: [
           { de: "KI-gestützte Tools", en: "AI-powered tools" },
-          { de: "Interne Prozess-Apps", en: "Internal process apps" },
-          { de: "Kundenfacing-SaaS", en: "Customer-facing SaaS" },
-          { de: "API-Integrationen", en: "API integrations" },
+          {
+            de: "Interne Prozess-Apps", en: "Internal process apps",
+            tooltip: {
+              de: "Software nur für dein Team — z.B. für Bestellverwaltung, interne Abläufe oder alles was ihr bisher per Excel oder auf Papier erledigt.",
+              en: "Software only your team uses — e.g. for order management, internal workflows, or anything currently done via Excel or paper.",
+            },
+          },
+          {
+            de: "Kundenfacing-SaaS", en: "Customer-facing SaaS",
+            tooltip: {
+              de: "Eine Web-App, die deine Kunden direkt nutzen — z.B. ein Buchungsportal, ein Tracking-Tool oder ein Self-Service-Bereich für Bestellungen.",
+              en: "A web app your customers use directly — e.g. a booking portal, tracking tool, or self-service area for orders.",
+            },
+          },
+          {
+            de: "API-Integrationen", en: "API integrations",
+            tooltip: {
+              de: "APIs sind digitale Verbindungen zwischen Programmen. Damit verbinden wir deine App mit Buchhaltungs-Software, Zahlungsanbietern oder Logistik-Tools.",
+              en: "APIs are digital connectors between programs. They link your app to accounting software, payment providers, or logistics tools.",
+            },
+          },
         ],
         metric: { de: "Auf Ihr Unternehmen zugeschnitten", en: "Tailored to your business" },
         highlight: false,
       },
     ],
   },
+
+  // ─── Process Section ──────────────────────────────────────────────────────────
+  // Section tag, headline, three numbered steps, and the bottom CTA button.
   process: {
     tag: { de: "// Build Protocol", en: "// Build Protocol" },
     headline: { de: "So läuft's ab — in Wochen, nicht Monaten", en: "How it works — in weeks, not months" },
+    // Bottom CTA button that opens the project wizard
+    projectCta: { de: "Jetzt Projekt anfragen →", en: "Start your project →" },
     steps: [
       {
         num: "01",
@@ -133,6 +208,9 @@ export const t = {
       },
     ],
   },
+
+  // ─── Portfolio Section ────────────────────────────────────────────────────────
+  // Section tag, headline, subtext, three case study cards.
   portfolio: {
     tag: { de: "// Selected Projects", en: "// Selected Projects" },
     headline: { de: "Ausgewählte Projekte", en: "Selected Projects" },
@@ -194,6 +272,9 @@ export const t = {
       },
     ],
   },
+
+  // ─── Testimonials Section ─────────────────────────────────────────────────────
+  // Section tag, headline, three client quote cards with result metrics.
   testimonials: {
     tag: { de: "// Client Stories", en: "// Client Stories" },
     headline: { de: "Was Kunden sagen", en: "What clients say" },
@@ -227,6 +308,9 @@ export const t = {
       },
     ],
   },
+
+  // ─── CTA Section ─────────────────────────────────────────────────────────────
+  // Mid-page call-to-action block with headline, sub, two action buttons.
   cta: {
     tag: { de: "// Get Started", en: "// Get Started" },
     headline: { de: "Klingt das nach dem was du brauchst?", en: "Does this sound like what you need?" },
@@ -237,6 +321,12 @@ export const t = {
     cta1: { de: "Jetzt unverbindlich beraten lassen", en: "Book a free call" },
     cta2: { de: "hello@hm-ai.de", en: "hello@hm-ai.de" },
   },
+
+  // ─── Lifecycle Section ────────────────────────────────────────────────────────
+  // "6 Probleme jedes KMUs" — interactive stage tabs with problem/solution cards.
+  // stages[]: one entry per tab (0–5). Each has name, problemHeadline, problemDesc,
+  // module, moduleDesc, metric. Visual properties (color, num) live in the component.
+  // mockup: UI chrome strings used inside the animated mockup previews.
   lifecycle: {
     tag: { de: "// The Problem", en: "// The Problem" },
     headline: { de: "Jedes KMU kämpft mit denselben 6 Problemen", en: "Every SMB struggles with the same 6 problems" },
@@ -251,7 +341,103 @@ export const t = {
       { de: "Festpreis", en: "Fixed price" },
       { de: "Keine Mindestlaufzeit", en: "No minimum term" },
     ],
+    // UI chrome inside the content card
+    mockup: {
+      livePreview: { de: "Live-Vorschau", en: "Live preview" },
+      yourModule: { de: "Dein Modul", en: "Your module" },
+      problem: { de: "Problem", en: "Problem" },
+    },
+    // The six stage entries — matches STAGE_META order in LifecycleSection.tsx
+    stages: [
+      {
+        name: { de: "Sichtbarkeit", en: "Visibility" },
+        problemHeadline: { de: "Du wirst nicht gefunden.", en: "You're not being found." },
+        problemDesc: {
+          de: "Konkurrenten ranken oben, deine Website wirkt veraltet — Interessenten springen ab, bevor sie anrufen.",
+          en: "Competitors rank above you, your website looks outdated — prospects bounce before they call.",
+        },
+        module: { de: "High-Converting Website", en: "High-Converting Website" },
+        moduleDesc: {
+          de: "SEO-optimierte Website mit KI-Chatbot, Core Web Vitals <1s und Mobile-first Design. Live in 14 Tagen.",
+          en: "SEO-optimized website with AI chatbot, Core Web Vitals <1s, and mobile-first design. Live in 14 days.",
+        },
+        metric: { de: "Live in 14 Tagen", en: "Live in 14 days" },
+      },
+      {
+        name: { de: "Erstanfrage", en: "First Inquiry" },
+        problemHeadline: { de: "Besucher kommen — und gehen.", en: "Visitors come — and leave." },
+        problemDesc: {
+          de: "Kein Chatbot, kein klares CTA. Interessenten gehen zur Konkurrenz, du erfährst es Tage später.",
+          en: "No chatbot, no clear CTA. Prospects go to competitors, you find out days later.",
+        },
+        module: { de: "KI-Chatbot & Lead-System", en: "AI Chatbot & Lead System" },
+        moduleDesc: {
+          de: "24/7-Chatbot qualifiziert Anfragen, sammelt Kontaktdaten und bucht Termine — vollautomatisch.",
+          en: "24/7 chatbot qualifies inquiries, collects contact data, and books appointments — fully automated.",
+        },
+        metric: { de: "24/7 Erreichbarkeit", en: "24/7 availability" },
+      },
+      {
+        name: { de: "Kommunikation", en: "Communication" },
+        problemHeadline: { de: "Mails stapeln sich, Anfragen gehen unter.", en: "Emails pile up, inquiries get lost." },
+        problemDesc: {
+          de: "Lange Antwortzeiten frustrieren Kunden. Das Team verbringt Stunden mit Copy-Paste statt echter Arbeit.",
+          en: "Long response times frustrate clients. The team spends hours on copy-paste instead of real work.",
+        },
+        module: { de: "Kommunikations-Automatisierung", en: "Communication Automation" },
+        moduleDesc: {
+          de: "KI beantwortet Voranfragen, klassifiziert Kunden und bereitet Gesprächsgrundlagen vor — in Sekunden.",
+          en: "AI answers initial inquiries, classifies clients, and prepares conversation foundations — in seconds.",
+        },
+        metric: { de: "Antwortzeit < 2 Min.", en: "Response time < 2 min." },
+      },
+      {
+        name: { de: "Angebot & Abschluss", en: "Offer & Close" },
+        problemHeadline: { de: "Angebote erstellen dauert Stunden.", en: "Creating quotes takes hours." },
+        problemDesc: {
+          de: "Jedes Mal von vorne: Preise recherchieren, formatieren, versenden. Fehler passieren, Aufträge gehen verloren.",
+          en: "Start from scratch every time: research prices, format, send. Errors happen, orders get lost.",
+        },
+        module: { de: "KI-Angebotsgenerator", en: "AI Quote Generator" },
+        moduleDesc: {
+          de: "Von der Kundenanfrage zum fertigen Angebot in unter 2 Minuten — mit deinen Preisen und deinem Layout.",
+          en: "From customer inquiry to finished quote in under 2 minutes — with your prices and your layout.",
+        },
+        metric: { de: "30 Min → 2 Min", en: "30 min → 2 min" },
+      },
+      {
+        name: { de: "Lieferung", en: "Delivery" },
+        problemHeadline: { de: "Kunden fragen ständig nach dem Status.", en: "Clients constantly ask about status." },
+        problemDesc: {
+          de: "Projekt-Tracking per Excel und E-Mail. Das Team verliert den Überblick, Kunden werden ungeduldig.",
+          en: "Project tracking via Excel and email. The team loses overview, clients get impatient.",
+        },
+        module: { de: "Kunden-Portal & Projekt-App", en: "Client Portal & Project App" },
+        moduleDesc: {
+          de: "Maßgeschneiderte Web-App: Kunden sehen Echtzeit-Status, das Team koordiniert alles an einem Ort.",
+          en: "Custom web app: clients see real-time status, the team coordinates everything in one place.",
+        },
+        metric: { de: "Keine Status-Mails mehr", en: "No more status emails" },
+      },
+      {
+        name: { de: "Wiederkehr", en: "Recurrence" },
+        problemHeadline: { de: "Einmal-Kunden, die nie wiederkommen.", en: "One-time clients who never return." },
+        problemDesc: {
+          de: "Kein Follow-up-System, keine Kundenpflege. Teure Neukundenakquise statt günstiger Wiederholungsaufträge.",
+          en: "No follow-up system, no client retention. Expensive new client acquisition instead of cheap repeat orders.",
+        },
+        module: { de: "Wiederkehr-Automatisierung", en: "Recurrence Automation" },
+        moduleDesc: {
+          de: "Automatische Follow-up-Sequenzen, Kundenpflege und Upsell-Kampagnen — dein stilles Verkaufsteam.",
+          en: "Automatic follow-up sequences, client retention, and upsell campaigns — your silent sales team.",
+        },
+        metric: { de: "Mehr Folgeaufträge", en: "More repeat orders" },
+      },
+    ],
   },
+
+  // ─── Tech Stack Section ───────────────────────────────────────────────────────
+  // Section tag, headline, subtext, six technology category groups.
   techStack: {
     tag: { de: "// The Stack", en: "// The Stack" },
     headline: { de: "Gebaut mit den besten Tools", en: "Built with the best tools" },
@@ -286,6 +472,10 @@ export const t = {
       },
     ],
   },
+
+  // ─── About Section ────────────────────────────────────────────────────────────
+  // Section tag, headline, main sub paragraph, author card texts, quick stats.
+  // subtitle/available/bioCard are used in the portrait card inside the section.
   about: {
     tag: { de: "// About Henry", en: "// About Henry" },
     headline: { de: "Kein Agentur-Overhead — direkt mit dem Entwickler", en: "No agency overhead — directly with the developer" },
@@ -293,6 +483,20 @@ export const t = {
       de: "Ich bin Henry. Ich baue Websites und KI-Tools für KMUs — ohne Zwischenhändler, ohne versteckte Kosten. Du redest direkt mit mir, von der ersten Idee bis zum Go-live.",
       en: "I'm Henry. I build websites and AI tools for SMBs — no middlemen, no hidden costs. You talk directly to me, from first idea to go-live.",
     },
+    // Author card inside the section
+    subtitle: { de: "Entwickler · KI-Experte · Unternehmer", en: "Developer · AI Expert · Entrepreneur" },
+    available: { de: "Verfügbar für neue Projekte", en: "Available for new projects" },
+    bioCard: {
+      de: "Ich kombiniere technische Expertise mit unternehmerischem Denken — und baue Lösungen, die wirklich funktionieren, nicht nur gut aussehen.",
+      en: "I combine technical expertise with entrepreneurial thinking — and build solutions that actually work, not just look good.",
+    },
+    // Quick stat grid (4 boxes) — val is not translated, label is
+    stats: [
+      { val: "10+",   label: { de: "Projekte",              en: "Projects"             } },
+      { val: "14 Tage", label: { de: "Ø Launch-Zeit",       en: "Avg. launch time"     } },
+      { val: "100%",  label: { de: "Direkte Kommunikation", en: "Direct communication" } },
+      { val: "24h",   label: { de: "Antwortzeit",           en: "Response time"        } },
+    ],
     values: [
       {
         title: { de: "Du redest direkt mit mir", en: "You talk directly to me" },
@@ -318,6 +522,10 @@ export const t = {
     ],
     stack: ["Next.js", "React", "TypeScript", "Claude API", "Supabase", "n8n", "Vercel", "Cloudflare"],
   },
+
+  // ─── Contact Section ──────────────────────────────────────────────────────────
+  // Section tag, headline, subtext, form field labels/placeholders, success message.
+  // form.sending is shown while the API call is in-flight.
   contact: {
     tag: { de: "// Contact", en: "// Contact" },
     headline: { de: "Lass uns reden", en: "Let's talk" },
@@ -335,6 +543,8 @@ export const t = {
         en: "What is your biggest challenge right now? What do you want to achieve?",
       },
       submit: { de: "Nachricht senden", en: "Send message" },
+      // Shown while the POST /api/contact request is in-flight
+      sending: { de: "Wird gesendet...", en: "Sending..." },
       success: { de: "Danke! Ich melde mich bald.", en: "Thanks! I'll be in touch soon." },
     },
     info: {
@@ -343,6 +553,8 @@ export const t = {
       response: { de: "Antwort innerhalb 24h", en: "Response within 24h" },
     },
   },
+
+  // ─── Footer ───────────────────────────────────────────────────────────────────
   footer: {
     copy: { de: "Alle Rechte vorbehalten.", en: "All rights reserved." },
     tagline: {
@@ -350,6 +562,9 @@ export const t = {
       en: "Websites & AI for the mid-market.",
     },
   },
+
+  // ─── FAQ Section ─────────────────────────────────────────────────────────────
+  // Section tag, headline, subtext, accordion Q&A items.
   faq: {
     tag: { de: "// FAQ", en: "// FAQ" },
     headline: { de: "Häufige Fragen", en: "Frequently Asked Questions" },
@@ -389,6 +604,8 @@ export const t = {
       },
     ],
   },
+
+  // ─── Newsletter Section ───────────────────────────────────────────────────────
   newsletter: {
     tag: { de: "// Newsletter", en: "// Newsletter" },
     headline: { de: "KI für dein Business — jede Woche konkret", en: "AI for your business — every week" },
@@ -397,10 +614,32 @@ export const t = {
     cta: { de: "Anmelden →", en: "Subscribe →" },
     note: { de: "DSGVO-konform · Jederzeit abmeldbar", en: "GDPR-compliant · Unsubscribe anytime" },
   },
+
+  // ─── Readiness Check Section ──────────────────────────────────────────────────
+  // Interactive 5-question quiz. questions/results come from the main data below.
+  // features: the three bullet points shown on the left side panel.
+  // intro*: the "start" card before the user begins the quiz.
+  // restart / tryAgain: reset buttons shown during and after the quiz.
   readinessCheck: {
     tag: { de: "// Kostenloser Check", en: "// Free Check" },
     headline: { de: "Wie digital-ready ist dein Unternehmen?", en: "How digital-ready is your business?" },
     sub: { de: "5 Fragen. 2 Minuten. Sofortiges Ergebnis.", en: "5 questions. 2 minutes. Instant result." },
+    // Three benefit bullets on the left panel
+    features: [
+      { de: "Kostenlos & ohne Anmeldung",      en: "Free & no signup needed"         },
+      { de: "Sofortiges, persönliches Ergebnis", en: "Instant, personalized result"  },
+      { de: "Konkrete Handlungsempfehlungen",  en: "Concrete recommendations"        },
+    ],
+    // Intro card (before quiz starts)
+    introLabel: { de: "5 FRAGEN · 2 MINUTEN", en: "5 QUESTIONS · 2 MINUTES" },
+    introTitle: { de: "Bereit loszulegen?", en: "Ready to start?" },
+    introDesc: {
+      de: "Beantworte 5 kurze Fragen und finde heraus wie gut dein Unternehmen für die KI-Ära aufgestellt ist.",
+      en: "Answer 5 quick questions and find out how well your business is positioned for the AI era.",
+    },
+    startBtn:  { de: "Check starten",    en: "Start check"   },
+    restart:   { de: "Neu starten",      en: "Restart"       },
+    tryAgain:  { de: "Nochmal versuchen", en: "Try again"    },
     questions: [
       {
         q: { de: "Wie beantwortest du Kundenanfragen heute?", en: "How do you handle customer inquiries today?" },
@@ -468,8 +707,115 @@ export const t = {
     ],
     ctaText: { de: "Kostenlos beraten lassen →", en: "Book a free call →" },
   },
+
+  // ─── Scroll Reveal Text ───────────────────────────────────────────────────────
+  // Large word-by-word scroll animation between hero and services.
+  // Words wrapped in **double asterisks** are highlighted in primary color.
+  scrollReveal: {
+    text: {
+      de: "Ich baue nicht nur schöne Websites. Ich baue **Systeme** — die neue **Kunden** anziehen, Anfragen **automatisch** bearbeiten und deinen **Umsatz** steigern. Während du schläfst.",
+      en: "I don't just build pretty websites. I build **systems** — that attract new **clients**, handle inquiries **automatically**, and grow your **revenue**. While you sleep.",
+    },
+  },
+
+  // ─── Project Wizard ───────────────────────────────────────────────────────────
+  // Multi-step modal wizard (4 choice steps + contact form + success screen).
+  // steps[]: one entry per choice step (0–3). choices[] order matches the icon order
+  //          defined in STEPS inside ProjectWizard.tsx.
+  // answerLabels: short summary labels shown in the answer breadcrumb and success screen.
+  // ui: all UI chrome strings (buttons, placeholders, error messages, etc.).
+  wizard: {
+    steps: [
+      {
+        question: { de: "Was suchen Sie?", en: "What are you looking for?" },
+        sub: { de: "Wählen Sie, was am besten zu Ihrem Vorhaben passt.", en: "Choose what best fits your needs." },
+        choices: [
+          { de: "Neue Website, die Kunden bringt",     en: "A website that brings customers"   },
+          { de: "KI-Chatbot & Automatisierung",        en: "AI chatbot & automation"           },
+          { de: "Eigene Software / App",               en: "Custom software / app"             },
+          { de: "Website + KI – das Komplettpaket",    en: "Website + AI – the full package"   },
+        ],
+      },
+      {
+        question: { de: "In welcher Branche sind Sie tätig?", en: "What industry are you in?" },
+        choices: [
+          { de: "Handwerk & lokale Dienste",            en: "Trades & local services"           },
+          { de: "Beratung, Recht & Steuer",             en: "Consulting, legal & tax"           },
+          { de: "Gesundheit, Handel & Gastronomie",     en: "Health, retail & hospitality"      },
+          { de: "Immobilien, Bau & andere",             en: "Real estate, construction & other" },
+        ],
+      },
+      {
+        question: { de: "Was ist Ihr größtes Problem?", en: "What is your biggest problem?" },
+        choices: [
+          { de: "Zu wenig Anfragen & Sichtbarkeit",              en: "Too few inquiries & visibility"   },
+          { de: "Meine Website ist veraltet / bringt nichts",    en: "My website is outdated / ineffective" },
+          { de: "Zu viel manuelle Arbeit im Alltag",             en: "Too much repetitive manual work"  },
+          { de: "Ich habe bereits eine konkrete Idee",           en: "I already have a concrete idea"   },
+        ],
+      },
+      {
+        question: { de: "Wie groß ist Ihr Unternehmen?", en: "How large is your company?" },
+        sub: { de: "Damit ich das passende Angebot für Sie vorbereiten kann.", en: "So I can prepare the right proposal for you." },
+        choices: [
+          { de: "Nur ich (Freelancer / Gründer)", en: "Just me (freelancer / founder)" },
+          { de: "2–10 Mitarbeiter",               en: "2–10 employees"                },
+          { de: "11–50 Mitarbeiter",              en: "11–50 employees"               },
+          { de: "50+ Mitarbeiter",                en: "50+ employees"                 },
+        ],
+      },
+    ],
+    // Short labels for the answer summary breadcrumb — keyed by choice id
+    answerLabels: {
+      website:           { de: "Neue Website",            en: "New website"              },
+      ai:                { de: "KI & Automatisierung",    en: "AI & automation"          },
+      software:          { de: "Eigene Software",         en: "Custom software"          },
+      bundle:            { de: "Website + KI Paket",      en: "Website + AI bundle"      },
+      trades:            { de: "Handwerk & Dienste",      en: "Trades & services"        },
+      consulting:        { de: "Beratung, Recht & Steuer", en: "Consulting, legal & tax" },
+      "health-retail":   { de: "Gesundheit / Handel",     en: "Health / retail"          },
+      "realestate-other":{ de: "Immobilien & andere",     en: "Real estate & other"      },
+      "no-visibility":   { de: "Zu wenig Sichtbarkeit",   en: "Too little visibility"    },
+      "weak-website":    { de: "Schwache Website",        en: "Weak website"             },
+      "manual-work":     { de: "Zu viel Handarbeit",      en: "Too much manual work"     },
+      "clear-project":   { de: "Konkrete Idee vorhanden", en: "Concrete idea"            },
+      solo:              { de: "Solo / Freelancer",        en: "Solo / freelancer"       },
+      small:             { de: "2–10 Mitarbeiter",         en: "2–10 employees"          },
+      medium:            { de: "11–50 Mitarbeiter",        en: "11–50 employees"         },
+      large:             { de: "50+ Mitarbeiter",          en: "50+ employees"           },
+    },
+    // UI chrome: buttons, placeholders, validation messages, success screen
+    ui: {
+      back:               { de: "Zurück",          en: "Back"          },
+      almostDone:         { de: "Fast fertig",     en: "Almost done"   },
+      contactHeadline:    { de: "Fast fertig — wie erreiche ich Sie?", en: "Almost done — how can I reach out to you?" },
+      contactSub:         {
+        de: "Ich melde mich innerhalb von 24 Stunden mit konkreten nächsten Schritten.",
+        en: "I'll get back to you within 24 hours with concrete next steps.",
+      },
+      namePlaceholder:    { de: "Ihr Name *",              en: "Your name *"                   },
+      emailPlaceholder:   { de: "E-Mail *",                en: "Email *"                       },
+      companyPlaceholder: { de: "Unternehmen (optional)",  en: "Company (optional)"            },
+      messagePlaceholder: {
+        de: "Was ist Ihre größte Herausforderung gerade? (optional)",
+        en: "What's your biggest challenge right now? (optional)",
+      },
+      submitBtn:    { de: "Jetzt kostenloses Gespräch anfragen", en: "Request free consultation"         },
+      noSpam:       { de: "Kein Spam. Keine Verpflichtung. Antwort innerhalb 24h.", en: "No spam. No commitment. Response within 24h." },
+      successTitle: { de: "Danke, ",           en: "Thanks, "          },
+      successMsg:   {
+        de: "Ihre Anfrage ist eingegangen. Ich melde mich innerhalb von 24 Stunden mit einem konkreten nächsten Schritt.",
+        en: "Your inquiry has been received. I'll get back to you within 24 hours with a concrete next step.",
+      },
+      yourAnswers:       { de: "Ihre Angaben",              en: "Your answers"              },
+      close:             { de: "Schließen",                 en: "Close"                     },
+      validationName:    { de: "Bitte Name eingeben",       en: "Please enter your name"    },
+      validationEmail:   { de: "Bitte gültige E-Mail eingeben", en: "Please enter a valid email" },
+    },
+  },
 };
 
+// ─── Helper ───────────────────────────────────────────────────────────────────
 export function getText(obj: { de: string; en: string }, lang: Lang): string {
   return obj[lang];
 }

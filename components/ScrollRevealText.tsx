@@ -2,16 +2,11 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { Lang } from "@/lib/translations";
+import { t, Lang } from "@/lib/translations";
 
 interface ScrollRevealTextProps {
   lang: Lang;
 }
-
-const CONTENT = {
-  de: "Ich baue nicht nur schöne Websites. Ich baue **Systeme** — die neue **Kunden** anziehen, Anfragen **automatisch** bearbeiten und deinen **Umsatz** steigern. Während du schläfst.",
-  en: "I don't just build pretty websites. I build **systems** — that attract new **clients**, handle inquiries **automatically**, and grow your **revenue**. While you sleep.",
-};
 
 type WordToken = { text: string; highlight: boolean };
 
@@ -54,7 +49,7 @@ export default function ScrollRevealText({ lang }: ScrollRevealTextProps) {
     offset: ["start 0.6", "end 0.7"],
   });
 
-  const words = parseWords(CONTENT[lang]);
+  const words = parseWords(t.scrollReveal.text[lang]);
 
   const lineScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
