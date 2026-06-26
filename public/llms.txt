@@ -6,16 +6,16 @@ Meine Arbeit richtet sich an Handwerker, Steuerberater, Logistiker, Gastronomen 
 
 ## Kontakt & Standort
 
-- E-Mail: hello@hm-ai.de
+- E-Mail: mrs.hnry@gmail.com
 - Standort: Deutschland
 - Antwortzeit: innerhalb von 24 Stunden
-- Website: https://hm-ai.de
+- Website: https://hm-labs.de
 
 ## Leistungen
 
-- [Websites](https://hm-ai.de/#services): High-Converting Websites mit KI-Chatbot, Mobile-first Design, SEO-Optimierung und Core Web Vitals. Fertig in 14 Tagen. Kostet zwischen 2.500 und 8.000 € (Festpreis).
-- [KI-Integration](https://hm-ai.de/#services): Einbindung von KI in bestehende Prozesse — Kundenkommunikation, Angebotserstellung, Terminbuchung, CRM-Integration. Durchschnittliche Ersparnis: 3 Stunden pro Tag.
-- [Software & SaaS](https://hm-ai.de/#services): Maßgeschneiderte Web-Apps und interne Tools, die repetitive Arbeit automatisieren und mit dem Unternehmen skalieren.
+- [Websites](https://hm-labs.de/#services): High-Converting Websites mit KI-Chatbot, Mobile-first Design, SEO-Optimierung und Core Web Vitals. Fertig in 14 Tagen. Kostet zwischen 2.500 und 8.000 € (Festpreis).
+- [KI-Integration](https://hm-labs.de/#services): Einbindung von KI in bestehende Prozesse — Kundenkommunikation, Angebotserstellung, Terminbuchung, CRM-Integration. Durchschnittliche Ersparnis: 3 Stunden pro Tag.
+- [Software & SaaS](https://hm-labs.de/#services): Maßgeschneiderte Web-Apps und interne Tools, die repetitive Arbeit automatisieren und mit dem Unternehmen skalieren.
 
 ## Prozess
 
@@ -62,3 +62,8 @@ Meine Arbeit richtet sich an Handwerker, Steuerberater, Logistiker, Gastronomen 
 ## Über Henry Mirus
 
 Henry Mirus ist Entwickler und KI-Spezialist mit Sitz in Deutschland. Er arbeitet direkt mit Inhabern kleiner und mittelständischer Unternehmen — ohne Projektmanager dazwischen, ohne Templates, ohne versteckte Kosten. Jede Lösung wird von Grund auf für das jeweilige Unternehmen entwickelt.
+
+## Rechtliches
+
+- Impressum: https://hm-labs.de/impressum
+- Datenschutzerklärung: https://hm-labs.de/datenschutz

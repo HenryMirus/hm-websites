@@ -254,14 +254,16 @@ export default function ServicesSection({ lang }: ServicesSectionProps) {
           </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-bg/30 via-transparent to-bg/30" />
-          <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-8">
-            {t.services.imageLabels.map((item) => (
-              <div key={item.de} className="flex items-center gap-2 bg-bg/70 backdrop-blur-md border border-border rounded-full px-4 py-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="font-mono text-xs text-text-dim">{getText(item, lang)}</span>
-              </div>
-            ))}
-          </div>
+          {t.services.imageLabels.map((item, i) => (
+            <div
+              key={item.de}
+              className="absolute bottom-6 -translate-x-1/2 flex items-center gap-2 bg-bg/70 backdrop-blur-md border border-border rounded-full px-4 py-1.5"
+              style={{ left: `${(i * 2 + 1) / (t.services.imageLabels.length * 2) * 100}%` }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              <span className="font-mono text-xs text-text-dim">{getText(item, lang)}</span>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

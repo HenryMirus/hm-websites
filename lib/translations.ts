@@ -548,7 +548,7 @@ export const t = {
       success: { de: "Danke! Ich melde mich bald.", en: "Thanks! I'll be in touch soon." },
     },
     info: {
-      email: "hello@hm-ai.de",
+      email: "mrs.hnry@gmail.com",
       location: { de: "Deutschland", en: "Germany" },
       response: { de: "Antwort innerhalb 24h", en: "Response within 24h" },
     },
@@ -561,6 +561,8 @@ export const t = {
       de: "Websites & KI für den Mittelstand.",
       en: "Websites & AI for the mid-market.",
     },
+    impressum: { de: "Impressum", en: "Imprint" },
+    datenschutz: { de: "Datenschutz", en: "Privacy Policy" },
   },
 
   // ─── FAQ Section ─────────────────────────────────────────────────────────────

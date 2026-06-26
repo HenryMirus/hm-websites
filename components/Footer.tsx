@@ -79,9 +79,17 @@ export default function Footer({ lang }: FooterProps) {
           <span className="font-mono text-xs text-text-muted">
             © {year} HM Labs · {getText(t.footer.copy, lang)}
           </span>
-          <span className="font-mono text-xs text-text-muted/50">
-            Built with Next.js · Powered by AI
-          </span>
+          <div className="flex items-center gap-4">
+            <a href="/impressum" className="font-mono text-xs text-text-muted/60 hover:text-text-muted transition-colors">
+              {getText(t.footer.impressum, lang)}
+            </a>
+            <a href="/datenschutz" className="font-mono text-xs text-text-muted/60 hover:text-text-muted transition-colors">
+              {getText(t.footer.datenschutz, lang)}
+            </a>
+            <span className="font-mono text-xs text-text-muted/50">
+              Built with Next.js · Powered by AI
+            </span>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CookieBanner from "@/components/CookieBanner";
 
-const SITE_URL = "https://hm-ai.de";
+const SITE_URL = "https://hm-labs.de";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -74,7 +75,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#business`,
       name: "HM Labs",
       url: SITE_URL,
-      email: "hello@hm-ai.de",
+      email: "mrs.hnry@gmail.com",
       description:
         "KI-Integration, Websites und Softwareentwicklung für KMU in Deutschland. Festpreis, DSGVO-konform, fertig in 14 Tagen.",
       areaServed: {
@@ -112,7 +113,7 @@ const jsonLd = {
       jobTitle: "KI-Entwickler & Unternehmer",
       worksFor: { "@id": `${SITE_URL}/#business` },
       url: SITE_URL,
-      email: "hello@hm-ai.de",
+      email: "mrs.hnry@gmail.com",
       knowsAbout: [
         "Künstliche Intelligenz",
         "Webentwicklung",
@@ -216,7 +217,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }
