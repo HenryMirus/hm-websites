@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { t, getText, Lang } from "@/lib/translations";
 import TypewriterText from "./TypewriterText";
@@ -312,14 +312,17 @@ function StageTab({
   active,
   lang,
   onClick,
+  tabRef,
 }: {
   stage: (typeof STAGES)[0];
   active: boolean;
   lang: Lang;
   onClick: () => void;
+  tabRef?: (el: HTMLButtonElement | null) => void;
 }) {
   return (
     <button
+      ref={tabRef}
       onClick={onClick}
       className="flex-shrink-0 text-left rounded-xl border transition-all duration-200 p-4 w-48 relative overflow-hidden"
       style={{
@@ -369,18 +372,43 @@ function StageTab({
 
 export default function LifecycleSection({ lang }: LifecycleSectionProps) {
   const [active, setActive] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const tabEls = useRef<(HTMLButtonElement | null)[]>([]);
+
   const stage = STAGES[active];
   const MockupComponent = MOCKUPS[active];
 
+  // Start cycling only once the section enters the viewport
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setHasStarted(true); },
+      { threshold: 0.25 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
     const timer = setInterval(() => {
       setActive((prev) => (prev + 1) % STAGES.length);
     }, 15000);
     return () => clearInterval(timer);
-  }, []);
+  }, [hasStarted]);
+
+  // Scroll active tab into horizontal center when it changes
+  useEffect(() => {
+    const container = tabsRef.current;
+    const tab = tabEls.current[active];
+    if (!container || !tab) return;
+    const scrollTo = tab.offsetLeft - container.offsetWidth / 2 + tab.offsetWidth / 2;
+    container.scrollTo({ left: scrollTo, behavior: "smooth" });
+  }, [active]);
 
   return (
-    <section id="lifecycle" className="py-28 relative overflow-hidden">
+    <section ref={sectionRef} id="lifecycle" className="py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/[0.015] to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
@@ -407,7 +435,8 @@ export default function LifecycleSection({ lang }: LifecycleSectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="flex gap-3 overflow-x-auto pb-2 mb-6"
+          ref={tabsRef}
+          className="flex gap-3 overflow-x-auto pb-2"
           style={{ scrollbarWidth: "none" }}
         >
           {STAGES.map((s, i) => (
@@ -417,9 +446,32 @@ export default function LifecycleSection({ lang }: LifecycleSectionProps) {
               active={active === i}
               lang={lang}
               onClick={() => setActive(i)}
+              tabRef={(el) => { tabEls.current[i] = el; }}
             />
           ))}
         </motion.div>
+
+        {/* Horizontal dot pagination */}
+        <div className="flex items-center justify-center gap-2.5 mt-4 mb-6">
+          {STAGES.map((s, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              aria-label={`Stage ${i + 1}`}
+              className="flex items-center justify-center p-1"
+            >
+              <motion.span
+                animate={{
+                  width: active === i ? 8 : 5,
+                  height: active === i ? 8 : 5,
+                  backgroundColor: active === i ? "#4F7FFF" : "#1E1E2E",
+                }}
+                transition={{ duration: 0.2 }}
+                className="rounded-full border border-[#2A2A3E] block"
+              />
+            </button>
+          ))}
+        </div>
 
         {/* Content Card */}
         <AnimatePresence mode="wait">
