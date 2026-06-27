@@ -1,5 +1,11 @@
 import { redirect } from "next/navigation";
+import { getUserRole } from "@/lib/auth/getRole";
 
-export default function PortalRoot() {
-  redirect("/portal/leads");
+export default async function PortalRoot() {
+  const role = await getUserRole();
+  if (role === "admin") {
+    redirect("/portal/leads");
+  } else {
+    redirect("/portal/projects");
+  }
 }

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { getUserRole } from "@/lib/auth/getRole";
 import PortalShell from "../_components/PortalShell";
 import Link from "next/link";
 
@@ -15,7 +16,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
 };
 
 export default async function ProjectsPage() {
-  const supabase = await createClient();
+  const [supabase, role] = await Promise.all([createClient(), getUserRole()]);
 
   const { data: projects } = await supabase
     .from("projects")
@@ -26,10 +27,12 @@ export default async function ProjectsPage() {
   const done = projects?.filter((p) => ["live", "maintenance", "cancelled"].includes(p.status)) ?? [];
 
   return (
-    <PortalShell>
+    <PortalShell role={role}>
       <div className="p-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="font-display font-bold text-2xl text-text-primary">Projekte</h1>
+          <h1 className="font-display font-bold text-2xl text-text-primary">
+            {role === "admin" ? "Projekte" : "Meine Projekte"}
+          </h1>
           <span className="font-mono text-xs text-text-muted">{projects?.length ?? 0} gesamt</span>
         </div>
 
@@ -85,15 +88,12 @@ function ProjectCard({ project }: { project: any }) {
             </span>
           </div>
           {client && (
-            <p className="text-text-muted text-sm">
-              {client.company_name || client.name}
-            </p>
+            <p className="text-text-muted text-sm">{client.company_name || client.name}</p>
           )}
           {project.description && (
             <p className="text-text-dim text-sm mt-1.5 line-clamp-1">{project.description}</p>
           )}
         </div>
-
         <div className="text-right shrink-0">
           {project.budget && (
             <p className="font-mono text-sm text-text-primary">
@@ -107,8 +107,6 @@ function ProjectCard({ project }: { project: any }) {
           )}
         </div>
       </div>
-
-      {/* Tech stack */}
       {project.tech_stack && Object.keys(project.tech_stack).length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-3">
           {(Array.isArray(project.tech_stack) ? project.tech_stack : Object.values(project.tech_stack)).slice(0, 5).map((t: any) => (

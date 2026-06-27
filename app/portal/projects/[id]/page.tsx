@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { getUserRole } from "@/lib/auth/getRole";
 import PortalShell from "../../_components/PortalShell";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -16,15 +17,15 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
 };
 
 const MS_STATUS: Record<string, { label: string; icon: string }> = {
-  pending:     { label: "Offen",       icon: "○" },
-  in_progress: { label: "In Arbeit",   icon: "◑" },
-  completed:   { label: "Fertig",      icon: "●" },
-  blocked:     { label: "Blockiert",   icon: "✕" },
+  pending:     { label: "Offen",     icon: "○" },
+  in_progress: { label: "In Arbeit", icon: "◑" },
+  completed:   { label: "Fertig",    icon: "●" },
+  blocked:     { label: "Blockiert", icon: "✕" },
 };
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const supabase = await createClient();
+  const [supabase, role] = await Promise.all([createClient(), getUserRole()]);
 
   const [{ data: project }, { data: milestones }, { data: decisions }, { data: feedback }] =
     await Promise.all([
@@ -40,9 +41,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   const client = project.clients;
 
   return (
-    <PortalShell>
+    <PortalShell role={role}>
       <div className="p-8 max-w-4xl">
-        {/* Back */}
         <Link href="/portal/projects" className="inline-flex items-center gap-1.5 text-text-muted hover:text-text-dim text-sm mb-6 transition-colors">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
@@ -50,22 +50,17 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           Alle Projekte
         </Link>
 
-        {/* Header */}
         <div className="flex items-start justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <h1 className="font-display font-bold text-3xl text-text-primary">{project.title}</h1>
-              <span className={`font-mono text-xs px-2.5 py-1 rounded-lg border ${cfg.color}`}>
-                {cfg.label}
-              </span>
+              <span className={`font-mono text-xs px-2.5 py-1 rounded-lg border ${cfg.color}`}>{cfg.label}</span>
             </div>
             {client && (
               <p className="text-text-dim">
                 {client.company_name || client.name}
                 {client.email && (
-                  <a href={`mailto:${client.email}`} className="ml-2 text-primary hover:underline">
-                    {client.email}
-                  </a>
+                  <a href={`mailto:${client.email}`} className="ml-2 text-primary hover:underline">{client.email}</a>
                 )}
               </p>
             )}
@@ -80,7 +75,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           )}
         </div>
 
-        {/* Meta row */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
           {[
             { label: "Typ", value: project.type },
@@ -95,7 +89,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           ))}
         </div>
 
-        {/* Links */}
         {(project.vercel_url || project.github_url || project.figma_url) && (
           <div className="flex flex-wrap gap-2 mb-8">
             {project.vercel_url && <ExternalLink href={project.vercel_url} label="Vercel" />}
@@ -105,7 +98,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         )}
 
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Milestones */}
           <div className="bg-surface border border-border rounded-2xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-display font-semibold text-text-primary">Meilensteine</h2>
@@ -142,7 +134,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             )}
           </div>
 
-          {/* Decisions */}
           <div className="bg-surface border border-border rounded-2xl p-6">
             <h2 className="font-display font-semibold text-text-primary mb-4">Entscheidungen</h2>
             {decisions?.length ? (
@@ -150,15 +141,11 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 {decisions.map((d) => (
                   <div key={d.id} className="py-2 border-b border-border/50 last:border-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-mono text-[10px] text-text-muted bg-bg border border-border rounded px-1.5 py-0.5">
-                        {d.category}
-                      </span>
+                      <span className="font-mono text-[10px] text-text-muted bg-bg border border-border rounded px-1.5 py-0.5">{d.category}</span>
                       <p className="text-text-primary text-sm font-medium">{d.title}</p>
                     </div>
                     <p className="text-text-dim text-sm">{d.decision}</p>
-                    {d.rationale && (
-                      <p className="text-text-muted text-xs mt-1 italic">{d.rationale}</p>
-                    )}
+                    {d.rationale && <p className="text-text-muted text-xs mt-1 italic">{d.rationale}</p>}
                   </div>
                 ))}
               </div>
@@ -167,7 +154,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             )}
           </div>
 
-          {/* Feedback */}
           {feedback && feedback.length > 0 && (
             <div className="bg-surface border border-border rounded-2xl p-6 lg:col-span-2">
               <h2 className="font-display font-semibold text-text-primary mb-4">Feedback-Runden</h2>
@@ -193,7 +179,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             </div>
           )}
 
-          {/* Notes */}
           {project.notes && (
             <div className="bg-surface border border-border rounded-2xl p-6 lg:col-span-2">
               <h2 className="font-display font-semibold text-text-primary mb-3">Notizen</h2>
@@ -208,12 +193,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
 function ExternalLink({ href, label }: { href: string; label: string }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-1.5 font-mono text-xs text-text-dim hover:text-primary border border-border hover:border-primary/30 rounded-lg px-3 py-1.5 transition-colors"
-    >
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      className="inline-flex items-center gap-1.5 font-mono text-xs text-text-dim hover:text-primary border border-border hover:border-primary/30 rounded-lg px-3 py-1.5 transition-colors">
       {label}
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
         <path d="M4 2H2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V6M6 1h3m0 0v3M9 1 5 5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
