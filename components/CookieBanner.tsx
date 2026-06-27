@@ -2,41 +2,29 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
-type ConsentState = {
-  necessary: boolean;
-  analytics: boolean;
-  marketing: boolean;
-  decided: boolean;
-};
-
-const STORAGE_KEY = "hm-cookie-consent";
+import { useConsent } from "@/lib/consent";
 
 export default function CookieBanner() {
-  const [consent, setConsent] = useState<ConsentState | null>(null);
+  const { consent, saveConsent } = useConsent();
   const [showBanner, setShowBanner] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [localAnalytics, setLocalAnalytics] = useState(false);
   const [localMarketing, setLocalMarketing] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed: ConsentState = JSON.parse(stored);
-        setConsent(parsed);
-        setLocalAnalytics(parsed.analytics);
-        setLocalMarketing(parsed.marketing);
-      } catch {
-        setConsent({ necessary: true, analytics: false, marketing: false, decided: false });
-        setShowBanner(true);
-      }
-    } else {
-      setConsent({ necessary: true, analytics: false, marketing: false, decided: false });
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (!consent.decided) {
       setShowBanner(true);
     }
-  }, []);
+    setLocalAnalytics(consent.analytics);
+    setLocalMarketing(consent.marketing);
+  }, [hydrated, consent.decided, consent.analytics, consent.marketing]);
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -50,23 +38,19 @@ export default function CookieBanner() {
   }, []);
 
   const save = (a: boolean, m: boolean) => {
-    const updated: ConsentState = { necessary: true, analytics: a, marketing: m, decided: true };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    setConsent(updated);
-    setLocalAnalytics(a);
-    setLocalMarketing(m);
+    saveConsent(a, m);
     setShowBanner(false);
     setShowPopup(false);
   };
 
   const openSettings = () => {
-    setLocalAnalytics(consent?.analytics ?? false);
-    setLocalMarketing(consent?.marketing ?? false);
+    setLocalAnalytics(consent.analytics);
+    setLocalMarketing(consent.marketing);
     setShowBanner(false);
     setShowPopup(true);
   };
 
-  if (consent === null) return null;
+  if (!hydrated) return null;
 
   const iconVisible = !showBanner && !footerVisible;
 
@@ -203,9 +187,9 @@ export default function CookieBanner() {
           onClick={() => setShowPopup((p) => !p)}
           title="Cookie-Einstellungen"
           aria-label="Cookie-Einstellungen öffnen"
-          className="w-10 h-10 rounded-full bg-[#111118] border border-[#1E1E2E] flex items-center justify-center shadow-lg hover:border-[#4F7FFF] hover:scale-110 transition-all group"
+          className="w-11 h-11 rounded-full bg-[#111118] border border-[#4F7FFF]/40 flex items-center justify-center shadow-lg shadow-[#4F7FFF]/10 hover:border-[#4F7FFF] hover:scale-110 hover:shadow-[#4F7FFF]/25 transition-all group"
         >
-          <CookieIcon className="w-[18px] h-[18px] text-[#5A5A7A] group-hover:text-[#4F7FFF] transition-colors" />
+          <CookieIcon className="w-5 h-5 text-[#4F7FFF]/70 group-hover:text-[#4F7FFF] transition-colors" />
         </button>
       </div>
     </>

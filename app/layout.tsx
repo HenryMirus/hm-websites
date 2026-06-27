@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
+import TrackingScripts from "@/components/TrackingScripts";
+import { ConsentProvider } from "@/lib/consent";
 
 const SITE_URL = "https://hm-labs.de";
 
@@ -218,8 +220,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        {children}
-        <CookieBanner />
+        <ConsentProvider>
+          {children}
+          <CookieBanner />
+          <TrackingScripts />
+        </ConsentProvider>
       </body>
     </html>
   );

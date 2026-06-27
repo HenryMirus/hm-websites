@@ -1,13 +1,21 @@
-1. KI-Chatbot
-    - Was ist möglich
-    - 
+# HM Labs — Todo
 
-2. Cookies technisch einbinden
-    - Für Seitennavigation etc.
-    - Zur Analyse
-    - Für Marketing
-    - Einstellungen-Button keine Funktion
+## 1. KI-Chatbot
+- Was ist möglich / Konzept ausarbeiten
 
-3. Probleme Section
-    - Da die einzelnen Probleme alle 15s durchswitchen sieht man auf dem Handy irgendwann nicht mehr bei welchem man gerade ist. Integriere einen autoscroll, der immer das aktuelle Problem in die Mitte des Fensters "scrollt" bzw. ins sichtbare Feld "scrollt". Füge außerdem eine horizontale Scrollbar ein (bestehend aus 6 Punkten, sonst wie die am rechten Rand der Website), sodass man sieht, wo man sich gerade befindet und dass man scrollen kann.
-    - Das durchlaufen der services soll erst beginnen, wenn man bis zur Probleme-Section gescrollt hat.
+## 2. ✅ Cookies technisch einbinden
+- ✅ Notwendige Cookies (Supabase Auth) — bereits aktiv
+- ✅ Analyse-Cookies (Google Analytics 4) — vorbereitet
+- ✅ Marketing-Cookies (Meta, Google Ads, LinkedIn) — vorbereitet
+- ✅ Einstellungen-Button funktioniert korrekt
+
+## 3. Tracking-IDs eintragen & Scripts testen
+Sobald die Accounts erstellt sind, IDs in `.env.local` eintragen:
+
+- **Google Analytics 4** → analytics.google.com → Property erstellen → Measurement ID (`G-XXXXXXX`) → `NEXT_PUBLIC_GA4_ID=`
+  Danach: Admin → Datenverarbeitungsbedingungen → AV-Vertrag akzeptieren (2 Min, 1 Klick)
+- **Meta Pixel** → business.facebook.com → Events Manager → Pixel erstellen → `NEXT_PUBLIC_META_PIXEL_ID=`
+- **Google Ads** → ads.google.com → Conversion-Tracking → Tag-ID (`AW-XXXXXXX`) → `NEXT_PUBLIC_GOOGLE_ADS_ID=`
+- **LinkedIn** → linkedin.com/campaignmanager → Account Assets → Insight Tag → `NEXT_PUBLIC_LINKEDIN_PARTNER_ID=`
+
+Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-analytics.com`, `facebook.net`, `snap.licdn.com` prüfen.

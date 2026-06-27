@@ -101,16 +101,16 @@ export default function DatenschutzPage() {
               <CookieCategory
                 name="Analyse-Cookies"
                 basis="Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)"
-                description="Diese Cookies helfen uns zu verstehen, wie Besucher mit der Website interagieren. Die erhobenen Daten werden anonymisiert verarbeitet und dienen der Verbesserung des Angebots."
-                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten"]}
+                description="Diese Cookies helfen uns zu verstehen, wie Besucher mit der Website interagieren. Wir nutzen Google Analytics 4 (Google Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Irland). Die IP-Adresse wird anonymisiert (IP-Anonymisierung aktiviert). Mit Google wurde ein Auftragsverarbeitungsvertrag (AV-Vertrag) gem. Art. 28 DSGVO abgeschlossen."
+                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten", "_ga", "_ga_XXXXXXX"]}
                 retention="Bis zu 2 Jahre"
                 optional
               />
               <CookieCategory
                 name="Marketing-Cookies"
                 basis="Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)"
-                description="Diese Cookies werden verwendet, um Besuchern relevante Werbung zu zeigen. Sie können zum Tracking von Nutzern über verschiedene Websites hinweg eingesetzt werden."
-                examples={["Werbe-ID", "Tracking-Pixel", "Retargeting"]}
+                description="Diese Cookies werden verwendet, um Besuchern relevante Werbung zu zeigen und Werbekampagnen auszuwerten. Folgende Anbieter werden eingesetzt: Meta Pixel (Meta Platforms Ireland Ltd., 4 Grand Canal Square, Dublin 2, Irland) für Facebook/Instagram-Werbung; Google Ads (Google Ireland Ltd.) für Google-Suchanzeigen und Remarketing; LinkedIn Insight Tag (LinkedIn Ireland Unlimited Company, Wilton Place, Dublin 2, Irland) für B2B-Werbung auf LinkedIn."
+                examples={["_fbp", "_fbc", "fr", "Google Ads ID", "li_sugr"]}
                 retention="Bis zu 1 Jahr"
                 optional
               />
@@ -145,6 +145,50 @@ export default function DatenschutzPage() {
                 Diese Website nutzt Google Fonts (Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA).
                 Beim Laden der Seite wird eine Verbindung zu Googles Servern hergestellt, wobei deine IP-Adresse übertragen werden kann.
                 Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.
+              </p>
+            </Subsection>
+            <Subsection title="Google Analytics 4 (nur mit Einwilligung)">
+              <p>
+                Mit deiner Einwilligung setzen wir Google Analytics 4 ein — ein Webanalysedienst der Google Ireland Ltd.
+                (Gordon House, Barrow Street, Dublin 4, Irland). Google Analytics verwendet Cookies, um die Nutzung der
+                Website zu analysieren. Die dabei erzeugten Informationen (inkl. anonymisierter IP-Adresse) werden an
+                Google-Server übertragen. Wir haben IP-Anonymisierung aktiviert und einen AV-Vertrag gem. Art. 28 DSGVO
+                abgeschlossen. Widerspruch: Du kannst die Erfassung jederzeit durch Abwahl der Analyse-Cookies verhindern.
+                Weitere Informationen:{" "}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  policies.google.com/privacy
+                </a>
+              </p>
+            </Subsection>
+            <Subsection title="Google Ads (nur mit Einwilligung)">
+              <p>
+                Mit deiner Einwilligung nutzen wir Google Ads-Conversion-Tracking (Google Ireland Ltd.). Dabei wird ein
+                Cookie gesetzt, wenn du auf eine unserer Anzeigen klickst. So können wir nachvollziehen, ob nach einem
+                Anzeigenklick eine Anfrage auf unserer Website eingegangen ist. Die erhobenen Daten werden pseudonymisiert
+                verarbeitet. Widerspruch: Abwahl der Marketing-Cookies im Cookie-Banner.
+              </p>
+            </Subsection>
+            <Subsection title="Meta Pixel (nur mit Einwilligung)">
+              <p>
+                Mit deiner Einwilligung verwenden wir den Meta Pixel der Meta Platforms Ireland Ltd.
+                (4 Grand Canal Square, Dublin 2, Irland). Der Meta Pixel ermöglicht es uns, die Wirksamkeit von
+                Facebook- und Instagram-Werbeanzeigen zu messen und Besuchern dieser Website auf Meta-Plattformen
+                relevante Inhalte zu zeigen (Retargeting). Die Daten werden gemäß den Standardvertragsklauseln der
+                EU verarbeitet. Widerspruch: Abwahl der Marketing-Cookies im Cookie-Banner oder unter{" "}
+                <a href="https://www.facebook.com/settings/?tab=ads" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  facebook.com/settings/?tab=ads
+                </a>.
+              </p>
+            </Subsection>
+            <Subsection title="LinkedIn Insight Tag (nur mit Einwilligung)">
+              <p>
+                Mit deiner Einwilligung nutzen wir den LinkedIn Insight Tag der LinkedIn Ireland Unlimited Company
+                (Wilton Place, Dublin 2, Irland). Dieser ermöglicht die Erfolgsmessung von LinkedIn-Kampagnen und
+                Retargeting gegenüber Besuchern dieser Website auf LinkedIn. Widerspruch: Abwahl der Marketing-Cookies
+                im Cookie-Banner oder unter{" "}
+                <a href="https://www.linkedin.com/psettings/guest-controls/retargeting-opt-out" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  LinkedIn Opt-out
+                </a>.
               </p>
             </Subsection>
           </Section>
