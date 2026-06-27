@@ -313,12 +313,16 @@ function StageTab({
   lang,
   onClick,
   tabRef,
+  hasStarted,
+  progressKey,
 }: {
   stage: (typeof STAGES)[0];
   active: boolean;
   lang: Lang;
   onClick: () => void;
   tabRef?: (el: HTMLButtonElement | null) => void;
+  hasStarted: boolean;
+  progressKey: number;
 }) {
   return (
     <button
@@ -353,10 +357,10 @@ function StageTab({
         {getText(stage.module, lang)}
       </div>
 
-      {/* Auto-cycle progress bar */}
-      {active && (
+      {/* Auto-cycle progress bar — only runs after section enters viewport */}
+      {active && hasStarted && (
         <motion.div
-          key={`progress-${stage.num}`}
+          key={`progress-${stage.num}-${progressKey}`}
           className="absolute bottom-0 left-0 h-0.5"
           style={{ backgroundColor: stage.color }}
           initial={{ width: "0%" }}
@@ -373,6 +377,7 @@ function StageTab({
 export default function LifecycleSection({ lang }: LifecycleSectionProps) {
   const [active, setActive] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
+  const [timerKey, setTimerKey] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const tabEls = useRef<(HTMLButtonElement | null)[]>([]);
@@ -394,9 +399,10 @@ export default function LifecycleSection({ lang }: LifecycleSectionProps) {
     if (!hasStarted) return;
     const timer = setInterval(() => {
       setActive((prev) => (prev + 1) % STAGES.length);
+      setTimerKey((k) => k + 1);
     }, 15000);
     return () => clearInterval(timer);
-  }, [hasStarted]);
+  }, [hasStarted, timerKey]);
 
   // Scroll active tab into horizontal center when it changes
   useEffect(() => {
@@ -445,8 +451,10 @@ export default function LifecycleSection({ lang }: LifecycleSectionProps) {
               stage={s}
               active={active === i}
               lang={lang}
-              onClick={() => setActive(i)}
+              onClick={() => { setActive(i); setTimerKey((k) => k + 1); }}
               tabRef={(el) => { tabEls.current[i] = el; }}
+              hasStarted={hasStarted}
+              progressKey={timerKey}
             />
           ))}
         </motion.div>
@@ -456,7 +464,7 @@ export default function LifecycleSection({ lang }: LifecycleSectionProps) {
           {STAGES.map((s, i) => (
             <button
               key={i}
-              onClick={() => setActive(i)}
+              onClick={() => { setActive(i); setTimerKey((k) => k + 1); }}
               aria-label={`Stage ${i + 1}`}
               className="flex items-center justify-center p-1"
             >

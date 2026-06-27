@@ -319,7 +319,7 @@ export const t = {
       en: "30 minutes is enough to find out if I'm the right fit for you. No pitch, no pressure.",
     },
     cta1: { de: "Jetzt unverbindlich beraten lassen", en: "Book a free call" },
-    cta2: { de: "hello@hm-ai.de", en: "hello@hm-ai.de" },
+    cta2: { de: "mrs.hnry@gmail.com", en: "mrs.hnry@gmail.com" },
   },
 
   // ─── Lifecycle Section ────────────────────────────────────────────────────────
@@ -331,8 +331,8 @@ export const t = {
     tag: { de: "// The Problem", en: "// The Problem" },
     headline: { de: "Jedes KMU kämpft mit denselben 6 Problemen", en: "Every SMB struggles with the same 6 problems" },
     sub: {
-      de: "Ich kenne jeden davon — und habe für jeden die passende Lösung gebaut.",
-      en: "I know each one — and have built the right solution for each.",
+      de: "Ich kenne jedes davon — und baue für jedes die passende Lösung.",
+      en: "I know each one — and build the right solution for each.",
     },
     cta: { de: "Modul anfragen", en: "Request module" },
     trust: [
