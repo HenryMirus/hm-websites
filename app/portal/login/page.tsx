@@ -20,6 +20,10 @@ export default function LoginPage() {
     if (params.get("pw") === "changed") {
       setSuccessMsg("Passwort erfolgreich geändert. Du kannst Dich jetzt einloggen.");
     }
+    if (params.get("error") === "exchange_failed") {
+      setError("Der Reset-Link ist abgelaufen oder wurde bereits verwendet. Bitte fordere einen neuen an.");
+      setForgotMode(true);
+    }
   }, []);
 
   async function handleLogin(e: React.FormEvent) {
