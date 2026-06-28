@@ -47,9 +47,9 @@ export async function GET(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 15 * 60, // 15 Minuten
-      path: "/auth/update-password",
+      path: "/password",
     });
-    return NextResponse.redirect(new URL("/auth/update-password", request.url));
+    return NextResponse.redirect(new URL("/password", request.url));
   }
 
   // Invite-Flow: clients.auth_user_id verknüpfen (braucht service role, da RLS)

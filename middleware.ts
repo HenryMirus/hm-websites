@@ -11,6 +11,7 @@ const PUBLIC_PATHS = new Set([
   "/portal/login",
   "/portal/auth/callback",
   "/portal/auth/update-password",
+  "/portal/password",
 ]);
 
 export async function middleware(request: NextRequest) {

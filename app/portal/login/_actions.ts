@@ -44,6 +44,11 @@ export async function requestPasswordReset(
     redirectTo: `${portalUrl}/auth/callback?type=recovery`,
   });
 
-  if (error) return { error: error.message };
+  if (error) {
+    if (error.message.toLowerCase().includes("rate limit")) {
+      return { error: "Zu viele Anfragen. Bitte warte einige Minuten und versuche es erneut." };
+    }
+    return { error: error.message };
+  }
   return {};
 }
