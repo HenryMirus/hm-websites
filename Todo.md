@@ -19,3 +19,10 @@ Sobald die Accounts erstellt sind, IDs in `.env.local` eintragen:
 - **LinkedIn** → linkedin.com/campaignmanager → Account Assets → Insight Tag → `NEXT_PUBLIC_LINKEDIN_PARTNER_ID=`
 
 Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-analytics.com`, `facebook.net`, `snap.licdn.com` prüfen.
+
+
+## 3. Client Portal
+- Email soll später von meiner email kommen (no-reply@hm-labs.de) Nicht von Supabase.
+- Passwort reset seite einrichten auf die man weitergeleitet wird
+    - muss man dafür die login page unter subdomain deployen?
+    - Link kommt an aber man kann kein passwort reseten
