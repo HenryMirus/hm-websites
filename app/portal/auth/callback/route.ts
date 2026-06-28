@@ -8,13 +8,15 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
   const type = searchParams.get("type");
 
+  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+
   if (!code) {
-    return NextResponse.redirect(new URL("/login?error=missing_code", request.url));
+    return NextResponse.redirect(`${portalBase}/login?error=missing_code`);
   }
 
   const redirectUrl = type === "recovery"
-    ? new URL("/password", request.url)
-    : new URL("/projects", request.url);
+    ? `${portalBase}/password`
+    : `${portalBase}/projects`;
 
   // Response-Objekt zuerst erstellen, damit Supabase Cookies direkt darauf schreiben kann.
   // cookies() aus next/headers funktioniert nicht mit NextResponse.redirect() zusammen.
@@ -38,7 +40,7 @@ export async function GET(request: NextRequest) {
   const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error || !session) {
-    return NextResponse.redirect(new URL("/login?error=exchange_failed", request.url));
+    return NextResponse.redirect(`${portalBase}/login?error=exchange_failed`);
   }
 
   if (type === "recovery") {
