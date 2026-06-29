@@ -2,6 +2,7 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createServerClient } from "@supabase/ssr";
+import { EMAIL } from "@/lib/config/email";
 import { cookies } from "next/headers";
 
 export async function requestPasswordReset(
@@ -21,7 +22,7 @@ export async function requestPasswordReset(
   if (!exists) {
     return {
       error:
-        "Kein Konto mit dieser E-Mail-Adresse gefunden. Wende Dich an henry@hm-ai.de.",
+        `Kein Konto mit dieser E-Mail-Adresse gefunden. Wende Dich an ${EMAIL.CONTACT}.`,
     };
   }
 
