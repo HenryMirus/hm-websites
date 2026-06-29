@@ -29,3 +29,6 @@ npm-debug.log*
 # Claude Code / Playwright logs
 .claude/
 .playwright-mcp/
+
+# Playwright CLI logs
+.playwright-cli/
