@@ -11,6 +11,9 @@ const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
 export default function TrackingScripts() {
   const { consent } = useConsent();
 
+  // Kein Tracking auf dem Portal — nur notwendige Cookies
+  if (typeof window !== "undefined" && window.location.hostname.startsWith("clients.")) return null;
+
   if (!consent.decided) return null;
 
   return (

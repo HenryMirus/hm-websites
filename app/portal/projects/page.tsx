@@ -23,10 +23,31 @@ export default async function ProjectsPage() {
     getUnreadMessageCount(),
   ]);
 
-  const { data: projects } = await supabase
-    .from("projects")
-    .select("*, clients(name, company_name, email)")
-    .order("created_at", { ascending: false });
+  let projects: any[] | null = null;
+
+  if (role === "admin") {
+    const { data } = await supabase
+      .from("projects")
+      .select("*, clients(name, company_name, email)")
+      .order("created_at", { ascending: false });
+    projects = data;
+  } else {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data: clientRecord } = await supabase
+      .from("clients")
+      .select("id")
+      .eq("auth_user_id", user?.id ?? "")
+      .single();
+
+    if (clientRecord) {
+      const { data } = await supabase
+        .from("projects")
+        .select("*, clients(name, company_name, email)")
+        .eq("client_id", clientRecord.id)
+        .order("created_at", { ascending: false });
+      projects = data;
+    }
+  }
 
   const active = projects?.filter((p) => !["live", "maintenance", "cancelled"].includes(p.status)) ?? [];
   const done = projects?.filter((p) => ["live", "maintenance", "cancelled"].includes(p.status)) ?? [];

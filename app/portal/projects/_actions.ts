@@ -5,6 +5,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/auth/getRole";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { notifyClientMilestoneReached } from "@/lib/email/notify";
 
 export type ProjectFormState = { error?: string };
 
@@ -129,6 +130,37 @@ export async function updateMilestoneStatusAction(
   await requireAdmin();
   const admin = createAdminClient();
   await admin.from("project_milestones").update({ status }).eq("id", id);
+
+  // E-Mail Fallback wenn keine Supabase-Webhooks konfiguriert
+  if (status === "completed" && !process.env.NOTIFY_VIA_WEBHOOK) {
+    try {
+      const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+      const { data: ms } = await admin
+        .from("project_milestones")
+        .select("title")
+        .eq("id", id)
+        .single();
+      const { data: project } = await admin
+        .from("projects")
+        .select("title, clients(name, email)")
+        .eq("id", projectId)
+        .single();
+
+      const client = (project as any)?.clients;
+      if (ms && project && client?.email) {
+        await notifyClientMilestoneReached(
+          client.email,
+          client.name ?? "Kunde",
+          project.title,
+          ms.title,
+          `${portalBase}/projects/${projectId}`
+        );
+      }
+    } catch (e) {
+      console.error("[Email] notifyClientMilestoneReached:", e);
+    }
+  }
+
   revalidatePath(`/portal/projects/${projectId}`);
   revalidatePath(`/portal/projects/${projectId}/edit`);
 }

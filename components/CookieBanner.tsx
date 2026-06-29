@@ -52,6 +52,9 @@ export default function CookieBanner() {
 
   if (!hydrated) return null;
 
+  // Portal-Subdomain braucht keinen Cookie-Banner — nur notwendige Cookies
+  if (window.location.hostname.startsWith("clients.")) return null;
+
   const iconVisible = !showBanner && !footerVisible;
 
   return (

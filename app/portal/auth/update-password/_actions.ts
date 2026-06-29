@@ -54,5 +54,6 @@ export async function updatePasswordAction(
   const admin = createAdminClient();
   await admin.auth.admin.signOut(user.id);
 
-  redirect("/login?pw=changed");
+  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://clients.localhost:3001";
+  redirect(`${portalBase}/login?pw=changed`);
 }

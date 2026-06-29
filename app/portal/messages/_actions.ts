@@ -33,18 +33,20 @@ export async function sendMessageAction(
 
     if (error) return { error: error.message };
 
-    // E-Mail an Kunden
-    try {
-      const { data: client } = await admin.from("clients").select("email, name").eq("id", client_id).single();
-      if (client) {
-        await notifyClientNewMessage(
-          client.email,
-          content.slice(0, 200),
-          `${portalUrl}/messages`
-        );
+    // E-Mail an Kunden (Fallback wenn keine Supabase-Webhooks konfiguriert)
+    if (!process.env.NOTIFY_VIA_WEBHOOK) {
+      try {
+        const { data: client } = await admin.from("clients").select("email, name").eq("id", client_id).single();
+        if (client) {
+          await notifyClientNewMessage(
+            client.email,
+            content.slice(0, 200),
+            `${portalUrl}/messages`
+          );
+        }
+      } catch (e) {
+        console.error("[Email] notifyClientNewMessage:", e);
       }
-    } catch (e) {
-      console.error("[Email] notifyClientNewMessage:", e);
     }
 
     revalidatePath(`/portal/messages/${client_id}`);
@@ -59,33 +61,36 @@ export async function sendMessageAction(
 
     if (!clientRecord) return { error: "Kein Kunden-Profil gefunden." };
 
-    const { error } = await supabase
+    const admin = createAdminClient();
+    const { error } = await admin
       .from("messages")
       .insert({ sender_id: user.id, sender_role: "client", client_id: clientRecord.id, content });
 
     if (error) return { error: error.message };
 
-    // E-Mail an alle Admins
-    try {
-      const adminClient = createAdminClient();
-      const { data: profiles } = await adminClient
-        .from("profiles")
-        .select("id")
-        .eq("role", "admin");
+    // E-Mail an alle Admins (Fallback wenn keine Supabase-Webhooks konfiguriert)
+    if (!process.env.NOTIFY_VIA_WEBHOOK) {
+      try {
+        const adminClient = createAdminClient();
+        const { data: profiles } = await adminClient
+          .from("profiles")
+          .select("id")
+          .eq("role", "admin");
 
-      if (profiles && profiles.length > 0) {
-        const adminIds = profiles.map((p) => p.id);
-        const { data: { users } } = await adminClient.auth.admin.listUsers({ perPage: 200 });
-        const adminEmails = users
-          .filter((u) => adminIds.includes(u.id) && u.email)
-          .map((u) => u.email as string);
+        if (profiles && profiles.length > 0) {
+          const adminIds = profiles.map((p) => p.id);
+          const { data: { users } } = await adminClient.auth.admin.listUsers({ perPage: 200 });
+          const adminEmails = users
+            .filter((u) => adminIds.includes(u.id) && u.email)
+            .map((u) => u.email as string);
 
-        if (adminEmails.length > 0) {
-          await notifyAdminsNewMessage(adminEmails, clientRecord.name, content.slice(0, 200));
+          if (adminEmails.length > 0) {
+            await notifyAdminsNewMessage(adminEmails, clientRecord.name, content.slice(0, 200));
+          }
         }
+      } catch (e) {
+        console.error("[Email] notifyAdminsNewMessage:", e);
       }
-    } catch (e) {
-      console.error("[Email] notifyAdminsNewMessage:", e);
     }
 
     revalidatePath("/portal/messages");

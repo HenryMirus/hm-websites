@@ -86,10 +86,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // URL intern auf /portal/... umschreiben
+  // URL intern auf /portal/... umschreiben.
+  // x-pathname forwarden damit das Portal-Layout den Original-Pfad für den
+  // server-seitigen Auth-Check lesen kann (headers() in layout.tsx).
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", pathname);
+
   const rewriteUrl = request.nextUrl.clone();
   rewriteUrl.pathname = effectivePath;
-  const rewriteResponse = NextResponse.rewrite(rewriteUrl);
+  const rewriteResponse = NextResponse.rewrite(rewriteUrl, {
+    request: { headers: requestHeaders },
+  });
   supabaseResponse.cookies.getAll().forEach(({ name, value }) => {
     rewriteResponse.cookies.set(name, value);
   });

@@ -12,6 +12,13 @@ const MESSAGES_ICON = (
   </svg>
 );
 
+const SETTINGS_ICON = (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M6.5 2h3l.5 1.5 1.3.75 1.5-.5L14.25 5.5l-.5 1.5.75 1.3-.5 1.5H12.5l-.75 1.3.5 1.5-1.45 1.25-1.5-.5-1.3.75L7.5 14h-1l-.5-1.5-1.3-.75-1.5.5L1.75 10.5l.5-1.5-.75-1.3.5-1.5H3.5l.75-1.3-.5-1.5L5.2 2.2l1.5.5L7.5 2z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.2"/>
+  </svg>
+);
+
 const ADMIN_NAV = [
   {
     href: "/portal/leads",
@@ -125,9 +132,9 @@ export default function PortalShell({ children, role, unreadMessages = 0 }: Port
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-56 shrink-0 border-r border-border bg-surface flex flex-col">
+      <aside className="w-56 shrink-0 border-r border-border bg-surface flex flex-col h-screen">
         {/* Logo */}
         <div className="h-16 flex items-center px-5 border-b border-border">
           <Link href="/" className="flex items-center gap-2.5">
@@ -168,12 +175,25 @@ export default function PortalShell({ children, role, unreadMessages = 0 }: Port
         </nav>
 
         {/* Footer */}
-        <div className="px-3 py-4 border-t border-border">
+        <div className="px-3 py-4 border-t border-border space-y-0.5">
           {!isAdmin && (
-            <div className="px-3 py-2 mb-1">
+            <div className="px-3 py-1.5 mb-0.5">
               <span className="font-mono text-[10px] text-text-muted">Kunden-Portal</span>
             </div>
           )}
+          <Link
+            href="/portal/settings"
+            className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+              pathname.startsWith("/portal/settings")
+                ? "bg-primary/10 text-primary"
+                : "text-text-dim hover:text-text-primary hover:bg-bg"
+            }`}
+          >
+            <span className={pathname.startsWith("/portal/settings") ? "text-primary" : "text-text-muted"}>
+              {SETTINGS_ICON}
+            </span>
+            Einstellungen
+          </Link>
           <button
             onClick={signOut}
             disabled={signingOut}
@@ -188,7 +208,7 @@ export default function PortalShell({ children, role, unreadMessages = 0 }: Port
       </aside>
 
       {/* Main */}
-      <main className="flex-1 overflow-auto">{children}</main>
+      <main className="flex-1 min-h-0 overflow-auto">{children}</main>
     </div>
   );
 }
