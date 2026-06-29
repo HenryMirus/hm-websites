@@ -1,8 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getUserRole, requireAdmin } from "@/lib/auth/getRole";
 import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../../../_components/PortalShell";
 import ClientForm from "../../_components/ClientForm";
+import FilesSection from "../../_components/FilesSection";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
@@ -27,7 +29,9 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
     getUnreadMessageCount(),
   ]);
 
-  const [{ data: client }, { data: projects }] = await Promise.all([
+  const admin = createAdminClient();
+
+  const [{ data: client }, { data: projects }, { data: rawFiles }] = await Promise.all([
     supabase
       .from("clients")
       .select("id, name, email, company_name, phone, status")
@@ -38,7 +42,22 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
       .select("id, title, status, deadline, budget")
       .eq("client_id", id)
       .order("created_at", { ascending: false }),
+    admin
+      .from("client_files")
+      .select("id, file_name, mime_type, category, size_bytes, storage_path, created_at")
+      .eq("client_id", id)
+      .order("created_at", { ascending: false }),
   ]);
+
+  // Generate signed URLs (1 h)
+  const files = await Promise.all(
+    (rawFiles ?? []).map(async (f) => {
+      const { data } = await admin.storage
+        .from("client-files")
+        .createSignedUrl(f.storage_path, 3600);
+      return { ...f, signedUrl: data?.signedUrl ?? undefined };
+    })
+  );
 
   if (!client) notFound();
 
@@ -60,7 +79,7 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
         </h1>
         <p className="text-text-muted text-sm mb-8">{client.company_name || client.name}</p>
 
-        <div className="grid xl:grid-cols-2 gap-8 items-start max-w-4xl">
+        <div className="grid xl:grid-cols-2 gap-8 items-start max-w-5xl">
           {/* Linke Spalte: Kunden-Formular */}
           <div>
             <ClientForm client={client} />
@@ -138,6 +157,11 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
               </div>
             )}
           </div>
+        </div>
+
+        {/* Untere Sektion: Dateien (volle Breite) */}
+        <div className="max-w-5xl mt-8">
+          <FilesSection clientId={id} files={files} />
         </div>
       </div>
     </PortalShell>

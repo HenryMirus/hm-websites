@@ -4,6 +4,7 @@ import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../_components/PortalShell";
 import Link from "next/link";
 import DeleteClientButton from "./_components/DeleteClientButton";
+import ResendInviteButton from "./_components/ResendInviteButton";
 
 export const revalidate = 0;
 
@@ -93,6 +94,7 @@ export default async function ClientsPage() {
                         </a>
                       )}
                     </div>
+                    <ResendInviteButton email={client.email} />
                     <Link
                       href={`/portal/clients/${client.id}/edit`}
                       className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-bg transition-colors"
