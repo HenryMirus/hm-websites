@@ -1,6 +1,7 @@
 import { getUserRole, requireAdmin } from "@/lib/auth/getRole";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
+import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../_components/PortalShell";
 import AdminInviteForm from "./_components/AdminInviteForm";
 import RemoveAdminButton from "./_components/RemoveAdminButton";
@@ -9,7 +10,7 @@ export const revalidate = 0;
 
 export default async function AdminsPage() {
   await requireAdmin();
-  const [role, supabase] = await Promise.all([getUserRole(), createClient()]);
+  const [role, supabase, unreadMessages] = await Promise.all([getUserRole(), createClient(), getUnreadMessageCount()]);
 
   const { data: { user: currentUser } } = await supabase.auth.getUser();
   const admin = createAdminClient();
@@ -26,7 +27,7 @@ export default async function AdminsPage() {
   const admins = users.filter((u) => adminIds.has(u.id));
 
   return (
-    <PortalShell role={role}>
+    <PortalShell role={role} unreadMessages={unreadMessages}>
       <div className="p-8 max-w-3xl">
         <div className="flex items-center justify-between mb-8">
           <h1 className="font-display font-bold text-2xl text-text-primary">Admins</h1>

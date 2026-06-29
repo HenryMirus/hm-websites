@@ -3,6 +3,7 @@ import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import TrackingScripts from "@/components/TrackingScripts";
 import { ConsentProvider } from "@/lib/consent";
+import { EMAIL } from "@/lib/config/email";
 
 const SITE_URL = "https://hm-labs.de";
 
@@ -77,7 +78,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#business`,
       name: "HM Labs",
       url: SITE_URL,
-      email: "mrs.hnry@gmail.com",
+      email: EMAIL.CONTACT,
       description:
         "KI-Integration, Websites und Softwareentwicklung für KMU in Deutschland. Festpreis, DSGVO-konform, fertig in 14 Tagen.",
       areaServed: {
@@ -115,7 +116,7 @@ const jsonLd = {
       jobTitle: "KI-Entwickler & Unternehmer",
       worksFor: { "@id": `${SITE_URL}/#business` },
       url: SITE_URL,
-      email: "mrs.hnry@gmail.com",
+      email: EMAIL.CONTACT,
       knowsAbout: [
         "Künstliche Intelligenz",
         "Webentwicklung",

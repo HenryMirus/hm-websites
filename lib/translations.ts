@@ -1,3 +1,5 @@
+import { EMAIL } from "@/lib/config/email";
+
 export type Lang = "de" | "en";
 
 // ─── Translation object ────────────────────────────────────────────────────────
@@ -319,7 +321,7 @@ export const t = {
       en: "30 minutes is enough to find out if I'm the right fit for you. No pitch, no pressure.",
     },
     cta1: { de: "Jetzt unverbindlich beraten lassen", en: "Book a free call" },
-    cta2: { de: "mrs.hnry@gmail.com", en: "mrs.hnry@gmail.com" },
+    cta2: { de: EMAIL.CONTACT, en: EMAIL.CONTACT },
   },
 
   // ─── Lifecycle Section ────────────────────────────────────────────────────────
@@ -548,7 +550,7 @@ export const t = {
       success: { de: "Danke! Ich melde mich bald.", en: "Thanks! I'll be in touch soon." },
     },
     info: {
-      email: "mrs.hnry@gmail.com",
+      email: EMAIL.CONTACT,
       location: { de: "Deutschland", en: "Germany" },
       response: { de: "Antwort innerhalb 24h", en: "Response within 24h" },
     },

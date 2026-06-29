@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { t, getText, Lang } from "@/lib/translations";
 import TypewriterText from "./TypewriterText";
+import { useAdminRole } from "@/lib/hooks/useAdminRole";
 
 interface ContactSectionProps {
   lang: Lang;
@@ -14,6 +15,7 @@ export default function ContactSection({ lang }: ContactSectionProps) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { isAdmin } = useAdminRole();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -203,7 +205,7 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                       )}
                     </button>
 
-                    {error && (
+                    {error && isAdmin && (
                       <p className="text-sm text-red-400 text-center pt-1">{error}</p>
                     )}
                   </motion.form>

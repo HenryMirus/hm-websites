@@ -6,6 +6,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import type { UserRole } from "@/lib/auth/getRole";
 
+const MESSAGES_ICON = (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M14 10.667A1.333 1.333 0 0 1 12.667 12H4L1.333 14.667V3.333A1.333 1.333 0 0 1 2.667 2h10A1.333 1.333 0 0 1 14 3.333v7.334z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 const ADMIN_NAV = [
   {
     href: "/portal/leads",
@@ -36,6 +42,11 @@ const ADMIN_NAV = [
         <path d="M11 14v-1.33A2.67 2.67 0 0 0 8.33 10H3.67A2.67 2.67 0 0 0 1 12.67V14M6 7a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM15 14v-1.33a2.67 2.67 0 0 0-2-2.58M11 2.08a2.5 2.5 0 0 1 0 4.84" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
       </svg>
     ),
+  },
+  {
+    href: "/portal/messages",
+    label: "Nachrichten",
+    icon: MESSAGES_ICON,
   },
 ];
 
@@ -74,19 +85,37 @@ const CLIENT_NAV = [
       </svg>
     ),
   },
+  {
+    href: "/portal/messages",
+    label: "Nachrichten",
+    icon: MESSAGES_ICON,
+  },
 ];
+
+interface NavItemType {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+  badge?: number;
+}
 
 interface PortalShellProps {
   children: React.ReactNode;
   role: UserRole;
+  unreadMessages?: number;
 }
 
-export default function PortalShell({ children, role }: PortalShellProps) {
+export default function PortalShell({ children, role, unreadMessages = 0 }: PortalShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
   const isAdmin = role === "admin";
-  const nav = isAdmin ? ADMIN_NAV : CLIENT_NAV;
+
+  const nav: NavItemType[] = (isAdmin ? ADMIN_NAV : CLIENT_NAV).map((item) =>
+    item.href === "/portal/messages"
+      ? { ...item, badge: unreadMessages > 0 ? unreadMessages : undefined }
+      : item
+  );
 
   async function signOut() {
     setSigningOut(true);
@@ -102,9 +131,10 @@ export default function PortalShell({ children, role }: PortalShellProps) {
         {/* Logo */}
         <div className="h-16 flex items-center px-5 border-b border-border">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-              <span className="font-display font-bold text-xs text-white">H</span>
-            </div>
+            <picture>
+              <source srcSet="/hm-labs-logo-v3.webp" type="image/webp" />
+              <img src="/hm-labs-logo-v3.png" alt="HM Labs" width={28} height={28} className="rounded-lg" />
+            </picture>
             <span className="font-display font-bold text-text-primary">
               HM <span className="text-primary">Labs</span>
             </span>
@@ -163,7 +193,7 @@ export default function PortalShell({ children, role }: PortalShellProps) {
   );
 }
 
-function NavItem({ item, active }: { item: { href: string; label: string; icon: React.ReactNode }; active: boolean }) {
+function NavItem({ item, active }: { item: NavItemType; active: boolean }) {
   return (
     <Link
       href={item.href}
@@ -174,7 +204,12 @@ function NavItem({ item, active }: { item: { href: string; label: string; icon: 
       }`}
     >
       <span className={active ? "text-primary" : "text-text-muted"}>{item.icon}</span>
-      {item.label}
+      <span className="flex-1">{item.label}</span>
+      {item.badge != null && item.badge > 0 && (
+        <span className="bg-accent text-white font-mono text-[10px] rounded-full px-1.5 min-w-[18px] text-center leading-5">
+          {item.badge}
+        </span>
+      )}
     </Link>
   );
 }

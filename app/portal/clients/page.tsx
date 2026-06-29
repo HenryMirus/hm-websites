@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getUserRole, requireAdmin } from "@/lib/auth/getRole";
+import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../_components/PortalShell";
 import Link from "next/link";
 import DeleteClientButton from "./_components/DeleteClientButton";
@@ -14,7 +15,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
 
 export default async function ClientsPage() {
   await requireAdmin();
-  const [supabase, role] = await Promise.all([createClient(), getUserRole()]);
+  const [supabase, role, unreadMessages] = await Promise.all([createClient(), getUserRole(), getUnreadMessageCount()]);
 
   const { data: clients } = await supabase
     .from("clients")
@@ -22,7 +23,7 @@ export default async function ClientsPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <PortalShell role={role}>
+    <PortalShell role={role} unreadMessages={unreadMessages}>
       <div className="p-8">
         <div className="flex items-center justify-between mb-8">
           <h1 className="font-display font-bold text-2xl text-text-primary">Kunden</h1>

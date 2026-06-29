@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getUserRole } from "@/lib/auth/getRole";
+import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../_components/PortalShell";
 import Link from "next/link";
 
@@ -16,7 +17,11 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
 };
 
 export default async function ProjectsPage() {
-  const [supabase, role] = await Promise.all([createClient(), getUserRole()]);
+  const [supabase, role, unreadMessages] = await Promise.all([
+    createClient(),
+    getUserRole(),
+    getUnreadMessageCount(),
+  ]);
 
   const { data: projects } = await supabase
     .from("projects")
@@ -27,13 +32,26 @@ export default async function ProjectsPage() {
   const done = projects?.filter((p) => ["live", "maintenance", "cancelled"].includes(p.status)) ?? [];
 
   return (
-    <PortalShell role={role}>
+    <PortalShell role={role} unreadMessages={unreadMessages}>
       <div className="p-8">
         <div className="flex items-center justify-between mb-8">
           <h1 className="font-display font-bold text-2xl text-text-primary">
             {role === "admin" ? "Projekte" : "Meine Projekte"}
           </h1>
-          <span className="font-mono text-xs text-text-muted">{projects?.length ?? 0} gesamt</span>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs text-text-muted">{projects?.length ?? 0} gesamt</span>
+            {role === "admin" && (
+              <Link
+                href="/portal/projects/new"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-primary text-white hover:bg-primary/90 transition-colors"
+              >
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                  <path d="M6.5 1v11M1 6.5h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                Neues Projekt
+              </Link>
+            )}
+          </div>
         </div>
 
         {active.length > 0 && (

@@ -3,12 +3,6 @@
 ## 1. KI-Chatbot
 - Was ist möglich / Konzept ausarbeiten
 
-## 2. ✅ Cookies technisch einbinden
-- ✅ Notwendige Cookies (Supabase Auth) — bereits aktiv
-- ✅ Analyse-Cookies (Google Analytics 4) — vorbereitet
-- ✅ Marketing-Cookies (Meta, Google Ads, LinkedIn) — vorbereitet
-- ✅ Einstellungen-Button funktioniert korrekt
-
 ## 3. Tracking-IDs eintragen & Scripts testen
 Sobald die Accounts erstellt sind, IDs in `.env.local` eintragen:
 
@@ -22,7 +16,13 @@ Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-anal
 
 
 ## 3. Client Portal
-- Email soll später von meiner email kommen (no-reply@hm-labs.de) Nicht von Supabase.
-- Passwort reset seite einrichten auf die man weitergeleitet wird
-    - muss man dafür die login page unter subdomain deployen?
-    - Link kommt an aber man kann kein passwort reseten
+- Email soll später von meiner email kommen (no-reply@hm-labs.de)
+
+## 4. Portal CRM — Offene Punkte
+
+- [ ] **E-Mail-Benachrichtigungen auf Resend umstellen**
+  - Account auf resend.com anlegen (kostenlos bis 3.000 E-Mails/Monat)
+  - API Key generieren → als `RESEND_API_KEY` in `.env.local` eintragen
+  - Domain verifizieren: `portal@hm-labs.de` als Absender (DNS TXT-Eintrag beim Hoster)
+  - `lib/email/notify.ts` implementieren mit Resend SDK (`npm install resend`)
+  - Aktuell: Nur Console-Logs als Platzhalter

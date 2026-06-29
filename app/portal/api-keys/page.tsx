@@ -1,5 +1,6 @@
 import { getUserRole, requireAdmin } from "@/lib/auth/getRole";
 import { createClient } from "@/lib/supabase/server";
+import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../_components/PortalShell";
 import ApiKeyCreateForm from "./_components/ApiKeyCreateForm";
 import RevokeKeyButton from "./_components/RevokeKeyButton";
@@ -8,7 +9,7 @@ export const revalidate = 0;
 
 export default async function ApiKeysPage() {
   await requireAdmin();
-  const [supabase, role] = await Promise.all([createClient(), getUserRole()]);
+  const [supabase, role, unreadMessages] = await Promise.all([createClient(), getUserRole(), getUnreadMessageCount()]);
 
   const { data: keys } = await supabase
     .from("api_keys")
@@ -19,7 +20,7 @@ export default async function ApiKeysPage() {
   const revoked = keys?.filter((k) => k.revoked_at) ?? [];
 
   return (
-    <PortalShell role={role}>
+    <PortalShell role={role} unreadMessages={unreadMessages}>
       <div className="p-8 max-w-3xl">
         <div className="flex items-center justify-between mb-8">
           <div>

@@ -1,8 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
 import { getUserRole } from "@/lib/auth/getRole";
+import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../../_components/PortalShell";
+import TasksSection from "./_components/TasksSection";
+import MilestoneRow from "./_components/MilestoneRow";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import {
+  updateTaskStatusAction,
+  deleteTaskAction,
+} from "../_actions";
 
 export const revalidate = 0;
 
@@ -16,23 +23,30 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   cancelled:   { label: "Abgebrochen", color: "bg-accent/10 text-accent border-accent/20" },
 };
 
-const MS_STATUS: Record<string, { label: string; icon: string }> = {
-  pending:     { label: "Offen",     icon: "○" },
-  in_progress: { label: "In Arbeit", icon: "◑" },
-  completed:   { label: "Fertig",    icon: "●" },
-  blocked:     { label: "Blockiert", icon: "✕" },
+const MS_STATUS: Record<string, { label: string; icon: string; color: string; next: string }> = {
+  pending:     { label: "Offen",     icon: "○", color: "text-text-muted",  next: "in_progress" },
+  in_progress: { label: "In Arbeit", icon: "◑", color: "text-primary",     next: "completed" },
+  completed:   { label: "Fertig",    icon: "●", color: "text-green-400",   next: "pending" },
+  blocked:     { label: "Blockiert", icon: "✕", color: "text-accent",      next: "pending" },
 };
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const [supabase, role] = await Promise.all([createClient(), getUserRole()]);
+  const [supabase, role, unreadMessages] = await Promise.all([
+    createClient(),
+    getUserRole(),
+    getUnreadMessageCount(),
+  ]);
 
-  const [{ data: project }, { data: milestones }, { data: decisions }, { data: feedback }] =
+  const isAdmin = role === "admin";
+
+  const [{ data: project }, { data: milestones }, { data: decisions }, { data: feedback }, { data: tasks }] =
     await Promise.all([
       supabase.from("projects").select("*, clients(*)").eq("id", id).single(),
       supabase.from("project_milestones").select("*").eq("project_id", id).order("sort_order"),
       supabase.from("project_decisions").select("*").eq("project_id", id).order("decided_at", { ascending: false }),
       supabase.from("project_feedback").select("*").eq("project_id", id).order("given_at", { ascending: false }),
+      supabase.from("tasks").select("*").eq("project_id", id).order("sort_order"),
     ]);
 
   if (!project) notFound();
@@ -41,14 +55,27 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   const client = project.clients;
 
   return (
-    <PortalShell role={role}>
+    <PortalShell role={role} unreadMessages={unreadMessages}>
       <div className="p-8 max-w-4xl">
-        <Link href="/portal/projects" className="inline-flex items-center gap-1.5 text-text-muted hover:text-text-dim text-sm mb-6 transition-colors">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Alle Projekte
-        </Link>
+        <div className="flex items-center justify-between mb-6">
+          <Link href="/portal/projects" className="inline-flex items-center gap-1.5 text-text-muted hover:text-text-dim text-sm transition-colors">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Alle Projekte
+          </Link>
+          {isAdmin && (
+            <Link
+              href={`/portal/projects/${id}/edit`}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium text-primary hover:bg-primary/10 border border-primary/20 transition-colors"
+            >
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                <path d="M10 2l2 2-8 8H2v-2L10 2z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Bearbeiten
+            </Link>
+          )}
+        </div>
 
         <div className="flex items-start justify-between gap-4 mb-8">
           <div>
@@ -59,10 +86,13 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             {client && (
               <p className="text-text-dim">
                 {client.company_name || client.name}
-                {client.email && (
+                {isAdmin && client.email && (
                   <a href={`mailto:${client.email}`} className="ml-2 text-primary hover:underline">{client.email}</a>
                 )}
               </p>
+            )}
+            {project.description && (
+              <p className="text-text-muted text-sm mt-2 max-w-xl">{project.description}</p>
             )}
           </div>
           {project.budget && (
@@ -77,7 +107,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
           {[
-            { label: "Typ", value: project.type },
+            { label: "Typ", value: project.type ?? "—" },
             { label: "Start", value: project.start_date ? new Date(project.start_date).toLocaleDateString("de-DE") : "—" },
             { label: "Deadline", value: project.deadline ? new Date(project.deadline).toLocaleDateString("de-DE") : "—" },
             { label: "Launch", value: project.launch_date ? new Date(project.launch_date).toLocaleDateString("de-DE") : "—" },
@@ -97,7 +127,32 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           </div>
         )}
 
+        {/* Tech-Stack */}
+        {project.tech_stack && (Array.isArray(project.tech_stack) ? project.tech_stack : Object.values(project.tech_stack)).length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-8">
+            {(Array.isArray(project.tech_stack) ? project.tech_stack : Object.values(project.tech_stack)).map((t: any) => (
+              <span key={t} className="font-mono text-[10px] bg-surface border border-border text-text-muted rounded px-1.5 py-0.5">
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Aufgaben — für Admin mit CRUD, für Client read-only */}
+        {(isAdmin || (tasks && tasks.length > 0)) && (
+          <div className="mb-6">
+            <TasksSection
+              tasks={tasks ?? []}
+              projectId={id}
+              isAdmin={isAdmin}
+              updateTaskStatusAction={isAdmin ? updateTaskStatusAction : undefined}
+              deleteTaskAction={isAdmin ? deleteTaskAction : undefined}
+            />
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-2 gap-6">
+          {/* Meilensteine */}
           <div className="bg-surface border border-border rounded-2xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-display font-semibold text-text-primary">Meilensteine</h2>
@@ -107,33 +162,23 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             </div>
             {milestones?.length ? (
               <div className="space-y-2">
-                {milestones.map((ms) => {
-                  const msCfg = MS_STATUS[ms.status] ?? MS_STATUS.pending;
-                  return (
-                    <div key={ms.id} className="flex items-start gap-3 py-2 border-b border-border/50 last:border-0">
-                      <span className={`font-mono text-sm mt-0.5 ${ms.status === "completed" ? "text-green-400" : ms.status === "blocked" ? "text-accent" : "text-text-muted"}`}>
-                        {msCfg.icon}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-medium ${ms.status === "completed" ? "text-text-muted line-through" : "text-text-primary"}`}>
-                          {ms.title}
-                        </p>
-                        {ms.due_date && (
-                          <p className="font-mono text-[10px] text-text-muted mt-0.5">
-                            {new Date(ms.due_date).toLocaleDateString("de-DE")}
-                          </p>
-                        )}
-                      </div>
-                      <span className="font-mono text-[10px] text-text-muted shrink-0">{msCfg.label}</span>
-                    </div>
-                  );
-                })}
+                {milestones.map((ms) => (
+                  <MilestoneRow key={ms.id} ms={ms} projectId={id} isAdmin={isAdmin} />
+                ))}
               </div>
             ) : (
               <p className="text-text-muted text-sm">Keine Meilensteine</p>
             )}
+            {isAdmin && (
+              <div className="mt-3 pt-3 border-t border-border/50">
+                <Link href={`/portal/projects/${id}/edit`} className="font-mono text-[11px] text-primary hover:text-primary/80 transition-colors">
+                  + Meilenstein hinzufügen →
+                </Link>
+              </div>
+            )}
           </div>
 
+          {/* Entscheidungen */}
           <div className="bg-surface border border-border rounded-2xl p-6">
             <h2 className="font-display font-semibold text-text-primary mb-4">Entscheidungen</h2>
             {decisions?.length ? (
@@ -152,30 +197,49 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             ) : (
               <p className="text-text-muted text-sm">Keine Entscheidungen</p>
             )}
+            {isAdmin && (
+              <div className="mt-3 pt-3 border-t border-border/50">
+                <Link href={`/portal/projects/${id}/edit`} className="font-mono text-[11px] text-primary hover:text-primary/80 transition-colors">
+                  + Entscheidung hinzufügen →
+                </Link>
+              </div>
+            )}
           </div>
 
-          {feedback && feedback.length > 0 && (
+          {/* Feedback */}
+          {(isAdmin || (feedback && feedback.length > 0)) && (
             <div className="bg-surface border border-border rounded-2xl p-6 lg:col-span-2">
               <h2 className="font-display font-semibold text-text-primary mb-4">Feedback-Runden</h2>
-              <div className="space-y-3">
-                {feedback.map((f) => (
-                  <div key={f.id} className="py-2 border-b border-border/50 last:border-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-mono text-[10px] text-text-muted">Runde {f.round}</span>
-                      <span className="font-mono text-[10px] text-text-muted">·</span>
-                      <span className="font-mono text-[10px] text-text-muted">{f.source}</span>
-                      <span className={`ml-auto font-mono text-[10px] px-1.5 py-0.5 rounded border ${
-                        f.status === "addressed" ? "bg-green-500/10 text-green-400 border-green-500/20" :
-                        f.status === "wont_fix" ? "bg-border/60 text-text-muted border-border" :
-                        "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
-                      }`}>
-                        {f.status === "addressed" ? "Erledigt" : f.status === "wont_fix" ? "Kein Fix" : "Offen"}
-                      </span>
+              {feedback && feedback.length > 0 ? (
+                <div className="space-y-3">
+                  {feedback.map((f) => (
+                    <div key={f.id} className="py-2 border-b border-border/50 last:border-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-mono text-[10px] text-text-muted">Runde {f.round}</span>
+                        <span className="font-mono text-[10px] text-text-muted">·</span>
+                        <span className="font-mono text-[10px] text-text-muted">{f.source}</span>
+                        <span className={`ml-auto font-mono text-[10px] px-1.5 py-0.5 rounded border ${
+                          f.status === "addressed" ? "bg-green-500/10 text-green-400 border-green-500/20" :
+                          f.status === "wont_fix" ? "bg-border/60 text-text-muted border-border" :
+                          "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
+                        }`}>
+                          {f.status === "addressed" ? "Erledigt" : f.status === "wont_fix" ? "Kein Fix" : "Offen"}
+                        </span>
+                      </div>
+                      <p className="text-text-dim text-sm">{f.summary}</p>
                     </div>
-                    <p className="text-text-dim text-sm">{f.summary}</p>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-text-muted text-sm">Keine Feedback-Runden</p>
+              )}
+              {isAdmin && (
+                <div className="mt-3 pt-3 border-t border-border/50">
+                  <Link href={`/portal/projects/${id}/edit`} className="font-mono text-[11px] text-primary hover:text-primary/80 transition-colors">
+                    + Feedback hinzufügen →
+                  </Link>
+                </div>
+              )}
             </div>
           )}
 

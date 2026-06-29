@@ -100,7 +100,7 @@ export default function CookieBanner() {
 
       {/* ── Fixed cookie icon ── */}
       <div
-        className={`fixed bottom-6 left-6 z-[9998] transition-all duration-300 ${
+        className={`fixed bottom-6 right-6 z-[9998] transition-all duration-300 ${
           iconVisible ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none translate-y-2"
         }`}
       >
@@ -108,7 +108,7 @@ export default function CookieBanner() {
         {showPopup && (
           <>
             <div className="fixed inset-0 z-[-1]" onClick={() => setShowPopup(false)} />
-            <div className="absolute bottom-14 left-0 w-80 rounded-xl border border-[#1E1E2E] bg-[#111118] shadow-2xl shadow-black/60 overflow-hidden">
+            <div className="absolute bottom-14 right-0 w-80 rounded-xl border border-[#1E1E2E] bg-[#111118] shadow-2xl shadow-black/60 overflow-hidden">
               {/* Header */}
               <div className="p-4 border-b border-[#1E1E2E]">
                 <div className="flex items-center justify-between">

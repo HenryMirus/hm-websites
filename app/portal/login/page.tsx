@@ -69,9 +69,10 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex items-center gap-3 mb-10 justify-center">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="font-display font-bold text-sm text-white">H</span>
-          </div>
+          <picture>
+            <source srcSet="/hm-labs-logo-v3.webp" type="image/webp" />
+            <img src="/hm-labs-logo-v3.png" alt="HM Labs" width={32} height={32} className="rounded-lg" />
+          </picture>
           <span className="font-display font-bold text-lg text-text-primary">
             HM <span className="text-primary">Labs</span>
             <span className="text-text-muted font-normal text-sm ml-2">Portal</span>

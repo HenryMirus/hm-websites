@@ -1,0 +1,31 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]: H
+      - generic [ref=e7]: HM LabsPortal
+    - generic [ref=e8]:
+      - heading "Anmelden" [level=1] [ref=e9]
+      - paragraph [ref=e10]: Melde Dich mit Deiner E-Mail und Deinem Passwort an.
+      - generic [ref=e11]:
+        - textbox "deine@email.de" [active] [ref=e12]
+        - textbox "Passwort" [ref=e13]
+        - button "Anmelden" [disabled] [ref=e14]
+        - button "Passwort vergessen?" [ref=e16] [cursor=pointer]
+    - paragraph [ref=e17]: Nur für autorisierte Nutzer · HM Labs
+  - alert [ref=e18]
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - img [ref=e23]
+      - generic [ref=e30]:
+        - paragraph [ref=e31]: Diese Website verwendet Cookies
+        - paragraph [ref=e32]:
+          - text: Wir nutzen Cookies, um dir die beste Erfahrung zu bieten. Notwendige Cookies sind immer aktiv.
+          - link "Datenschutzerklärung" [ref=e33] [cursor=pointer]:
+            - /url: /datenschutz
+    - generic [ref=e34]:
+      - button "Nur Notwendige" [ref=e35] [cursor=pointer]
+      - button "Einstellungen" [ref=e36] [cursor=pointer]
+      - button "Alle akzeptieren" [ref=e37] [cursor=pointer]
+  - generic:
+    - button "Cookie-Einstellungen öffnen":
+      - img

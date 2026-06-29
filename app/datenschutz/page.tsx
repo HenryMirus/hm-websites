@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { EMAIL } from "@/lib/config/email";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung — HM Labs",
@@ -53,7 +54,7 @@ export default function DatenschutzPage() {
             <div className="mt-3 text-sm space-y-1">
               <p className="font-medium">Henry Mirus — HM Labs</p>
               <p className="text-[#5A5A7A]">E-Mail:{" "}
-                <a href="mailto:mrs.hnry@gmail.com" className="text-[#4F7FFF] hover:underline">mrs.hnry@gmail.com</a>
+                <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>
               </p>
               <p className="text-[#5A5A7A]">Website: hm-labs.de</p>
             </div>
@@ -214,7 +215,7 @@ export default function DatenschutzPage() {
             </div>
             <p className="text-sm text-[#5A5A7A] mt-4">
               Zur Ausübung deiner Rechte wende dich an:{" "}
-              <a href="mailto:mrs.hnry@gmail.com" className="text-[#4F7FFF] hover:underline">mrs.hnry@gmail.com</a>.
+              <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>.
               Du hast außerdem das Recht, bei der zuständigen Datenschutzaufsichtsbehörde Beschwerde einzulegen.
             </p>
           </Section>
