@@ -52,7 +52,10 @@ export default function TypewriterText({
     if (startWhen === true) setActive(true);
   }, [startWhen]);
 
-  // Typing animation — runs once when active becomes true
+  // Typing animation — runs when active becomes true, and retypes whenever text changes
+  // (e.g. on language toggle) without re-applying the initial reveal delay.
+  const hasTypedOnce = useRef(false);
+
   useEffect(() => {
     if (!active) return;
 
@@ -60,7 +63,10 @@ export default function TypewriterText({
     let intervalId: ReturnType<typeof setInterval>;
     let idx = 0;
 
-    timeoutId = setTimeout(() => {
+    setDisplayed("");
+    setDone(false);
+
+    const startTyping = () => {
       intervalId = setInterval(() => {
         idx++;
         setDisplayed(text.slice(0, idx));
@@ -70,13 +76,20 @@ export default function TypewriterText({
           onComplete?.();
         }
       }, speed);
-    }, delay * 1000);
+    };
+
+    if (hasTypedOnce.current) {
+      startTyping();
+    } else {
+      hasTypedOnce.current = true;
+      timeoutId = setTimeout(startTyping, delay * 1000);
+    }
 
     return () => {
       clearTimeout(timeoutId);
       clearInterval(intervalId);
     };
-  }, [active]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [active, text]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const cursorVisible = showCursor && active && (!done || persistCursor);
 

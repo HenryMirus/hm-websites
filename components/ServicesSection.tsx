@@ -55,7 +55,7 @@ function SpotlightCard({
   );
 }
 
-function InfoTooltip({ text }: { text: string }) {
+function InfoTooltip({ text, lang }: { text: string; lang: Lang }) {
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -81,7 +81,7 @@ function InfoTooltip({ text }: { text: string }) {
         onBlur={() => setVisible(false)}
         type="button"
         className="ml-0.5 w-3.5 h-3.5 rounded-full border border-text-muted/50 text-text-muted hover:border-primary hover:text-primary transition-colors inline-flex items-center justify-center flex-shrink-0 cursor-help"
-        aria-label="Mehr Infos"
+        aria-label={getText(t.services.moreInfo, lang)}
       >
         <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
           <circle cx="4" cy="4" r="3.2" stroke="currentColor" strokeWidth="0.9" />
@@ -185,7 +185,7 @@ export default function ServicesSection({ lang }: ServicesSectionProps) {
                     </div>
                     {service.highlight && (
                       <span className="font-mono text-[10px] bg-primary/15 text-primary border border-primary/20 rounded-full px-2 py-0.5">
-                        Beliebt
+                        {getText(t.services.popularBadge, lang)}
                       </span>
                     )}
                   </div>
@@ -210,7 +210,7 @@ export default function ServicesSection({ lang }: ServicesSectionProps) {
                         <span className="flex items-center gap-1 min-w-0">
                           {getText(f, lang)}
                           {"tooltip" in f && f.tooltip && (
-                            <InfoTooltip text={getText(f.tooltip as { de: string; en: string }, lang)} />
+                            <InfoTooltip text={getText(f.tooltip as { de: string; en: string }, lang)} lang={lang} />
                           )}
                         </span>
                       </li>
@@ -250,7 +250,7 @@ export default function ServicesSection({ lang }: ServicesSectionProps) {
         >
           <picture>
             <source srcSet="/services-visual.webp" type="image/webp" />
-            <img src="/services-visual.png" alt={getText(t.services.imageAlt, lang)} width={1440} height={320} className="w-full object-cover" style={{ maxHeight: "320px" }} loading="lazy" />
+            <img src="/services-visual.jpg" alt={getText(t.services.imageAlt, lang)} width={1440} height={320} className="w-full object-cover" style={{ maxHeight: "320px" }} loading="lazy" />
           </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-bg/30 via-transparent to-bg/30" />

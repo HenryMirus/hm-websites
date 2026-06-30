@@ -44,6 +44,7 @@ export const t = {
     floating: {
       stat1Label: { de: "mehr Kundenanfragen", en: "more inquiries" },
       live: { de: "Projekt live", en: "Project live" },
+      avgVal: { de: "14 Tage", en: "14 days" },
       avg: { de: "Ø bis zum Launch", en: "avg. to launch" },
     },
   },
@@ -78,6 +79,9 @@ export const t = {
     },
     // "Anfragen" / "Inquire" link at the bottom of each service card
     inquire: { de: "Anfragen", en: "Inquire" },
+    // Highlight badge on the featured card, and the info-tooltip button's a11y label
+    popularBadge: { de: "Beliebt", en: "Popular" },
+    moreInfo: { de: "Mehr Infos", en: "More info" },
     // Alt text and pill labels for the visual showcase image
     imageAlt: { de: "Website, KI & Software Visualisierung", en: "Website, AI & Software visualization" },
     imageLabels: [
@@ -233,7 +237,11 @@ export const t = {
           de: "Neue Website mit KI-Chatbot, der Anfragen qualifiziert und Termine bucht. Kein Sekretariat mehr nötig für Erstanfragen.",
           en: "New website with AI chatbot that qualifies inquiries and books appointments. No more receptionist needed for initial inquiries.",
         },
-        tags: ["Next.js", "KI-Chatbot", "Google Ads"],
+        tags: [
+          { de: "Next.js", en: "Next.js" },
+          { de: "KI-Chatbot", en: "AI Chatbot" },
+          { de: "Google Ads", en: "Google Ads" },
+        ],
         metric: "",
         metricLabel: { de: "", en: "" },
         timeframe: { de: "", en: "" },
@@ -250,7 +258,11 @@ export const t = {
           de: "KI-System beantwortet Voranfragen, klassifiziert Mandanten und bereitet Erstgespräche vor. Das Team hat wieder Zeit für echte Arbeit.",
           en: "AI system answers initial inquiries, classifies clients, and prepares first meetings. The team has time for real work again.",
         },
-        tags: ["KI-Chatbot", "CRM-Integration", "Automatisierung"],
+        tags: [
+          { de: "KI-Chatbot", en: "AI Chatbot" },
+          { de: "CRM-Integration", en: "CRM Integration" },
+          { de: "Automatisierung", en: "Automation" },
+        ],
         metric: "",
         metricLabel: { de: "", en: "" },
         timeframe: { de: "", en: "" },
@@ -267,7 +279,11 @@ export const t = {
           de: "Maßgeschneidertes Tool, das Angebote aus Kundenanfragen automatisch generiert. Was früher eine halbe Stunde dauerte, geht jetzt in Minuten.",
           en: "Custom tool that automatically generates quotes from client requests. What used to take half an hour now takes minutes.",
         },
-        tags: ["Web-App", "KI", "Automatisierung"],
+        tags: [
+          { de: "Web-App", en: "Web App" },
+          { de: "KI", en: "AI" },
+          { de: "Automatisierung", en: "Automation" },
+        ],
         metric: "",
         metricLabel: { de: "", en: "" },
         timeframe: { de: "", en: "" },
@@ -492,12 +508,12 @@ export const t = {
       de: "Ich kombiniere technische Expertise mit unternehmerischem Denken — und baue Lösungen, die wirklich funktionieren, nicht nur gut aussehen.",
       en: "I combine technical expertise with entrepreneurial thinking — and build solutions that actually work, not just look good.",
     },
-    // Quick stat grid (4 boxes) — val is not translated, label is
+    // Quick stat grid (4 boxes)
     stats: [
-      { val: "10+",   label: { de: "Projekte",              en: "Projects"             } },
-      { val: "14 Tage", label: { de: "Ø Launch-Zeit",       en: "Avg. launch time"     } },
-      { val: "100%",  label: { de: "Direkte Kommunikation", en: "Direct communication" } },
-      { val: "24h",   label: { de: "Antwortzeit",           en: "Response time"        } },
+      { val: { de: "10+",     en: "10+" },     label: { de: "Projekte",              en: "Projects"             } },
+      { val: { de: "14 Tage", en: "14 days" }, label: { de: "Ø Launch-Zeit",         en: "Avg. launch time"     } },
+      { val: { de: "100%",    en: "100%" },     label: { de: "Direkte Kommunikation", en: "Direct communication" } },
+      { val: { de: "24h",     en: "24h" },      label: { de: "Antwortzeit",           en: "Response time"        } },
     ],
     values: [
       {

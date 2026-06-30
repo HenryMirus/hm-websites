@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/hm-labs-logo-v3.png",
-        width: 512,
-        height: 512,
+        width: 1024,
+        height: 1024,
         alt: "HM Labs — KI & Software für KMU",
       },
     ],
@@ -136,6 +136,10 @@ const jsonLd = {
       inLanguage: ["de-DE", "en-US"],
     },
     {
+      // Deliberately German-only: language toggling is client-side state, but this
+      // JSON-LD is rendered in the root layout (no access to searchParams), and
+      // German is the canonical/primary market. Revisit if URL-based locale routing
+      // (e.g. /en) is ever added.
       "@type": "FAQPage",
       mainEntity: [
         {

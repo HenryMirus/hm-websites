@@ -81,7 +81,7 @@ function MockupChatbot({ lang }: { lang: Lang }) {
           <div className="w-6 h-6 rounded-full bg-[#FF4D6A]/20 border border-[#FF4D6A]/30 flex items-center justify-center">
             <span className="text-[8px]">🤖</span>
           </div>
-          <span className="text-[#EEEEFF] font-sans text-[10px] font-semibold">KI-Assistent</span>
+          <span className="text-[#EEEEFF] font-sans text-[10px] font-semibold">{lang === "de" ? "KI-Assistent" : "AI Assistant"}</span>
         </div>
         <div className="flex items-center gap-1">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { notifyClientNewMessage, notifyAdminsNewMessage } from "@/lib/email/notify";
+import { isWebhookAuthorized } from "@/lib/auth/webhookAuth";
 
 // Supabase Webhook Payload — Typ für messages-Tabelle
 interface MessageRecord {
@@ -21,15 +22,8 @@ interface WebhookPayload {
   old_record: MessageRecord | null;
 }
 
-function isAuthorized(request: NextRequest): boolean {
-  const secret = process.env.WEBHOOK_SECRET;
-  if (!secret) return false;
-  const auth = request.headers.get("authorization");
-  return auth === `Bearer ${secret}`;
-}
-
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  if (!isAuthorized(request)) {
+  if (!isWebhookAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
