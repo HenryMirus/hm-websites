@@ -22,7 +22,7 @@ export async function requestPasswordReset(
   if (!exists) {
     return {
       error:
-        `Kein Konto mit dieser E-Mail-Adresse gefunden. Wende Dich an ${EMAIL.CONTACT}.`,
+        `Kein Konto mit dieser E-Mail-Adresse gefunden. Wenden Sie sich an ${EMAIL.CONTACT}.`,
     };
   }
 
@@ -51,7 +51,7 @@ export async function requestPasswordReset(
 
   if (error) {
     if (error.message.toLowerCase().includes("rate limit")) {
-      return { error: "Zu viele Anfragen. Bitte warte einige Minuten und versuche es erneut." };
+      return { error: "Zu viele Anfragen. Bitte warten Sie einige Minuten und versuchen Sie es erneut." };
     }
     return { error: error.message };
   }

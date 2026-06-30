@@ -18,7 +18,7 @@ export default function LoginPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("pw") === "changed") {
-      setSuccessMsg("Passwort erfolgreich geändert. Du kannst Dich jetzt einloggen.");
+      setSuccessMsg("Passwort erfolgreich geändert. Sie können sich jetzt einloggen.");
     }
     if (params.get("error") === "exchange_failed") {
       setError("Der Reset-Link ist abgelaufen oder wurde bereits verwendet. Bitte fordere einen neuen an.");
@@ -89,7 +89,7 @@ export default function LoginPage() {
               </div>
               <h2 className="font-display font-bold text-xl text-text-primary mb-2">E-Mail gesendet!</h2>
               <p className="text-text-dim text-sm">
-                Klicke auf den Link in Deiner E-Mail an{" "}
+                Klicken Sie auf den Link in Ihrer E-Mail an{" "}
                 <span className="text-primary">{email}</span>, um ein neues Passwort zu setzen.
               </p>
               <button
@@ -105,12 +105,12 @@ export default function LoginPage() {
                 Passwort zurücksetzen
               </h1>
               <p className="text-text-dim text-sm mb-6">
-                Gib Deine E-Mail ein — wir schicken Dir einen Reset-Link.
+                Geben Sie Ihre E-Mail ein — wir schicken Ihnen einen Reset-Link.
               </p>
               <form onSubmit={handleForgot} className="space-y-4">
                 <input
                   type="email"
-                  placeholder="deine@email.de"
+                  placeholder="ihre@email.de"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoFocus
@@ -145,7 +145,7 @@ export default function LoginPage() {
                 Anmelden
               </h1>
               <p className="text-text-dim text-sm mb-6">
-                Melde Dich mit Deiner E-Mail und Deinem Passwort an.
+                Melden Sie sich mit Ihrer E-Mail und Ihrem Passwort an.
               </p>
 
               {successMsg && (
@@ -157,7 +157,7 @@ export default function LoginPage() {
               <form onSubmit={handleLogin} className="space-y-4">
                 <input
                   type="email"
-                  placeholder="deine@email.de"
+                  placeholder="ihre@email.de"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoFocus

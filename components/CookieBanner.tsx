@@ -70,7 +70,7 @@ export default function CookieBanner() {
               <div>
                 <p className="text-[#EEEEFF] text-sm font-medium">Diese Website verwendet Cookies</p>
                 <p className="text-[#5A5A7A] text-xs leading-relaxed mt-0.5">
-                  Wir nutzen Cookies, um dir die beste Erfahrung zu bieten. Notwendige Cookies sind immer aktiv.{" "}
+                  Wir nutzen Cookies, um Ihnen die beste Erfahrung zu bieten. Notwendige Cookies sind immer aktiv.{" "}
                   <Link href="/datenschutz" className="underline hover:text-[#4F7FFF] transition-colors">
                     Datenschutzerklärung
                   </Link>
@@ -127,7 +127,7 @@ export default function CookieBanner() {
                   </button>
                 </div>
                 <p className="text-[#5A5A7A] text-xs mt-1 leading-relaxed">
-                  DSGVO-konform · Deine Auswahl wird lokal gespeichert
+                  DSGVO-konform · Ihre Auswahl wird lokal gespeichert
                 </p>
               </div>
 

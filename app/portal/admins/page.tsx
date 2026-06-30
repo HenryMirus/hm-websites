@@ -59,7 +59,7 @@ export default async function AdminsPage() {
                     )}
                     {u.id === currentUser?.id && (
                       <span className="font-mono text-[10px] px-1.5 py-0.5 rounded border bg-primary/10 text-primary border-primary/20">
-                        Du
+                        Sie
                       </span>
                     )}
                   </div>

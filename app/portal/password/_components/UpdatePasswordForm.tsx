@@ -67,7 +67,7 @@ export default function UpdatePasswordForm({ userEmail }: { userEmail: string })
         {[
           "Mindestens 8 Zeichen",
           "Groß- und Kleinbuchstaben empfohlen",
-          "Nach dem Speichern wirst Du auf allen Geräten abgemeldet",
+          "Nach dem Speichern werden Sie auf allen Geräten abgemeldet",
         ].map((hint) => (
           <li key={hint} className="flex items-center gap-2 text-xs text-text-muted">
             <span className="w-1 h-1 rounded-full bg-text-muted/50 shrink-0" />

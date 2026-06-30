@@ -42,7 +42,7 @@ export async function removeAdminAction(userId: string): Promise<AdminFormState>
   // Eigenen Account nicht entfernen
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (user?.id === userId) return { error: "Du kannst Deinen eigenen Account nicht entfernen." };
+  if (user?.id === userId) return { error: "Sie können Ihren eigenen Account nicht entfernen." };
 
   const admin = createAdminClient();
   const { error } = await admin.auth.admin.deleteUser(userId);

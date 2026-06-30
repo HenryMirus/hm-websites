@@ -32,3 +32,6 @@ npm-debug.log*
 
 # Playwright CLI logs
 .playwright-cli/
+
+# Dev-Mode Email-Previews (siehe lib/email/send.ts)
+.dev-emails/

@@ -143,7 +143,7 @@ const jsonLd = {
           name: "Was kostet eine Website?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Eine professionelle Website liegt je nach Umfang zwischen 2.500 und 8.000€ — als Festpreis, nicht Stundensatz. Du weißt vor dem Start genau, was du zahlst.",
+            text: "Eine professionelle Website liegt je nach Umfang zwischen 2.500 und 8.000€ — als Festpreis, nicht Stundensatz. Sie wissen vor dem Start genau, was Sie zahlen.",
           },
         },
         {
@@ -159,7 +159,7 @@ const jsonLd = {
           name: "Brauche ich technisches Vorwissen?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Nein. Ich erkläre alles verständlich und du triffst informierte Entscheidungen. Kein Fachjargon, keine versteckten Komplexitäten.",
+            text: "Nein. Ich erkläre alles verständlich, sodass Sie informierte Entscheidungen treffen können. Kein Fachjargon, keine versteckten Komplexitäten.",
           },
         },
         {
@@ -167,20 +167,20 @@ const jsonLd = {
           name: "Was passiert nach dem Launch?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Ich begleite dich über den Launch hinaus: Hosting, Updates, Monitoring und Optimierungen. Du wirst nie allein gelassen.",
+            text: "Ich begleite Sie über den Launch hinaus: Hosting, Updates, Monitoring und Optimierungen. Sie werden nie allein gelassen.",
           },
         },
         {
           "@type": "Question",
-          name: "Bin ich nach dem Projekt an dich gebunden?",
+          name: "Bin ich nach dem Projekt an Sie gebunden?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Nein. Keine Mindestlaufzeiten, keine Knebelverträge. Du kannst jederzeit wechseln — aber die meisten Kunden bleiben, weil's funktioniert.",
+            text: "Nein. Keine Mindestlaufzeiten, keine Knebelverträge. Sie können jederzeit wechseln — aber die meisten Kunden bleiben, weil es funktioniert.",
           },
         },
         {
           "@type": "Question",
-          name: "Übernimmst du auch Marketing und SEO?",
+          name: "Übernehmen Sie auch Marketing und SEO?",
           acceptedAnswer: {
             "@type": "Answer",
             text: "SEO-Optimierung ist in jede Website eingebaut. Für laufendes Content-Marketing oder Ads empfehle ich spezialisierte Partner — ich konzentriere mich auf das was ich am besten kann.",
@@ -191,7 +191,7 @@ const jsonLd = {
           name: "Kann ich meine bestehende Website behalten?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit dir und empfehle, was wirklich besser ist — nicht was teurer ist.",
+            text: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit Ihnen und empfehle, was wirklich besser ist — nicht was teurer ist.",
           },
         },
         {
@@ -199,7 +199,7 @@ const jsonLd = {
           name: "Wie läuft die Zusammenarbeit ab?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Erstgespräch → Angebot → Umsetzung in 2-Wochen-Sprints → Launch. Du siehst Fortschritte live, bevor alles fertig ist. Direkte Kommunikation, kein Ticket-System.",
+            text: "Erstgespräch → Angebot → Umsetzung in 2-Wochen-Sprints → Launch. Sie sehen Fortschritte live, bevor alles fertig ist. Direkte Kommunikation, kein Ticket-System.",
           },
         },
       ],

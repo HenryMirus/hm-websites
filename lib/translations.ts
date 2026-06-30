@@ -15,7 +15,7 @@ export const t = {
     services: { de: "Leistungen", en: "Services" },
     process: { de: "Ablauf", en: "Process" },
     portfolio: { de: "Projekte", en: "Projects" },
-    about: { de: "Über uns", en: "About" },
+    about: { de: "Über mich", en: "About me" },
     contact: { de: "Kontakt", en: "Contact" },
     cta: { de: "Kostenlos beraten", en: "Free consultation" },
   },
@@ -73,7 +73,7 @@ export const t = {
     tag: { de: "// Service Protocol", en: "// Service Protocol" },
     headline: { de: "Drei Dinge die ich baue", en: "Three things I build" },
     sub: {
-      de: "Kein Template, kein Agentur-Overhead. Du bekommst eine Lösung die auf dein Unternehmen zugeschnitten ist.",
+      de: "Kein Template, kein Agentur-Overhead. Sie erhalten eine Lösung, die auf Ihr Unternehmen zugeschnitten ist.",
       en: "No templates, no agency overhead. You get a solution built specifically for your business.",
     },
     // "Anfragen" / "Inquire" link at the bottom of each service card
@@ -98,14 +98,14 @@ export const t = {
           {
             de: "Mobile-first Design", en: "Mobile-first design",
             tooltip: {
-              de: "Deine Website wird zuerst für Smartphones gebaut — dort surfen 70% aller Nutzer. Auf Desktop läuft sie genauso sauber.",
+              de: "Ihre Website wird zuerst für Smartphones gebaut — dort surfen 70% aller Nutzer. Auf Desktop läuft sie genauso sauber.",
               en: "Your website is built for smartphones first — where 70% of users browse. It works just as cleanly on desktop.",
             },
           },
           {
             de: "SEO & Core Web Vitals", en: "SEO & Core Web Vitals",
             tooltip: {
-              de: "SEO sorgt dafür, dass Google dich bei relevanten Suchen anzeigt. Core Web Vitals misst wie schnell & stabil deine Seite lädt — beides beeinflusst dein Ranking direkt.",
+              de: "SEO sorgt dafür, dass Google Sie bei relevanten Suchen anzeigt. Core Web Vitals misst, wie schnell & stabil Ihre Seite lädt — beides beeinflusst Ihr Ranking direkt.",
               en: "SEO ensures Google shows you for relevant searches. Core Web Vitals measures page speed & stability — both directly affect your ranking.",
             },
           },
@@ -126,7 +126,7 @@ export const t = {
           {
             de: "E-Mail & CRM-Integration", en: "Email & CRM integration",
             tooltip: {
-              de: "CRM = deine digitale Kundenverwaltung (z.B. HubSpot, Salesforce). Die KI verbindet sich damit und pflegt neue Kontakte & Anfragen automatisch ein.",
+              de: "CRM = Ihre digitale Kundenverwaltung (z.B. HubSpot, Salesforce). Die KI verbindet sich damit und pflegt neue Kontakte & Anfragen automatisch ein.",
               en: "CRM = digital customer management (e.g. HubSpot, Salesforce). The AI connects to it and automatically logs new contacts & inquiries.",
             },
           },
@@ -140,7 +140,7 @@ export const t = {
         tag: { de: "SVC_03", en: "SVC_03" },
         title: { de: "Software & SaaS", en: "Software & SaaS" },
         desc: {
-          de: "Repetitive Arbeit in Software auslagern. Ich entwickle maßgeschneiderte Web-Apps, die genau das tun, was dein Unternehmen braucht — und mit dir skalieren.",
+          de: "Repetitive Arbeit in Software auslagern. Ich entwickle maßgeschneiderte Web-Apps, die genau das tun, was Ihr Unternehmen braucht — und mit Ihnen skalieren.",
           en: "Offload repetitive work into software. I develop custom web apps that do exactly what your business needs — and scale with you.",
         },
         features: [
@@ -148,21 +148,21 @@ export const t = {
           {
             de: "Interne Prozess-Apps", en: "Internal process apps",
             tooltip: {
-              de: "Software nur für dein Team — z.B. für Bestellverwaltung, interne Abläufe oder alles was ihr bisher per Excel oder auf Papier erledigt.",
+              de: "Software nur für Ihr Team — z.B. für Bestellverwaltung, interne Abläufe oder alles, was bisher per Excel oder auf Papier erledigt wird.",
               en: "Software only your team uses — e.g. for order management, internal workflows, or anything currently done via Excel or paper.",
             },
           },
           {
             de: "Kundenfacing-SaaS", en: "Customer-facing SaaS",
             tooltip: {
-              de: "Eine Web-App, die deine Kunden direkt nutzen — z.B. ein Buchungsportal, ein Tracking-Tool oder ein Self-Service-Bereich für Bestellungen.",
+              de: "Eine Web-App, die Ihre Kunden direkt nutzen — z.B. ein Buchungsportal, ein Tracking-Tool oder ein Self-Service-Bereich für Bestellungen.",
               en: "A web app your customers use directly — e.g. a booking portal, tracking tool, or self-service area for orders.",
             },
           },
           {
             de: "API-Integrationen", en: "API integrations",
             tooltip: {
-              de: "APIs sind digitale Verbindungen zwischen Programmen. Damit verbinden wir deine App mit Buchhaltungs-Software, Zahlungsanbietern oder Logistik-Tools.",
+              de: "APIs sind digitale Verbindungen zwischen Programmen. Damit verbinden wir Ihre App mit Buchhaltungs-Software, Zahlungsanbietern oder Logistik-Tools.",
               en: "APIs are digital connectors between programs. They link your app to accounting software, payment providers, or logistics tools.",
             },
           },
@@ -177,7 +177,7 @@ export const t = {
   // Section tag, headline, three numbered steps, and the bottom CTA button.
   process: {
     tag: { de: "// Build Protocol", en: "// Build Protocol" },
-    headline: { de: "So läuft's ab — in Wochen, nicht Monaten", en: "How it works — in weeks, not months" },
+    headline: { de: "So läuft es ab — in Wochen, nicht Monaten", en: "How it works — in weeks, not months" },
     // Bottom CTA button that opens the project wizard
     projectCta: { de: "Jetzt Projekt anfragen →", en: "Start your project →" },
     steps: [
@@ -185,7 +185,7 @@ export const t = {
         num: "01",
         title: { de: "Kostenlose Analyse", en: "Free analysis" },
         desc: {
-          de: "Ich verstehe dein Unternehmen, deine Kunden und deine größten Wachstumshebel. Keine Verpflichtung, keine Agentur-Phrasen.",
+          de: "Ich verstehe Ihr Unternehmen, Ihre Kunden und Ihre größten Wachstumshebel. Keine Verpflichtung, keine Agentur-Phrasen.",
           en: "I understand your business, your clients, and your biggest growth levers. No commitment, no agency jargon.",
         },
         duration: { de: "30 Min.", en: "30 min." },
@@ -194,7 +194,7 @@ export const t = {
         num: "02",
         title: { de: "Umsetzung", en: "Implementation" },
         desc: {
-          de: "Design, Entwicklung und KI-Integration in einem agilen Prozess. Du siehst Fortschritte, bevor ich fertig bin.",
+          de: "Design, Entwicklung und KI-Integration in einem agilen Prozess. Sie sehen Fortschritte, bevor ich fertig bin.",
           en: "Design, development, and AI integration in one agile process. You see progress before I'm done.",
         },
         duration: { de: "1–4 Wochen", en: "1–4 weeks" },
@@ -315,9 +315,9 @@ export const t = {
   // Mid-page call-to-action block with headline, sub, two action buttons.
   cta: {
     tag: { de: "// Get Started", en: "// Get Started" },
-    headline: { de: "Klingt das nach dem was du brauchst?", en: "Does this sound like what you need?" },
+    headline: { de: "Klingt das nach dem, was Sie brauchen?", en: "Does this sound like what you need?" },
     sub: {
-      de: "30 Minuten reichen um herauszufinden ob ich zu dir passe. Kein Pitch, kein Druck.",
+      de: "30 Minuten reichen aus, um herauszufinden, ob ich zu Ihnen passe. Kein Pitch, kein Druck.",
       en: "30 minutes is enough to find out if I'm the right fit for you. No pitch, no pressure.",
     },
     cta1: { de: "Jetzt unverbindlich beraten lassen", en: "Book a free call" },
@@ -346,16 +346,16 @@ export const t = {
     // UI chrome inside the content card
     mockup: {
       livePreview: { de: "Live-Vorschau", en: "Live preview" },
-      yourModule: { de: "Dein Modul", en: "Your module" },
+      yourModule: { de: "Ihr Modul", en: "Your module" },
       problem: { de: "Problem", en: "Problem" },
     },
     // The six stage entries — matches STAGE_META order in LifecycleSection.tsx
     stages: [
       {
         name: { de: "Sichtbarkeit", en: "Visibility" },
-        problemHeadline: { de: "Du wirst nicht gefunden.", en: "You're not being found." },
+        problemHeadline: { de: "Sie werden nicht gefunden.", en: "You're not being found." },
         problemDesc: {
-          de: "Konkurrenten ranken oben, deine Website wirkt veraltet — Interessenten springen ab, bevor sie anrufen.",
+          de: "Konkurrenten ranken oben, Ihre Website wirkt veraltet — Interessenten springen ab, bevor sie anrufen.",
           en: "Competitors rank above you, your website looks outdated — prospects bounce before they call.",
         },
         module: { de: "High-Converting Website", en: "High-Converting Website" },
@@ -369,7 +369,7 @@ export const t = {
         name: { de: "Erstanfrage", en: "First Inquiry" },
         problemHeadline: { de: "Besucher kommen — und gehen.", en: "Visitors come — and leave." },
         problemDesc: {
-          de: "Kein Chatbot, kein klares CTA. Interessenten gehen zur Konkurrenz, du erfährst es Tage später.",
+          de: "Kein Chatbot, kein klares CTA. Interessenten gehen zur Konkurrenz, Sie erfahren es Tage später.",
           en: "No chatbot, no clear CTA. Prospects go to competitors, you find out days later.",
         },
         module: { de: "KI-Chatbot & Lead-System", en: "AI Chatbot & Lead System" },
@@ -402,7 +402,7 @@ export const t = {
         },
         module: { de: "KI-Angebotsgenerator", en: "AI Quote Generator" },
         moduleDesc: {
-          de: "Von der Kundenanfrage zum fertigen Angebot in unter 2 Minuten — mit deinen Preisen und deinem Layout.",
+          de: "Von der Kundenanfrage zum fertigen Angebot in unter 2 Minuten — mit Ihren Preisen und Ihrem Layout.",
           en: "From customer inquiry to finished quote in under 2 minutes — with your prices and your layout.",
         },
         metric: { de: "30 Min → 2 Min", en: "30 min → 2 min" },
@@ -430,7 +430,7 @@ export const t = {
         },
         module: { de: "Wiederkehr-Automatisierung", en: "Recurrence Automation" },
         moduleDesc: {
-          de: "Automatische Follow-up-Sequenzen, Kundenpflege und Upsell-Kampagnen — dein stilles Verkaufsteam.",
+          de: "Automatische Follow-up-Sequenzen, Kundenpflege und Upsell-Kampagnen — Ihr stilles Verkaufsteam.",
           en: "Automatic follow-up sequences, client retention, and upsell campaigns — your silent sales team.",
         },
         metric: { de: "Mehr Folgeaufträge", en: "More repeat orders" },
@@ -454,7 +454,7 @@ export const t = {
       },
       {
         name: { de: "Backend & Daten", en: "Backend & Data" },
-        tools: ["Supabase", "PostgreSQL", "pgvector", "Drizzle ORM", "Stripe", "Resend"],
+        tools: ["Supabase", "PostgreSQL", "pgvector", "Drizzle ORM", "Stripe", "Resend", "Nodemailer"],
       },
       {
         name: { de: "KI & Agenten", en: "AI & Agents" },
@@ -470,7 +470,7 @@ export const t = {
       },
       {
         name: { de: "Analytics & CMS", en: "Analytics & CMS" },
-        tools: ["Posthog", "Plausible", "Sanity.io", "Google Tag Manager"],
+        tools: ["Posthog", "Plausible", "Sanity.io", "Google Analytics 4", "Google Ads", "Meta Pixel", "LinkedIn Insight Tag"],
       },
     ],
   },
@@ -482,7 +482,7 @@ export const t = {
     tag: { de: "// About Henry", en: "// About Henry" },
     headline: { de: "Kein Agentur-Overhead — direkt mit dem Entwickler", en: "No agency overhead — directly with the developer" },
     sub: {
-      de: "Ich bin Henry. Ich baue Websites und KI-Tools für KMUs — ohne Zwischenhändler, ohne versteckte Kosten. Du redest direkt mit mir, von der ersten Idee bis zum Go-live.",
+      de: "Ich bin Henry. Ich baue Websites und KI-Tools für KMUs — ohne Zwischenhändler, ohne versteckte Kosten. Sie sprechen direkt mit mir, von der ersten Idee bis zum Go-live.",
       en: "I'm Henry. I build websites and AI tools for SMBs — no middlemen, no hidden costs. You talk directly to me, from first idea to go-live.",
     },
     // Author card inside the section
@@ -501,23 +501,23 @@ export const t = {
     ],
     values: [
       {
-        title: { de: "Du redest direkt mit mir", en: "You talk directly to me" },
+        title: { de: "Sie sprechen direkt mit mir", en: "You talk directly to me" },
         desc: {
-          de: "Kein Projektmanager dazwischen, kein Team das Infos verdünnt. Was du sagst, kommt genau so bei mir an.",
+          de: "Kein Projektmanager dazwischen, kein Team, das Infos verdünnt. Was Sie sagen, kommt genau so bei mir an.",
           en: "No project manager in between, no team diluting information. What you say reaches me exactly as stated.",
         },
       },
       {
         title: { de: "Keine Templates", en: "No templates" },
         desc: {
-          de: "Jede Lösung bau ich von Grund auf für dich. Nicht Copy-Paste, nicht angepasst — neu gedacht.",
+          de: "Jede Lösung baue ich von Grund auf für Sie. Nicht Copy-Paste, nicht angepasst — neu gedacht.",
           en: "Every solution I build from scratch for you. Not copy-paste, not adapted — rethought.",
         },
       },
       {
         title: { de: "Festpreis, kein Stundensatz", en: "Fixed price, no hourly rate" },
         desc: {
-          de: "Du weißt vorher was es kostet. Kein Ticketsystem, keine bösen Überraschungen.",
+          de: "Sie wissen vorher, was es kostet. Kein Ticketsystem, keine bösen Überraschungen.",
           en: "You know the cost upfront. No ticket system, no nasty surprises.",
         },
       },
@@ -530,10 +530,10 @@ export const t = {
   // form.sending is shown while the API call is in-flight.
   contact: {
     tag: { de: "// Contact", en: "// Contact" },
-    headline: { de: "Lass uns reden", en: "Let's talk" },
+    headline: { de: "Lassen Sie uns sprechen", en: "Let's talk" },
     sub: {
-      de: "Schreib mir kurz was dich beschäftigt — ich melde mich innerhalb von 24 Stunden mit einem konkreten nächsten Schritt.",
-      en: "Drop me a quick message about what's on your mind — I'll get back to you within 24 hours with a concrete next step.",
+      de: "Schreiben Sie mir kurz, was Sie beschäftigt — ich melde mich innerhalb von 24 Stunden mit einem konkreten nächsten Schritt.",
+      en: "Send me a brief message about your situation — I'll get back to you within 24 hours with a concrete next step.",
     },
     form: {
       name: { de: "Name", en: "Name" },
@@ -572,11 +572,11 @@ export const t = {
   faq: {
     tag: { de: "// FAQ", en: "// FAQ" },
     headline: { de: "Häufige Fragen", en: "Frequently Asked Questions" },
-    sub: { de: "Alles, was du wissen musst — bevor ich mich melde.", en: "Everything you need to know — before I get in touch." },
+    sub: { de: "Alles, was Sie wissen müssen — bevor ich mich melde.", en: "Everything you need to know — before I get in touch." },
     items: [
       {
         q: { de: "Was kostet eine Website?", en: "How much does a website cost?" },
-        a: { de: "Eine professionelle Website liegt je nach Umfang zwischen 2.500 und 8.000€ — als Festpreis, nicht Stundensatz. Du weißt vor dem Start genau, was du zahlst.", en: "A professional website costs between €2,500 and €8,000 depending on scope — as a fixed price, not hourly. You know exactly what you pay before we start." },
+        a: { de: "Eine professionelle Website liegt je nach Umfang zwischen 2.500 und 8.000€ — als Festpreis, nicht Stundensatz. Sie wissen vor dem Start genau, was Sie zahlen.", en: "A professional website costs between €2,500 and €8,000 depending on scope — as a fixed price, not hourly. You know exactly what you pay before we start." },
       },
       {
         q: { de: "Wie lange dauert ein Projekt?", en: "How long does a project take?" },
@@ -584,26 +584,26 @@ export const t = {
       },
       {
         q: { de: "Brauche ich technisches Vorwissen?", en: "Do I need technical knowledge?" },
-        a: { de: "Nein. Ich erkläre alles verständlich und du triffst informierte Entscheidungen. Kein Fachjargon, keine versteckten Komplexitäten.", en: "No. I explain everything clearly so you can make informed decisions. No jargon, no hidden complexity." },
+        a: { de: "Nein. Ich erkläre alles verständlich, sodass Sie informierte Entscheidungen treffen können. Kein Fachjargon, keine versteckten Komplexitäten.", en: "No. I explain everything clearly so you can make informed decisions. No jargon, no hidden complexity." },
       },
       {
         q: { de: "Was passiert nach dem Launch?", en: "What happens after launch?" },
-        a: { de: "Ich begleite dich über den Launch hinaus: Hosting, Updates, Monitoring und Optimierungen. Du wirst nie allein gelassen.", en: "I support you beyond launch: hosting, updates, monitoring and optimizations. You'll never be left alone." },
+        a: { de: "Ich begleite Sie über den Launch hinaus: Hosting, Updates, Monitoring und Optimierungen. Sie werden nie allein gelassen.", en: "I support you beyond launch: hosting, updates, monitoring and optimizations. You'll never be left alone." },
       },
       {
         q: { de: "Kann ich meine bestehende Website behalten?", en: "Can I keep my existing website?" },
-        a: { de: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit dir und empfehle, was wirklich besser ist — nicht was teurer ist.", en: "Often starting fresh makes more sense. I analyze this together with you and recommend what's actually better — not what's more expensive." },
+        a: { de: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit Ihnen und empfehle, was wirklich besser ist — nicht was teurer ist.", en: "Often starting fresh makes more sense. I analyze this together with you and recommend what's actually better — not what's more expensive." },
       },
       {
-        q: { de: "Bin ich nach dem Projekt an dich gebunden?", en: "Am I locked in after the project?" },
-        a: { de: "Nein. Keine Mindestlaufzeiten, keine Knebelverträge. Du kannst jederzeit wechseln — aber die meisten Kunden bleiben, weil's funktioniert.", en: "No. No minimum terms, no lock-in contracts. You can switch at any time — but most clients stay because it works." },
+        q: { de: "Bin ich nach dem Projekt an Sie gebunden?", en: "Am I locked in after the project?" },
+        a: { de: "Nein. Keine Mindestlaufzeiten, keine Knebelverträge. Sie können jederzeit wechseln — aber die meisten Kunden bleiben, weil es funktioniert.", en: "No. No minimum terms, no lock-in contracts. You can switch at any time — but most clients stay because it works." },
       },
       {
         q: { de: "Wie läuft die Zusammenarbeit ab?", en: "How does the collaboration work?" },
-        a: { de: "Erstgespräch → Angebot → Umsetzung in 2-Wochen-Sprints → Launch. Du siehst Fortschritte live, bevor alles fertig ist. Direkte Kommunikation, kein Ticket-System.", en: "Initial call → quote → 2-week sprints → launch. You see live progress before everything is done. Direct communication, no ticket system." },
+        a: { de: "Erstgespräch → Angebot → Umsetzung in 2-Wochen-Sprints → Launch. Sie sehen Fortschritte live, bevor alles fertig ist. Direkte Kommunikation, kein Ticket-System.", en: "Initial call → quote → 2-week sprints → launch. You see live progress before everything is done. Direct communication, no ticket system." },
       },
       {
-        q: { de: "Übernimmst du auch Marketing und SEO?", en: "Do you also handle marketing and SEO?" },
+        q: { de: "Übernehmen Sie auch Marketing und SEO?", en: "Do you also handle marketing and SEO?" },
         a: { de: "SEO-Optimierung ist in jede Website eingebaut. Für laufendes Content-Marketing oder Ads empfehle ich spezialisierte Partner — ich konzentriere mich auf das was ich am besten kann.", en: "SEO optimization is built into every website. For ongoing content marketing or ads I recommend specialized partners — I focus on what I do best." },
       },
     ],
@@ -612,9 +612,9 @@ export const t = {
   // ─── Newsletter Section ───────────────────────────────────────────────────────
   newsletter: {
     tag: { de: "// Newsletter", en: "// Newsletter" },
-    headline: { de: "KI für dein Business — jede Woche konkret", en: "AI for your business — every week" },
-    sub: { de: "Cases, Tools und Prompts — direkt in dein Postfach. Kein Spam. Jederzeit abmelden.", en: "Cases, tools and prompts — straight to your inbox. No spam. Unsubscribe anytime." },
-    placeholder: { de: "deine@email.de", en: "your@email.com" },
+    headline: { de: "KI für Ihr Business — jede Woche konkret", en: "AI for your business — every week" },
+    sub: { de: "Cases, Tools und Prompts — direkt in Ihr Postfach. Kein Spam. Jederzeit abmelden.", en: "Cases, tools and prompts — straight to your inbox. No spam. Unsubscribe anytime." },
+    placeholder: { de: "ihre@email.de", en: "your@email.com" },
     cta: { de: "Anmelden →", en: "Subscribe →" },
     note: { de: "DSGVO-konform · Jederzeit abmeldbar", en: "GDPR-compliant · Unsubscribe anytime" },
   },
@@ -626,7 +626,7 @@ export const t = {
   // restart / tryAgain: reset buttons shown during and after the quiz.
   readinessCheck: {
     tag: { de: "// Kostenloser Check", en: "// Free Check" },
-    headline: { de: "Wie digital-ready ist dein Unternehmen?", en: "How digital-ready is your business?" },
+    headline: { de: "Wie digital-ready ist Ihr Unternehmen?", en: "How digital-ready is your business?" },
     sub: { de: "5 Fragen. 2 Minuten. Sofortiges Ergebnis.", en: "5 questions. 2 minutes. Instant result." },
     // Three benefit bullets on the left panel
     features: [
@@ -638,7 +638,7 @@ export const t = {
     introLabel: { de: "5 FRAGEN · 2 MINUTEN", en: "5 QUESTIONS · 2 MINUTES" },
     introTitle: { de: "Bereit loszulegen?", en: "Ready to start?" },
     introDesc: {
-      de: "Beantworte 5 kurze Fragen und finde heraus wie gut dein Unternehmen für die KI-Ära aufgestellt ist.",
+      de: "Beantworten Sie 5 kurze Fragen und finden Sie heraus, wie gut Ihr Unternehmen für die KI-Ära aufgestellt ist.",
       en: "Answer 5 quick questions and find out how well your business is positioned for the AI era.",
     },
     startBtn:  { de: "Check starten",    en: "Start check"   },
@@ -646,7 +646,7 @@ export const t = {
     tryAgain:  { de: "Nochmal versuchen", en: "Try again"    },
     questions: [
       {
-        q: { de: "Wie beantwortest du Kundenanfragen heute?", en: "How do you handle customer inquiries today?" },
+        q: { de: "Wie beantworten Sie Kundenanfragen heute?", en: "How do you handle customer inquiries today?" },
         options: [
           { label: { de: "Alles manuell per Telefon/E-Mail", en: "All manual via phone/email" }, score: 0 },
           { label: { de: "Teilweise mit Formularen oder Templates", en: "Partly with forms or templates" }, score: 1 },
@@ -654,7 +654,7 @@ export const t = {
         ],
       },
       {
-        q: { de: "Wie viel Zeit verbringt dein Team täglich mit Routineaufgaben?", en: "How much time does your team spend on routine tasks daily?" },
+        q: { de: "Wie viel Zeit verbringt Ihr Team täglich mit Routineaufgaben?", en: "How much time does your team spend on routine tasks daily?" },
         options: [
           { label: { de: "Mehr als 3 Stunden", en: "More than 3 hours" }, score: 0 },
           { label: { de: "1–3 Stunden", en: "1–3 hours" }, score: 1 },
@@ -662,7 +662,7 @@ export const t = {
         ],
       },
       {
-        q: { de: "Wie aktuell und mobiloptimiert ist deine Website?", en: "How current and mobile-optimized is your website?" },
+        q: { de: "Wie aktuell und mobiloptimiert ist Ihre Website?", en: "How current and mobile-optimized is your website?" },
         options: [
           { label: { de: "Veraltet oder keine Website", en: "Outdated or no website" }, score: 0 },
           { label: { de: "Vorhanden aber nicht optimal", en: "Exists but not optimal" }, score: 1 },
@@ -670,7 +670,7 @@ export const t = {
         ],
       },
       {
-        q: { de: "Nutzt du KI-Tools in deinem Arbeitsalltag?", en: "Do you use AI tools in your daily work?" },
+        q: { de: "Nutzen Sie KI-Tools in Ihrem Arbeitsalltag?", en: "Do you use AI tools in your daily work?" },
         options: [
           { label: { de: "Noch gar nicht", en: "Not yet" }, score: 0 },
           { label: { de: "Gelegentlich (ChatGPT etc.)", en: "Occasionally (ChatGPT etc.)" }, score: 1 },
@@ -678,7 +678,7 @@ export const t = {
         ],
       },
       {
-        q: { de: "Wie hoch ist dein Aufwand für Verwaltung & Kommunikation pro Monat?", en: "How much time do you spend on admin & communication monthly?" },
+        q: { de: "Wie hoch ist Ihr Aufwand für Verwaltung & Kommunikation pro Monat?", en: "How much time do you spend on admin & communication monthly?" },
         options: [
           { label: { de: "Mehr als 20 Stunden", en: "More than 20 hours" }, score: 0 },
           { label: { de: "10–20 Stunden", en: "10–20 hours" }, score: 1 },
@@ -690,22 +690,22 @@ export const t = {
       {
         min: 0, max: 3,
         level: { de: "Starter", en: "Starter" },
-        title: { de: "Du lässt viel Potenzial liegen", en: "You're leaving a lot of potential on the table" },
-        desc: { de: "Die gute Nachricht: Kleine Änderungen hätten sofort große Wirkung. Ich zeige dir wo du ansetzen solltest.", en: "The good news: small changes would have immediate big impact. I'll show you exactly where to start." },
+        title: { de: "Sie lassen viel Potenzial liegen", en: "You're leaving a lot of potential on the table" },
+        desc: { de: "Die gute Nachricht: Kleine Änderungen hätten sofort große Wirkung. Ich zeige Ihnen, wo Sie ansetzen sollten.", en: "The good news: small changes would have immediate big impact. I'll show you exactly where to start." },
         color: "#FF4D6A",
       },
       {
         min: 4, max: 7,
         level: { de: "Growing", en: "Growing" },
-        title: { de: "Du bist auf dem richtigen Weg", en: "You're on the right track" },
-        desc: { de: "Du hast erste Schritte gemacht. Mit gezielten KI-Integrationen kannst du jetzt deutlich schneller skalieren.", en: "You've already taken first steps. With targeted AI integrations you can now scale much faster." },
+        title: { de: "Sie sind auf dem richtigen Weg", en: "You're on the right track" },
+        desc: { de: "Sie haben erste Schritte gemacht. Mit gezielten KI-Integrationen können Sie jetzt deutlich schneller skalieren.", en: "You've already taken first steps. With targeted AI integrations you can now scale much faster." },
         color: "#F59E0B",
       },
       {
         min: 8, max: 10,
         level: { de: "Ready", en: "Ready" },
-        title: { de: "Du bist bereit für den nächsten Level", en: "You're ready for the next level" },
-        desc: { de: "Deine Basis ist stark. Jetzt geht's darum, KI strategisch einzusetzen und echte Wettbewerbsvorteile aufzubauen.", en: "Your foundation is strong. Now it's about strategically deploying AI and building real competitive advantages." },
+        title: { de: "Sie sind bereit für den nächsten Level", en: "You're ready for the next level" },
+        desc: { de: "Ihre Basis ist stark. Jetzt geht es darum, KI strategisch einzusetzen und echte Wettbewerbsvorteile aufzubauen.", en: "Your foundation is strong. Now it's about strategically deploying AI and building real competitive advantages." },
         color: "#10B981",
       },
     ],
@@ -717,7 +717,7 @@ export const t = {
   // Words wrapped in **double asterisks** are highlighted in primary color.
   scrollReveal: {
     text: {
-      de: "Ich baue nicht nur schöne Websites. Ich baue **Systeme** — die neue **Kunden** anziehen, Anfragen **automatisch** bearbeiten und deinen **Umsatz** steigern. Während du schläfst.",
+      de: "Ich baue nicht nur schöne Websites. Ich baue **Systeme** — die neue **Kunden** anziehen, Anfragen **automatisch** bearbeiten und Ihren **Umsatz** steigern. Während Sie schlafen.",
       en: "I don't just build pretty websites. I build **systems** — that attract new **clients**, handle inquiries **automatically**, and grow your **revenue**. While you sleep.",
     },
   },

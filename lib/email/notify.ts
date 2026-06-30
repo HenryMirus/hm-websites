@@ -44,7 +44,14 @@ function emailShell({
   <!-- Logo -->
   <tr><td align="center" style="padding-bottom:36px;">
     <a href="https://hm-labs.de" target="_blank" style="text-decoration:none;">
-      <img src="https://hm-labs.de/hm-labs-logo-v3.png" alt="HM Labs" width="130" style="display:block;border:0;"/>
+      <table cellpadding="0" cellspacing="0" border="0" align="center"><tr>
+        <td style="vertical-align:middle;padding-right:10px;">
+          <img src="cid:hm-labs-logo" alt="HM Labs" width="36" height="36" style="display:block;border:0;border-radius:8px;"/>
+        </td>
+        <td style="vertical-align:middle;font-family:${FONT};font-size:19px;font-weight:700;color:#EEEEFF;letter-spacing:-0.3px;">
+          HM&nbsp;<span style="color:#4F7FFF;">Labs</span>
+        </td>
+      </tr></table>
     </a>
   </td></tr>
 
@@ -121,8 +128,8 @@ export async function notifyClientNewMessage(
 
   const body = `
     <p style="margin:0 0 20px;font-size:15px;color:#8888AA;line-height:1.7;">
-      Du hast eine neue Nachricht von <strong style="color:#EEEEFF;">HM Labs</strong> erhalten.
-      Melde dich im Portal an, um sie zu lesen und zu antworten.
+      Sie haben eine neue Nachricht von <strong style="color:#EEEEFF;">HM Labs</strong> erhalten.
+      Melden Sie sich im Portal an, um sie zu lesen und zu antworten.
     </p>
     <!-- Preview box -->
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
@@ -133,7 +140,7 @@ export async function notifyClientNewMessage(
   `;
 
   const html = emailShell({
-    preheader: "Du hast eine neue Nachricht von HM Labs erhalten.",
+    preheader: "Sie haben eine neue Nachricht von HM Labs erhalten.",
     accentGradient: "linear-gradient(90deg,#4F7FFF 0%,#7B9FFF 100%)",
     iconChar: "&#x2709;",
     iconBg: "rgba(79,127,255,0.10)",
@@ -211,7 +218,7 @@ export async function notifyClientMilestoneReached(
 
   const body = `
     <p style="margin:0 0 20px;font-size:15px;color:#8888AA;line-height:1.7;">
-      Hey ${safeName}, wir haben gerade einen wichtigen Schritt in deinem Projekt abgeschlossen!
+      Hallo ${safeName}, wir haben gerade einen wichtigen Schritt in Ihrem Projekt abgeschlossen!
     </p>
     <!-- Milestone box -->
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
@@ -228,7 +235,7 @@ export async function notifyClientMilestoneReached(
       </td></tr>
     </table>
     <p style="margin:0 0 28px;font-size:14px;color:#8888AA;line-height:1.7;">
-      Im Portal siehst du den aktuellen Stand aller Meilensteine und Aufgaben.
+      Im Portal sehen Sie den aktuellen Stand aller Meilensteine und Aufgaben.
     </p>
   `;
 

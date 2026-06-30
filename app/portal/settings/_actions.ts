@@ -41,12 +41,12 @@ export async function changeEmailAction(
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Nicht angemeldet." };
-  if (email === user.email) return { error: "Das ist bereits deine aktuelle E-Mail-Adresse." };
+  if (email === user.email) return { error: "Das ist bereits Ihre aktuelle E-Mail-Adresse." };
 
   const { error } = await supabase.auth.updateUser({ email });
   if (error) return { error: error.message };
 
-  return { success: "Bestätigungs-E-Mail wurde gesendet. Bitte prüfe dein Postfach und klicke den Link." };
+  return { success: "Bestätigungs-E-Mail wurde gesendet. Bitte prüfen Sie Ihr Postfach und klicken Sie den Link." };
 }
 
 export async function changePasswordAction(
