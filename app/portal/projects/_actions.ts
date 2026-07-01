@@ -5,7 +5,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/auth/getRole";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { notifyClientMilestoneReached } from "@/lib/email/notify";
+import { dispatchEvent } from "@/lib/automations/engine";
 
 export type ProjectFormState = { error?: string };
 
@@ -131,7 +131,7 @@ export async function updateMilestoneStatusAction(
   const admin = createAdminClient();
   await admin.from("project_milestones").update({ status }).eq("id", id);
 
-  // E-Mail Fallback wenn keine Supabase-Webhooks konfiguriert
+  // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
   if (status === "completed" && !process.env.NOTIFY_VIA_WEBHOOK) {
     try {
       const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
@@ -142,22 +142,22 @@ export async function updateMilestoneStatusAction(
         .single();
       const { data: project } = await admin
         .from("projects")
-        .select("title, clients(name, email)")
+        .select("id, title, status, clients(id, name, email)")
         .eq("id", projectId)
         .single();
 
       const client = (project as any)?.clients;
-      if (ms && project && client?.email) {
-        await notifyClientMilestoneReached(
-          client.email,
-          client.name ?? "Kunde",
-          project.title,
-          ms.title,
-          `${portalBase}/projects/${projectId}`
-        );
+      if (ms && project && client?.id) {
+        await dispatchEvent("milestone.completed", {}, {
+          portalUrl: portalBase,
+          client: { id: client.id, name: client.name ?? "Kunde", email: client.email },
+          project: { id: (project as any).id, title: project.title, status: (project as any).status },
+          milestone: { id, title: ms.title },
+          vars: { project_url: `${portalBase}/projects/${projectId}` },
+        });
       }
     } catch (e) {
-      console.error("[Email] notifyClientMilestoneReached:", e);
+      console.error("[Automation] milestone.completed:", e);
     }
   }
 

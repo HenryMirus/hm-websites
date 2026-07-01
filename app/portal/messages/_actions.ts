@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getUserRole } from "@/lib/auth/getRole";
 import { revalidatePath } from "next/cache";
-import { notifyClientNewMessage, notifyAdminsNewMessage } from "@/lib/email/notify";
+import { dispatchEvent } from "@/lib/automations/engine";
 
 export type MessageFormState = { error?: string };
 
@@ -33,19 +33,24 @@ export async function sendMessageAction(
 
     if (error) return { error: error.message };
 
-    // E-Mail an Kunden (Fallback wenn keine Supabase-Webhooks konfiguriert)
+    // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
     if (!process.env.NOTIFY_VIA_WEBHOOK) {
       try {
-        const { data: client } = await admin.from("clients").select("email, name").eq("id", client_id).single();
+        const { data: client } = await admin.from("clients").select("id, email, name").eq("id", client_id).single();
         if (client) {
-          await notifyClientNewMessage(
-            client.email,
-            content.slice(0, 200),
-            `${portalUrl}/messages`
+          await dispatchEvent(
+            "message.created",
+            { sender_role: "admin" },
+            {
+              portalUrl,
+              client: { id: client.id, name: client.name ?? "Kunde", email: client.email },
+              message: { content: content.slice(0, 200), sender_role: "admin" },
+              vars: {},
+            }
           );
         }
       } catch (e) {
-        console.error("[Email] notifyClientNewMessage:", e);
+        console.error("[Automation] message.created (admin):", e);
       }
     }
 
@@ -68,28 +73,21 @@ export async function sendMessageAction(
 
     if (error) return { error: error.message };
 
-    // E-Mail an alle Admins (Fallback wenn keine Supabase-Webhooks konfiguriert)
+    // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
     if (!process.env.NOTIFY_VIA_WEBHOOK) {
       try {
-        const adminClient = createAdminClient();
-        const { data: profiles } = await adminClient
-          .from("profiles")
-          .select("id")
-          .eq("role", "admin");
-
-        if (profiles && profiles.length > 0) {
-          const adminIds = profiles.map((p) => p.id);
-          const { data: { users } } = await adminClient.auth.admin.listUsers({ perPage: 200 });
-          const adminEmails = users
-            .filter((u) => adminIds.includes(u.id) && u.email)
-            .map((u) => u.email as string);
-
-          if (adminEmails.length > 0) {
-            await notifyAdminsNewMessage(adminEmails, clientRecord.name, content.slice(0, 200));
+        await dispatchEvent(
+          "message.created",
+          { sender_role: "client" },
+          {
+            portalUrl,
+            client: { id: clientRecord.id, name: clientRecord.name ?? "Kunde", email: null },
+            message: { content: content.slice(0, 200), sender_role: "client" },
+            vars: {},
           }
-        }
+        );
       } catch (e) {
-        console.error("[Email] notifyAdminsNewMessage:", e);
+        console.error("[Automation] message.created (client):", e);
       }
     }
 

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { notifyClientMilestoneReached } from "@/lib/email/notify";
 import { isWebhookAuthorized } from "@/lib/auth/webhookAuth";
+import { dispatchEvent } from "@/lib/automations/engine";
+import type { RunContext } from "@/lib/automations/types";
 
 interface MilestoneRecord {
   id: string;
@@ -50,26 +51,27 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { data: project } = await admin
       .from("projects")
-      .select("title, clients(name, email)")
+      .select("id, title, status, clients(id, name, email)")
       .eq("id", record.project_id)
       .single();
 
     const client = (project as any)?.clients;
-    if (!project || !client?.email) {
-      return NextResponse.json({ ok: true, skipped: true, reason: "no client email" });
+    if (!project || !client?.id) {
+      return NextResponse.json({ ok: true, skipped: true, reason: "no client" });
     }
 
-    await notifyClientMilestoneReached(
-      client.email,
-      client.name ?? "Kunde",
-      project.title,
-      record.title,
-      `${portalBase}/projects/${record.project_id}`
-    );
+    const ctx: RunContext = {
+      portalUrl: portalBase,
+      client: { id: client.id, name: client.name ?? "Kunde", email: client.email },
+      project: { id: project.id, title: project.title, status: project.status },
+      milestone: { id: record.id, title: record.title },
+      vars: { project_url: `${portalBase}/projects/${record.project_id}` },
+    };
+
+    const { fired } = await dispatchEvent("milestone.completed", {}, ctx);
+    return NextResponse.json({ ok: true, fired });
   } catch (e) {
     console.error("[Webhook] milestone-completed:", e);
-    return NextResponse.json({ error: "Email send failed" }, { status: 500 });
+    return NextResponse.json({ error: "Automation run failed" }, { status: 500 });
   }
-
-  return NextResponse.json({ ok: true });
 }

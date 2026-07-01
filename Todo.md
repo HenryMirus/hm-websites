@@ -24,10 +24,6 @@ Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-anal
   - `lib/email/notify.ts` implementieren mit Resend SDK (`npm install resend`)
   - Aktuell: Nur Console-Logs als Platzhalter
 - [ ] **Workflows und Hooks (Admin-Only)**
-  - Sobald ein Meilenstein erreicht ist, soll der Kunde per email und chat-nachricht automatisch benachrichtigt werden.
-  - Sobald eine Nachricht gesendet wurde soll die andere Person/Unternehmen eine Email-Benachrichtigung erhalten.
-  - 1 Monat nach Fertigstellung eines Projekts soll die Feedback-Email an den Kunden gesendet werden.
-  - jeweils am Jahrestag des starts des ersten Projekts eines Kunden soll die jährliche Email gesendet werden.
   - Projektstart Workflow
     - Ein KI Agent soll den Chat und von mir bereitgestelltem Email-Verlauf und Videocall-Aufzeichnung mit dem Kunden analysieren, die notwendigen Kundenspezifischen Dateien und projektbezogenen Aufgaben, Meilensteine, Notizen etc. anlegen.
     - KI Agenten sollen sich bei start eines neuen Projekts erst die Informationen aus dem Portal bzw. der Datenbank ziehen.
@@ -40,6 +36,10 @@ Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-anal
     - Fertigstellung des Projekts
     - Nachbearbeitung, Lessons-Learned, neue Skills, neue Templates usw. von KI Agenten anlegen lassen, damit weitere Projekte noch einfacher und schneller bearbeitet werden können
   - Ein KI Agent soll die Möglichkeit haben per Chat mit den Kunden zu kommunizieren, um fragen zu klären und den Kontext zu erweitern.
+  - Lead-Analyse und -Priorisierung
+    - Eine KI soll die eingehenden Leads analysieren, indem es erstmal die Anfrage selbst liest und einordnet. Dann sollen recherchen zu dem Kunden bzw. dessen Firma angestellt werden, die Branche, Nische, aktuellen Stand der Website, Mitarbeiterzahl, ggf. Jahresumsatz usw. rausfindet.
+    - Danach soll die KI diesen Lead Priorisieren.
+    - Zum Schluss soll die KI eine antwort-email verfassen und unter den Wizard-Antworten hinterlegen, sodass ich sie kopieren und abschicken kann. (Hierfür muss noch ein Feld unterhalb der Wizard-Antworten der Leads eingefügt werden)
   - [ ] **Angebotserstellung (Admin-only)**
     - Ich möchte eine KI-gestützte Angebotserstellung einbauen. Es soll so funktionieren, dass ich pro Projekt einen Button "Angebot erstellen" habe und dann die Daten des Kunden und des Projekts geladen und an ein KI-System übergeben werden. Dieses erstellt mir dann ein Angebot im bearbeitbaren PDF-Format mit Preview, welches ich anschließend direkt akzeptieren kann, sodass es dem Kunden im Chat und unter seinem Projekt zur verfügung gestellt wird, ich es exportieren und selbst bearbeiten kann oder ich dem KI-System Feedback geben kann und dieses das Angebot dann entsprechend überarbeitet. 
     - Das Angebot muss, genau wie Rechnungen, Formal gestaltet sein und soll neben allem anderen, was rechtlich enthalten sein muss, auch mein Logo enthalten
@@ -47,9 +47,5 @@ Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-anal
     - Das Feedback an das KI-System soll per Chat erfolgen, wenn ich also etwas anders haben will schreibe ich das einfach in den Chat und das System überarbeitet das Angebot. Über diesen Chat soll das KI-System Rückfragen stellen, wenn wichtige Informationen für die Angebotserstellung fehlen bevor die Angebots-PDF erstellt wird.
 
 
-  ## 4. Website Feinschliff
+## 4. Website Feinschliff
   - Tech-Stack anpassen
-    - Gehe dieses Projekt durch und füge alle Technologien aus diesem Projekt im Tech-Stack hinzu, die noch nicht enthalten sind.
-  - Texte etwas formeller gestalten. Sie sind mir zu lieb/persönlich. Ich spreche hier mit Unternehmen und nicht mit meinen besten Freunden.
-    - Beachte **alle** Texte, auch die in den emails, Fehler-Seiten, Wizards usw.
-  - Über uns --> Über mich

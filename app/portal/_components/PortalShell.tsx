@@ -59,6 +59,15 @@ const ADMIN_NAV = [
 
 const ADMIN_TOOLS = [
   {
+    href: "/portal/automations",
+    label: "Automationen",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M1 8h3l2-5 3 10 2-5h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
     href: "/portal/admins",
     label: "Admins",
     icon: (
