@@ -1,7 +1,7 @@
 # HM Labs — Todo
 
 ## 1. KI-Chatbot
-- Was ist möglich / Konzept ausarbeiten
+- siehe Implementierungsplan
 
 ## 2. Tracking-IDs eintragen & Scripts testen
 Sobald die Accounts erstellt sind, IDs in `.env.local` eintragen:
@@ -32,7 +32,7 @@ Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-anal
     - Daraus soll ein Plan zur Umsetzung erstellt werden, der bereits existierende Templates integriert, um das Aufsetzen der Grundstruktur zu vereinfachen.
     - Danach folgt die Implementierung des ersten Prototypen, Testing und Verbesserungen durch mich
     - Ersten Protoypen mit Kunden besprechen (Zoom)
-    - Weitere Iterationen bis zur Abnahme oder Ausschöpfung des Budgets
+    - Weitere Iterationen (mit Kunden) bis zur Abnahme oder Ausschöpfung des Budgets
     - Fertigstellung des Projekts
     - Nachbearbeitung, Lessons-Learned, neue Skills, neue Templates usw. von KI Agenten anlegen lassen, damit weitere Projekte noch einfacher und schneller bearbeitet werden können
   - Ein KI Agent soll die Möglichkeit haben per Chat mit den Kunden zu kommunizieren, um fragen zu klären und den Kontext zu erweitern.
@@ -49,3 +49,7 @@ Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-anal
 
 ## 4. Website Feinschliff
   - Tech-Stack anpassen
+
+
+## 5. Sonstige Punkte
+  - AGB ausarbeiten und von Anwalt prüfen lassen

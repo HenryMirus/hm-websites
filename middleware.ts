@@ -5,31 +5,35 @@ const MAIN_DOMAIN = "hm-labs.de";
 const PORTAL_SUBDOMAIN = "clients.hm-labs.de";
 const PORTAL_BASE = `https://${PORTAL_SUBDOMAIN}`;
 const DEV_PORTAL_SUBDOMAIN = "clients.localhost";
+const OS_SUBDOMAIN = "os.hm-labs.de";
+const OS_BASE = `https://${OS_SUBDOMAIN}`;
+const DEV_OS_SUBDOMAIN = "os.localhost";
 
-// Paths accessible without authentication (relative to portal, after /portal prefix)
-const PUBLIC_PATHS = new Set([
-  "/portal/login",
-  "/portal/auth/callback",
-  "/portal/auth/update-password",
-  "/portal/password",
-]);
+// Public path suffixes (relative to the subdomain prefix, e.g. /portal or /os).
+const PUBLIC_SUFFIXES = ["/login", "/auth/callback", "/auth/update-password", "/password"];
 
 export async function middleware(request: NextRequest) {
   const hostname = (request.headers.get("host") || "").replace(/:.*$/, "");
   const isPortalSubdomain =
     hostname === PORTAL_SUBDOMAIN || hostname === DEV_PORTAL_SUBDOMAIN;
+  const isOsSubdomain =
+    hostname === OS_SUBDOMAIN || hostname === DEV_OS_SUBDOMAIN;
   const isMainDomain =
     hostname === MAIN_DOMAIN || hostname === `www.${MAIN_DOMAIN}`;
   const pathname = request.nextUrl.pathname;
 
-  // Hauptdomain + /portal/* → redirect zur Subdomain
+  // Hauptdomain + /portal/* oder /os/* → redirect zur jeweiligen Subdomain
   if (isMainDomain && pathname.startsWith("/portal")) {
     const subPath = pathname.replace("/portal", "") || "/";
     return NextResponse.redirect(`${PORTAL_BASE}${subPath}`);
   }
+  if (isMainDomain && pathname.startsWith("/os")) {
+    const subPath = pathname.replace("/os", "") || "/";
+    return NextResponse.redirect(`${OS_BASE}${subPath}`);
+  }
 
-  // Nicht die Portal-Subdomain → durchlassen (inkl. /api/v1/*)
-  if (!isPortalSubdomain) {
+  // Weder Portal- noch OS-Subdomain → durchlassen (inkl. /api/v1/*)
+  if (!isPortalSubdomain && !isOsSubdomain) {
     return NextResponse.next({ request });
   }
 
@@ -38,16 +42,19 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next({ request });
   }
 
-  // Pfad intern umschreiben: / → /portal, /login → /portal/login
-  // Wenn der Pfad bereits mit /portal beginnt (z.B. PortalShell-Links oder Refresh nach Redirect),
-  // nicht nochmals /portal voranstellen — sonst würde /portal/leads zu /portal/portal/leads
+  // Prefix je nach Subdomain. Die Auth-Logik ist für beide identisch.
+  const prefix = isOsSubdomain ? "/os" : "/portal";
+
+  // Pfad intern umschreiben: / → <prefix>, /login → <prefix>/login.
+  // Wenn der Pfad bereits mit dem Prefix beginnt (z.B. Shell-Links oder Refresh
+  // nach Redirect), nicht nochmals voranstellen.
   const effectivePath =
     pathname === "/"
-      ? "/portal"
-      : pathname.startsWith("/portal")
+      ? prefix
+      : pathname.startsWith(prefix)
       ? pathname
-      : `/portal${pathname}`;
-  const isPublicPath = PUBLIC_PATHS.has(effectivePath);
+      : `${prefix}${pathname}`;
+  const isPublicPath = PUBLIC_SUFFIXES.some((s) => effectivePath === `${prefix}${s}`);
 
   // Supabase Auth-Check
   let supabaseResponse = NextResponse.next({ request });
@@ -82,12 +89,12 @@ export async function middleware(request: NextRequest) {
   }
 
   // Bereits eingeloggt + auf Login-Seite → zum Dashboard
-  if (effectivePath === "/portal/login" && user) {
+  if (effectivePath === `${prefix}/login` && user) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // URL intern auf /portal/... umschreiben.
-  // x-pathname forwarden damit das Portal-Layout den Original-Pfad für den
+  // URL intern auf <prefix>/... umschreiben.
+  // x-pathname forwarden damit das Layout den Original-Pfad für den
   // server-seitigen Auth-Check lesen kann (headers() in layout.tsx).
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pathname", pathname);
