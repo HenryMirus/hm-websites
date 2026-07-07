@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Lang } from "@/lib/translations";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
@@ -27,6 +27,18 @@ export default function Home() {
   const [wizardOpen, setWizardOpen] = useState(false);
 
   const openWizard = () => setWizardOpen(true);
+
+  // Honor the ?lang=en hreflang alternate so it actually delivers English content.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("lang") === "en") {
+      setLang("en");
+    }
+  }, []);
+
+  // Keep the <html lang> attribute in sync for screen readers and search engines.
+  useEffect(() => {
+    document.documentElement.lang = lang === "en" ? "en" : "de";
+  }, [lang]);
 
   return (
     <div className="min-h-screen">

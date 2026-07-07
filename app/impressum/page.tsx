@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { EMAIL } from "@/lib/config/email";
 
 export const metadata: Metadata = {
   title: "Impressum — HM Labs",
@@ -54,7 +55,7 @@ export default function ImpressumPage() {
           </Section>
 
           <Section title="Kontakt">
-            <InfoRow label="E-Mail" value={<a href="mailto:mrs.hnry@gmail.com" className="text-[#4F7FFF] hover:underline">mrs.hnry@gmail.com</a>} />
+            <InfoRow label="E-Mail" value={<a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>} />
             <InfoRow label="Website" value={<a href="https://hm-labs.de" className="text-[#4F7FFF] hover:underline">hm-labs.de</a>} />
           </Section>
 

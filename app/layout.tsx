@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
+import TrackingScripts from "@/components/TrackingScripts";
+import { ConsentProvider } from "@/lib/consent";
+import { EMAIL } from "@/lib/config/email";
 
 const SITE_URL = "https://hm-labs.de";
 
@@ -36,8 +39,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/hm-labs-logo-v3.png",
-        width: 512,
-        height: 512,
+        width: 1024,
+        height: 1024,
         alt: "HM Labs — KI & Software für KMU",
       },
     ],
@@ -75,7 +78,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#business`,
       name: "HM Labs",
       url: SITE_URL,
-      email: "mrs.hnry@gmail.com",
+      email: EMAIL.CONTACT,
       description:
         "KI-Integration, Websites und Softwareentwicklung für KMU in Deutschland. Festpreis, DSGVO-konform, fertig in 14 Tagen.",
       areaServed: {
@@ -113,7 +116,7 @@ const jsonLd = {
       jobTitle: "KI-Entwickler & Unternehmer",
       worksFor: { "@id": `${SITE_URL}/#business` },
       url: SITE_URL,
-      email: "mrs.hnry@gmail.com",
+      email: EMAIL.CONTACT,
       knowsAbout: [
         "Künstliche Intelligenz",
         "Webentwicklung",
@@ -133,6 +136,10 @@ const jsonLd = {
       inLanguage: ["de-DE", "en-US"],
     },
     {
+      // Deliberately German-only: language toggling is client-side state, but this
+      // JSON-LD is rendered in the root layout (no access to searchParams), and
+      // German is the canonical/primary market. Revisit if URL-based locale routing
+      // (e.g. /en) is ever added.
       "@type": "FAQPage",
       mainEntity: [
         {
@@ -140,7 +147,7 @@ const jsonLd = {
           name: "Was kostet eine Website?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Eine professionelle Website liegt je nach Umfang zwischen 2.500 und 8.000€ — als Festpreis, nicht Stundensatz. Du weißt vor dem Start genau, was du zahlst.",
+            text: "Eine professionelle Website liegt je nach Umfang zwischen 2.500 und 8.000€ — als Festpreis, nicht Stundensatz. Sie wissen vor dem Start genau, was Sie zahlen.",
           },
         },
         {
@@ -156,7 +163,7 @@ const jsonLd = {
           name: "Brauche ich technisches Vorwissen?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Nein. Ich erkläre alles verständlich und du triffst informierte Entscheidungen. Kein Fachjargon, keine versteckten Komplexitäten.",
+            text: "Nein. Ich erkläre alles verständlich, sodass Sie informierte Entscheidungen treffen können. Kein Fachjargon, keine versteckten Komplexitäten.",
           },
         },
         {
@@ -164,20 +171,20 @@ const jsonLd = {
           name: "Was passiert nach dem Launch?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Ich begleite dich über den Launch hinaus: Hosting, Updates, Monitoring und Optimierungen. Du wirst nie allein gelassen.",
+            text: "Ich begleite Sie über den Launch hinaus: Hosting, Updates, Monitoring und Optimierungen. Sie werden nie allein gelassen.",
           },
         },
         {
           "@type": "Question",
-          name: "Bin ich nach dem Projekt an dich gebunden?",
+          name: "Bin ich nach dem Projekt an Sie gebunden?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Nein. Keine Mindestlaufzeiten, keine Knebelverträge. Du kannst jederzeit wechseln — aber die meisten Kunden bleiben, weil's funktioniert.",
+            text: "Nein. Keine Mindestlaufzeiten, keine Knebelverträge. Sie können jederzeit wechseln — aber die meisten Kunden bleiben, weil es funktioniert.",
           },
         },
         {
           "@type": "Question",
-          name: "Übernimmst du auch Marketing und SEO?",
+          name: "Übernehmen Sie auch Marketing und SEO?",
           acceptedAnswer: {
             "@type": "Answer",
             text: "SEO-Optimierung ist in jede Website eingebaut. Für laufendes Content-Marketing oder Ads empfehle ich spezialisierte Partner — ich konzentriere mich auf das was ich am besten kann.",
@@ -188,7 +195,7 @@ const jsonLd = {
           name: "Kann ich meine bestehende Website behalten?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit dir und empfehle, was wirklich besser ist — nicht was teurer ist.",
+            text: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit Ihnen und empfehle, was wirklich besser ist — nicht was teurer ist.",
           },
         },
         {
@@ -196,7 +203,7 @@ const jsonLd = {
           name: "Wie läuft die Zusammenarbeit ab?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Erstgespräch → Angebot → Umsetzung in 2-Wochen-Sprints → Launch. Du siehst Fortschritte live, bevor alles fertig ist. Direkte Kommunikation, kein Ticket-System.",
+            text: "Erstgespräch → Angebot → Umsetzung in 2-Wochen-Sprints → Launch. Sie sehen Fortschritte live, bevor alles fertig ist. Direkte Kommunikation, kein Ticket-System.",
           },
         },
       ],
@@ -218,8 +225,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        {children}
-        <CookieBanner />
+        <ConsentProvider>
+          {children}
+          <CookieBanner />
+          <TrackingScripts />
+        </ConsentProvider>
       </body>
     </html>
   );

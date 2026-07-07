@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { getUserRole } from "@/lib/auth/getRole";
+import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../_components/PortalShell";
 import Link from "next/link";
 
@@ -15,22 +17,62 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
 };
 
 export default async function ProjectsPage() {
-  const supabase = await createClient();
+  const [supabase, role, unreadMessages] = await Promise.all([
+    createClient(),
+    getUserRole(),
+    getUnreadMessageCount(),
+  ]);
 
-  const { data: projects } = await supabase
-    .from("projects")
-    .select("*, clients(name, company_name, email)")
-    .order("created_at", { ascending: false });
+  let projects: any[] | null = null;
+
+  if (role === "admin") {
+    const { data } = await supabase
+      .from("projects")
+      .select("*, clients(name, company_name, email)")
+      .order("created_at", { ascending: false });
+    projects = data;
+  } else {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data: clientRecord } = await supabase
+      .from("clients")
+      .select("id")
+      .eq("auth_user_id", user?.id ?? "")
+      .single();
+
+    if (clientRecord) {
+      const { data } = await supabase
+        .from("projects")
+        .select("*, clients(name, company_name, email)")
+        .eq("client_id", clientRecord.id)
+        .order("created_at", { ascending: false });
+      projects = data;
+    }
+  }
 
   const active = projects?.filter((p) => !["live", "maintenance", "cancelled"].includes(p.status)) ?? [];
   const done = projects?.filter((p) => ["live", "maintenance", "cancelled"].includes(p.status)) ?? [];
 
   return (
-    <PortalShell>
+    <PortalShell role={role} unreadMessages={unreadMessages}>
       <div className="p-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="font-display font-bold text-2xl text-text-primary">Projekte</h1>
-          <span className="font-mono text-xs text-text-muted">{projects?.length ?? 0} gesamt</span>
+          <h1 className="font-display font-bold text-2xl text-text-primary">
+            {role === "admin" ? "Projekte" : "Meine Projekte"}
+          </h1>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs text-text-muted">{projects?.length ?? 0} gesamt</span>
+            {role === "admin" && (
+              <Link
+                href="/portal/projects/new"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-primary text-white hover:bg-primary/90 transition-colors"
+              >
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                  <path d="M6.5 1v11M1 6.5h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                Neues Projekt
+              </Link>
+            )}
+          </div>
         </div>
 
         {active.length > 0 && (
@@ -85,15 +127,12 @@ function ProjectCard({ project }: { project: any }) {
             </span>
           </div>
           {client && (
-            <p className="text-text-muted text-sm">
-              {client.company_name || client.name}
-            </p>
+            <p className="text-text-muted text-sm">{client.company_name || client.name}</p>
           )}
           {project.description && (
             <p className="text-text-dim text-sm mt-1.5 line-clamp-1">{project.description}</p>
           )}
         </div>
-
         <div className="text-right shrink-0">
           {project.budget && (
             <p className="font-mono text-sm text-text-primary">
@@ -107,8 +146,6 @@ function ProjectCard({ project }: { project: any }) {
           )}
         </div>
       </div>
-
-      {/* Tech stack */}
       {project.tech_stack && Object.keys(project.tech_stack).length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-3">
           {(Array.isArray(project.tech_stack) ? project.tech_stack : Object.values(project.tech_stack)).slice(0, 5).map((t: any) => (

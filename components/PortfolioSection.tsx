@@ -85,10 +85,10 @@ export default function PortfolioSection({ lang }: PortfolioSectionProps) {
                 <div className="flex flex-wrap gap-2">
                   {item.tags.map((tag) => (
                     <span
-                      key={tag}
+                      key={tag.de}
                       className="font-mono text-[11px] text-text-dim bg-bg border border-border rounded-md px-2 py-0.5"
                     >
-                      {tag}
+                      {getText(tag, lang)}
                     </span>
                   ))}
                 </div>

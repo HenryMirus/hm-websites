@@ -57,6 +57,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
 
   return (
     <section
+      id="home"
       className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-bg"
       onMouseMove={handleMouseMove}
     >
@@ -76,7 +77,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
       >
         <picture className="absolute inset-0">
           <source srcSet="/hero-bg.webp" type="image/webp" />
-          <img src="/hero-bg.png" alt="" aria-hidden className="w-full h-full object-cover object-center" />
+          <img src="/hero-bg.jpg" alt="" aria-hidden className="w-full h-full object-cover object-center" />
         </picture>
         {/* Left gradient fade — blends image into page bg */}
         <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/60 to-transparent" />
@@ -116,7 +117,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
             {getText(t.hero.floating.live, lang)}
           </span>
         </div>
-        <div className="font-display font-bold text-xl text-primary">14 Tage</div>
+        <div className="font-display font-bold text-xl text-primary">{getText(t.hero.floating.avgVal, lang)}</div>
         <div className="font-mono text-[11px] text-text-muted">
           {getText(t.hero.floating.avg, lang)}
         </div>

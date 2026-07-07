@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { t, getText, Lang } from "@/lib/translations";
 import TypewriterText from "./TypewriterText";
@@ -19,10 +20,25 @@ const ALL_REV = [...ALL_TOOLS].reverse();
 const ROW1 = [...ALL_TOOLS, ...ALL_TOOLS];
 const ROW2 = [...ALL_REV, ...ALL_REV];
 
-const DUR1 = 18;
-const DUR2 = 22;
+// Speed in px/s — duration is derived from actual rendered width, so it stays
+// constant even if tools are added/removed (a fixed-seconds duration would not).
+const SPEED_L = 45;
+const SPEED_R = 37;
 
 export default function TechStackSection({ lang }: TechStackSectionProps) {
+  const rowLRef = useRef<HTMLDivElement>(null);
+  const rowRRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const setDuration = (el: HTMLDivElement | null, speed: number) => {
+      if (!el) return;
+      const singleListWidth = el.scrollWidth / 2; // ROW is two copies back-to-back
+      el.style.setProperty("--ts-dur", `${singleListWidth / speed}s`);
+    };
+    setDuration(rowLRef.current, SPEED_L);
+    setDuration(rowRRef.current, SPEED_R);
+  }, []);
+
   return (
     <section id="tech-stack" className="py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
@@ -54,15 +70,15 @@ export default function TechStackSection({ lang }: TechStackSectionProps) {
           from { transform: translateX(-50%); }
           to   { transform: translateX(0); }
         }
-        .ts-row-l { animation: ts-left  ${DUR1}s linear infinite; will-change: transform; }
-        .ts-row-r { animation: ts-right ${DUR2}s linear infinite; will-change: transform; }
+        .ts-row-l { animation: ts-left  var(--ts-dur, 80s) linear infinite; will-change: transform; }
+        .ts-row-r { animation: ts-right var(--ts-dur, 95s) linear infinite; will-change: transform; }
         .ts-row-l:hover, .ts-row-r:hover { animation-play-state: paused; }
       `}</style>
 
       <div className="space-y-3">
         {/* Row 1 — left */}
         <div className="overflow-hidden border-y border-border/50 py-3 bg-surface/20">
-          <div className="ts-row-l flex">
+          <div className="ts-row-l flex w-max" ref={rowLRef}>
             {ROW1.map(({ tool, color }, i) => (
               <div
                 key={i}
@@ -80,7 +96,7 @@ export default function TechStackSection({ lang }: TechStackSectionProps) {
 
         {/* Row 2 — right */}
         <div className="overflow-hidden border-b border-border/50 py-3 bg-surface/20">
-          <div className="ts-row-r flex">
+          <div className="ts-row-r flex w-max" ref={rowRRef}>
             {ROW2.map(({ tool, color }, i) => (
               <div
                 key={i}

@@ -25,6 +25,10 @@ export default function ParticleNetwork() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     let particles: Particle[] = [];
     let raf: number;
     let w = 0;
@@ -52,13 +56,15 @@ export default function ParticleNetwork() {
       ctx.fillStyle = BG;
       ctx.fillRect(0, 0, w, h);
 
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) { p.x = 0; p.vx *= -1; }
-        if (p.x > w) { p.x = w; p.vx *= -1; }
-        if (p.y < 0) { p.y = 0; p.vy *= -1; }
-        if (p.y > h) { p.y = h; p.vy *= -1; }
+      if (!prefersReducedMotion) {
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) { p.x = 0; p.vx *= -1; }
+          if (p.x > w) { p.x = w; p.vx *= -1; }
+          if (p.y < 0) { p.y = 0; p.vy *= -1; }
+          if (p.y > h) { p.y = h; p.vy *= -1; }
+        }
       }
 
       // Connections
@@ -87,7 +93,9 @@ export default function ParticleNetwork() {
         ctx.fill();
       }
 
-      raf = requestAnimationFrame(draw);
+      if (!prefersReducedMotion) {
+        raf = requestAnimationFrame(draw);
+      }
     };
 
     init();
@@ -96,7 +104,10 @@ export default function ParticleNetwork() {
     let resizeTimer: ReturnType<typeof setTimeout>;
     const onResize = () => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(init, 200);
+      resizeTimer = setTimeout(() => {
+        init();
+        if (prefersReducedMotion) draw();
+      }, 200);
     };
     window.addEventListener("resize", onResize);
 

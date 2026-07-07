@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { t, Lang } from "@/lib/translations";
+import { EMAIL } from "@/lib/config/email";
 
 type Lang_ = Lang;
 
@@ -492,10 +493,10 @@ export default function ProjectWizard({ open, onClose, lang }: ProjectWizardProp
                     </p>
 
                     <a
-                      href="mailto:hello@hm-ai.de"
+                      href={`mailto:${EMAIL.CONTACT}`}
                       className="font-mono text-sm text-primary hover:text-primary/80 transition-colors mb-6"
                     >
-                      hello@hm-ai.de
+                      {EMAIL.CONTACT}
                     </a>
 
                     <div className="w-full border-t border-border pt-6 space-y-2">

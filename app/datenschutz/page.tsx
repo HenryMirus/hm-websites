@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { EMAIL } from "@/lib/config/email";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung — HM Labs",
@@ -53,7 +54,7 @@ export default function DatenschutzPage() {
             <div className="mt-3 text-sm space-y-1">
               <p className="font-medium">Henry Mirus — HM Labs</p>
               <p className="text-[#5A5A7A]">E-Mail:{" "}
-                <a href="mailto:mrs.hnry@gmail.com" className="text-[#4F7FFF] hover:underline">mrs.hnry@gmail.com</a>
+                <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>
               </p>
               <p className="text-[#5A5A7A]">Website: hm-labs.de</p>
             </div>
@@ -63,22 +64,22 @@ export default function DatenschutzPage() {
             <Subsection title="2.1 Server-Logs">
               <p>
                 Beim Besuch dieser Website werden durch den Hosting-Anbieter automatisch Informationen in sogenannten Server-Log-Dateien gespeichert,
-                die dein Browser an uns übermittelt. Dazu gehören: IP-Adresse (anonymisiert), Browsertyp, Betriebssystem, Referrer-URL, Datum und Uhrzeit des Zugriffs.
+                die Ihr Browser an uns übermittelt. Dazu gehören: IP-Adresse (anonymisiert), Browsertyp, Betriebssystem, Referrer-URL, Datum und Uhrzeit des Zugriffs.
                 Diese Daten werden nicht mit anderen Datenquellen zusammengeführt und nach spätestens 7 Tagen gelöscht.
                 Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Sicherheit und Stabilität des Angebots).
               </p>
             </Subsection>
             <Subsection title="2.2 Kontaktformular">
               <p>
-                Wenn du das Kontaktformular nutzt, werden die von dir eingegebenen Daten (Name, E-Mail-Adresse, Unternehmen, Nachricht)
-                zur Bearbeitung deiner Anfrage verarbeitet. Diese Daten werden nicht ohne deine Einwilligung weitergegeben und nach
+                Wenn Sie das Kontaktformular nutzen, werden die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, Unternehmen, Nachricht)
+                zur Bearbeitung Ihrer Anfrage verarbeitet. Diese Daten werden nicht ohne Ihre Einwilligung weitergegeben und nach
                 Abschluss der Anfrage gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.
                 Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung / vorvertragliche Maßnahmen).
               </p>
             </Subsection>
             <Subsection title="2.3 E-Mail-Kontakt">
               <p>
-                Wenn du uns per E-Mail kontaktierst, werden die übermittelten Daten zum Zweck der Bearbeitung deiner Anfrage verarbeitet
+                Wenn Sie uns per E-Mail kontaktieren, werden die übermittelten Daten zum Zweck der Bearbeitung Ihrer Anfrage verarbeitet
                 und gespeichert. Eine Weitergabe an Dritte erfolgt nicht. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.
               </p>
             </Subsection>
@@ -86,7 +87,7 @@ export default function DatenschutzPage() {
 
           <Section title="3. Cookies">
             <p className="text-sm leading-relaxed text-[#EEEEFF]/70 mb-4">
-              Diese Website verwendet Cookies. Cookies sind kleine Textdateien, die auf deinem Gerät gespeichert werden.
+              Diese Website verwendet Cookies. Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden.
               Wir unterscheiden folgende Kategorien:
             </p>
             <div className="space-y-4">
@@ -101,22 +102,22 @@ export default function DatenschutzPage() {
               <CookieCategory
                 name="Analyse-Cookies"
                 basis="Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)"
-                description="Diese Cookies helfen uns zu verstehen, wie Besucher mit der Website interagieren. Die erhobenen Daten werden anonymisiert verarbeitet und dienen der Verbesserung des Angebots."
-                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten"]}
+                description="Diese Cookies helfen uns zu verstehen, wie Besucher mit der Website interagieren. Wir nutzen Google Analytics 4 (Google Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Irland). Die IP-Adresse wird anonymisiert (IP-Anonymisierung aktiviert). Mit Google wurde ein Auftragsverarbeitungsvertrag (AV-Vertrag) gem. Art. 28 DSGVO abgeschlossen."
+                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten", "_ga", "_ga_XXXXXXX"]}
                 retention="Bis zu 2 Jahre"
                 optional
               />
               <CookieCategory
                 name="Marketing-Cookies"
                 basis="Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)"
-                description="Diese Cookies werden verwendet, um Besuchern relevante Werbung zu zeigen. Sie können zum Tracking von Nutzern über verschiedene Websites hinweg eingesetzt werden."
-                examples={["Werbe-ID", "Tracking-Pixel", "Retargeting"]}
+                description="Diese Cookies werden verwendet, um Besuchern relevante Werbung zu zeigen und Werbekampagnen auszuwerten. Folgende Anbieter werden eingesetzt: Meta Pixel (Meta Platforms Ireland Ltd., 4 Grand Canal Square, Dublin 2, Irland) für Facebook/Instagram-Werbung; Google Ads (Google Ireland Ltd.) für Google-Suchanzeigen und Remarketing; LinkedIn Insight Tag (LinkedIn Ireland Unlimited Company, Wilton Place, Dublin 2, Irland) für B2B-Werbung auf LinkedIn."
+                examples={["_fbp", "_fbc", "fr", "Google Ads ID", "li_sugr"]}
                 retention="Bis zu 1 Jahr"
                 optional
               />
             </div>
             <p className="text-sm text-[#5A5A7A] mt-4">
-              Du kannst deine Cookie-Einwilligung jederzeit über das Cookie-Icon links unten auf der Seite ändern oder widerrufen.
+              Sie können Ihre Cookie-Einwilligung jederzeit über das Cookie-Icon links unten auf der Seite ändern oder widerrufen.
             </p>
           </Section>
 
@@ -143,21 +144,65 @@ export default function DatenschutzPage() {
             <Subsection title="Google Fonts">
               <p>
                 Diese Website nutzt Google Fonts (Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA).
-                Beim Laden der Seite wird eine Verbindung zu Googles Servern hergestellt, wobei deine IP-Adresse übertragen werden kann.
+                Beim Laden der Seite wird eine Verbindung zu Googles Servern hergestellt, wobei Ihre IP-Adresse übertragen werden kann.
                 Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.
+              </p>
+            </Subsection>
+            <Subsection title="Google Analytics 4 (nur mit Einwilligung)">
+              <p>
+                Mit Ihrer Einwilligung setzen wir Google Analytics 4 ein — ein Webanalysedienst der Google Ireland Ltd.
+                (Gordon House, Barrow Street, Dublin 4, Irland). Google Analytics verwendet Cookies, um die Nutzung der
+                Website zu analysieren. Die dabei erzeugten Informationen (inkl. anonymisierter IP-Adresse) werden an
+                Google-Server übertragen. Wir haben IP-Anonymisierung aktiviert und einen AV-Vertrag gem. Art. 28 DSGVO
+                abgeschlossen. Widerspruch: Sie können die Erfassung jederzeit durch Abwahl der Analyse-Cookies verhindern.
+                Weitere Informationen:{" "}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  policies.google.com/privacy
+                </a>
+              </p>
+            </Subsection>
+            <Subsection title="Google Ads (nur mit Einwilligung)">
+              <p>
+                Mit Ihrer Einwilligung nutzen wir Google Ads-Conversion-Tracking (Google Ireland Ltd.). Dabei wird ein
+                Cookie gesetzt, wenn Sie auf eine unserer Anzeigen klicken. So können wir nachvollziehen, ob nach einem
+                Anzeigenklick eine Anfrage auf unserer Website eingegangen ist. Die erhobenen Daten werden pseudonymisiert
+                verarbeitet. Widerspruch: Abwahl der Marketing-Cookies im Cookie-Banner.
+              </p>
+            </Subsection>
+            <Subsection title="Meta Pixel (nur mit Einwilligung)">
+              <p>
+                Mit Ihrer Einwilligung verwenden wir den Meta Pixel der Meta Platforms Ireland Ltd.
+                (4 Grand Canal Square, Dublin 2, Irland). Der Meta Pixel ermöglicht es uns, die Wirksamkeit von
+                Facebook- und Instagram-Werbeanzeigen zu messen und Besuchern dieser Website auf Meta-Plattformen
+                relevante Inhalte zu zeigen (Retargeting). Die Daten werden gemäß den Standardvertragsklauseln der
+                EU verarbeitet. Widerspruch: Abwahl der Marketing-Cookies im Cookie-Banner oder unter{" "}
+                <a href="https://www.facebook.com/settings/?tab=ads" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  facebook.com/settings/?tab=ads
+                </a>.
+              </p>
+            </Subsection>
+            <Subsection title="LinkedIn Insight Tag (nur mit Einwilligung)">
+              <p>
+                Mit Ihrer Einwilligung nutzen wir den LinkedIn Insight Tag der LinkedIn Ireland Unlimited Company
+                (Wilton Place, Dublin 2, Irland). Dieser ermöglicht die Erfolgsmessung von LinkedIn-Kampagnen und
+                Retargeting gegenüber Besuchern dieser Website auf LinkedIn. Widerspruch: Abwahl der Marketing-Cookies
+                im Cookie-Banner oder unter{" "}
+                <a href="https://www.linkedin.com/psettings/guest-controls/retargeting-opt-out" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  LinkedIn Opt-out
+                </a>.
               </p>
             </Subsection>
           </Section>
 
-          <Section title="5. Deine Rechte">
+          <Section title="5. Ihre Rechte">
             <p className="text-sm text-[#EEEEFF]/70 mb-4">
-              Du hast folgende Rechte bezüglich deiner bei uns gespeicherten personenbezogenen Daten:
+              Sie haben folgende Rechte bezüglich Ihrer bei uns gespeicherten personenbezogenen Daten:
             </p>
             <div className="grid sm:grid-cols-2 gap-3">
               {[
                 { right: "Auskunftsrecht", desc: "Art. 15 DSGVO — Auskunft über verarbeitete Daten" },
                 { right: "Berichtigungsrecht", desc: "Art. 16 DSGVO — Korrektur unrichtiger Daten" },
-                { right: "Löschungsrecht", desc: "Art. 17 DSGVO — Löschung deiner Daten" },
+                { right: "Löschungsrecht", desc: "Art. 17 DSGVO — Löschung Ihrer Daten" },
                 { right: "Einschränkung", desc: "Art. 18 DSGVO — Einschränkung der Verarbeitung" },
                 { right: "Datenübertragbarkeit", desc: "Art. 20 DSGVO — Daten in maschinenlesbarem Format" },
                 { right: "Widerspruchsrecht", desc: "Art. 21 DSGVO — Widerspruch gegen Verarbeitung" },
@@ -169,16 +214,16 @@ export default function DatenschutzPage() {
               ))}
             </div>
             <p className="text-sm text-[#5A5A7A] mt-4">
-              Zur Ausübung deiner Rechte wende dich an:{" "}
-              <a href="mailto:mrs.hnry@gmail.com" className="text-[#4F7FFF] hover:underline">mrs.hnry@gmail.com</a>.
-              Du hast außerdem das Recht, bei der zuständigen Datenschutzaufsichtsbehörde Beschwerde einzulegen.
+              Zur Ausübung Ihrer Rechte wenden Sie sich an:{" "}
+              <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>.
+              Sie haben außerdem das Recht, bei der zuständigen Datenschutzaufsichtsbehörde Beschwerde einzulegen.
             </p>
           </Section>
 
           <Section title="6. Datensicherheit">
             <p className="text-sm leading-relaxed text-[#EEEEFF]/70">
-              Diese Website nutzt SSL-Verschlüsselung (HTTPS) für die Übertragung deiner Daten. Wir ergreifen technische und
-              organisatorische Maßnahmen gemäß Art. 32 DSGVO, um deine Daten zu schützen. Unsere Infrastruktur befindet sich
+              Diese Website nutzt SSL-Verschlüsselung (HTTPS) für die Übertragung Ihrer Daten. Wir ergreifen technische und
+              organisatorische Maßnahmen gemäß Art. 32 DSGVO, um Ihre Daten zu schützen. Unsere Infrastruktur befindet sich
               in der EU (Hetzner, Frankfurt) und wird regelmäßig auf Sicherheitslücken geprüft.
             </p>
           </Section>

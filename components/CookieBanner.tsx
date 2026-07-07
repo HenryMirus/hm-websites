@@ -2,41 +2,29 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
-type ConsentState = {
-  necessary: boolean;
-  analytics: boolean;
-  marketing: boolean;
-  decided: boolean;
-};
-
-const STORAGE_KEY = "hm-cookie-consent";
+import { useConsent } from "@/lib/consent";
 
 export default function CookieBanner() {
-  const [consent, setConsent] = useState<ConsentState | null>(null);
+  const { consent, saveConsent } = useConsent();
   const [showBanner, setShowBanner] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [localAnalytics, setLocalAnalytics] = useState(false);
   const [localMarketing, setLocalMarketing] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed: ConsentState = JSON.parse(stored);
-        setConsent(parsed);
-        setLocalAnalytics(parsed.analytics);
-        setLocalMarketing(parsed.marketing);
-      } catch {
-        setConsent({ necessary: true, analytics: false, marketing: false, decided: false });
-        setShowBanner(true);
-      }
-    } else {
-      setConsent({ necessary: true, analytics: false, marketing: false, decided: false });
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (!consent.decided) {
       setShowBanner(true);
     }
-  }, []);
+    setLocalAnalytics(consent.analytics);
+    setLocalMarketing(consent.marketing);
+  }, [hydrated, consent.decided, consent.analytics, consent.marketing]);
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -50,23 +38,23 @@ export default function CookieBanner() {
   }, []);
 
   const save = (a: boolean, m: boolean) => {
-    const updated: ConsentState = { necessary: true, analytics: a, marketing: m, decided: true };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    setConsent(updated);
-    setLocalAnalytics(a);
-    setLocalMarketing(m);
+    saveConsent(a, m);
     setShowBanner(false);
     setShowPopup(false);
   };
 
   const openSettings = () => {
-    setLocalAnalytics(consent?.analytics ?? false);
-    setLocalMarketing(consent?.marketing ?? false);
+    setLocalAnalytics(consent.analytics);
+    setLocalMarketing(consent.marketing);
     setShowBanner(false);
     setShowPopup(true);
   };
 
-  if (consent === null) return null;
+  if (!hydrated) return null;
+
+  // Portal- und OS-Subdomain brauchen keinen Cookie-Banner — nur notwendige Cookies
+  const h = window.location.hostname;
+  if (h.startsWith("clients.") || h.startsWith("os.")) return null;
 
   const iconVisible = !showBanner && !footerVisible;
 
@@ -83,7 +71,7 @@ export default function CookieBanner() {
               <div>
                 <p className="text-[#EEEEFF] text-sm font-medium">Diese Website verwendet Cookies</p>
                 <p className="text-[#5A5A7A] text-xs leading-relaxed mt-0.5">
-                  Wir nutzen Cookies, um dir die beste Erfahrung zu bieten. Notwendige Cookies sind immer aktiv.{" "}
+                  Wir nutzen Cookies, um Ihnen die beste Erfahrung zu bieten. Notwendige Cookies sind immer aktiv.{" "}
                   <Link href="/datenschutz" className="underline hover:text-[#4F7FFF] transition-colors">
                     Datenschutzerklärung
                   </Link>
@@ -116,7 +104,7 @@ export default function CookieBanner() {
 
       {/* ── Fixed cookie icon ── */}
       <div
-        className={`fixed bottom-6 left-6 z-[9998] transition-all duration-300 ${
+        className={`fixed bottom-6 right-6 z-[9998] transition-all duration-300 ${
           iconVisible ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none translate-y-2"
         }`}
       >
@@ -124,7 +112,7 @@ export default function CookieBanner() {
         {showPopup && (
           <>
             <div className="fixed inset-0 z-[-1]" onClick={() => setShowPopup(false)} />
-            <div className="absolute bottom-14 left-0 w-80 rounded-xl border border-[#1E1E2E] bg-[#111118] shadow-2xl shadow-black/60 overflow-hidden">
+            <div className="absolute bottom-14 right-0 w-80 rounded-xl border border-[#1E1E2E] bg-[#111118] shadow-2xl shadow-black/60 overflow-hidden">
               {/* Header */}
               <div className="p-4 border-b border-[#1E1E2E]">
                 <div className="flex items-center justify-between">
@@ -140,7 +128,7 @@ export default function CookieBanner() {
                   </button>
                 </div>
                 <p className="text-[#5A5A7A] text-xs mt-1 leading-relaxed">
-                  DSGVO-konform · Deine Auswahl wird lokal gespeichert
+                  DSGVO-konform · Ihre Auswahl wird lokal gespeichert
                 </p>
               </div>
 
@@ -203,9 +191,9 @@ export default function CookieBanner() {
           onClick={() => setShowPopup((p) => !p)}
           title="Cookie-Einstellungen"
           aria-label="Cookie-Einstellungen öffnen"
-          className="w-10 h-10 rounded-full bg-[#111118] border border-[#1E1E2E] flex items-center justify-center shadow-lg hover:border-[#4F7FFF] hover:scale-110 transition-all group"
+          className="w-11 h-11 rounded-full bg-[#111118] border border-[#4F7FFF]/40 flex items-center justify-center shadow-lg shadow-[#4F7FFF]/10 hover:border-[#4F7FFF] hover:scale-110 hover:shadow-[#4F7FFF]/25 transition-all group"
         >
-          <CookieIcon className="w-[18px] h-[18px] text-[#5A5A7A] group-hover:text-[#4F7FFF] transition-colors" />
+          <CookieIcon className="w-5 h-5 text-[#4F7FFF]/70 group-hover:text-[#4F7FFF] transition-colors" />
         </button>
       </div>
     </>
