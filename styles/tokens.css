@@ -1,0 +1,22 @@
+/* HM Labs — Leiterbahn v1.0 (verbindliche Quelle: docs/spec/hm-ci-leiterbahn.md §8) */
+:root {
+  --substrat: #F2F4F0; --substrat-tief: #E7EBE4; --flaeche: #FFFFFF;
+  --lack: #0F211A; --lack-flaeche: #1A3327;
+  --text: #17231D; --text-gedimmt: rgba(23,35,29,.62);
+  --text-invers: #F4F6F2; --text-invers-ged: rgba(244,246,242,.64);
+  --kupfer: #C0752F; --kupfer-tief: #8A501B; --kupfer-hell: #E0965B;
+  --linie: rgba(23,35,29,.14); --linie-invers: rgba(244,246,242,.18);
+  --ok: #2E6B4F; --warnung: #9A6B15; --fehler: #A93226;
+
+  /* Font-Stacks — die --font-hubot/--font-mona/--font-spline Variablen
+     werden von next/font/local auf <html> gesetzt (self-hosted, kein CDN) */
+  --font-display: var(--font-hubot), 'Hubot Sans', sans-serif;
+  --font-text: var(--font-mona), 'Mona Sans', sans-serif;
+  --font-mono: var(--font-spline), 'Spline Sans Mono', monospace;
+
+  --radius: 2px;
+  --space-unit: 8px;               /* Raster: alle Abstände Vielfache von 8 */
+  --ease-in: cubic-bezier(.55,.06,.68,.19);
+  --ease-out: cubic-bezier(.22,1,.36,1);
+  --dur-ui: .3s; --dur-reveal: .7s;
+}

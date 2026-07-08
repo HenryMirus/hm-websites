@@ -38,7 +38,13 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name, email, company, message, subject, wizard_answers, source } = body;
+    const { name, email, company, message, subject, wizard_answers, source, budget, website } = body;
+
+    // Honeypot (Masterplan §5.7): Bots füllen das unsichtbare Feld —
+    // wir antworten mit Erfolg, speichern aber nichts.
+    if (typeof website === "string" && website.trim() !== "") {
+      return NextResponse.json({ success: true });
+    }
 
     if (!name?.trim() || !email?.trim()) {
       return NextResponse.json({ error: "Name und E-Mail sind erforderlich." }, { status: 400 });
@@ -65,9 +71,13 @@ export async function POST(req: NextRequest) {
       message: message?.trim() || "",
       subject: subject?.trim() || null,
       source_url: source || null,
-      metadata: wizard_answers
-        ? { wizard_answers, submitted_at: new Date().toISOString() }
-        : {},
+      metadata: {
+        ...(wizard_answers ? { wizard_answers } : {}),
+        ...(typeof budget === "string" && budget.trim()
+          ? { budget: budget.trim().slice(0, 100) }
+          : {}),
+        submitted_at: new Date().toISOString(),
+      },
     });
 
     if (error) {

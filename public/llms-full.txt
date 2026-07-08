@@ -1,0 +1,128 @@
+# llms-full.txt for HM Labs — full service descriptions
+# Source of truth: hm-labs.de/leistungen · Prices are non-binding
+# orientation ranges (EUR net); binding quotes only after a personal
+# consultation. HM Labs, Pantaleonstraße 20, 53567 Buchholz (Westerwald),
+# Germany — https://hm-labs.de
+
+## Positioning
+HM Labs builds individual, hand-crafted websites and digital solutions —
+no site builders, no templates, no interchangeable designs. Every project
+is designed for the client, with its own animation concept, technical
+quality at measurable level (Lighthouse 90+ target) and built-in
+future-proofing: visibility in AI search systems (GAIO) and GDPR-native
+AI features on EU servers. One fixed point of contact, the range of an
+agency, prices between freelancer and traditional agency.
+
+## Part A — Websites & Design
+
+### 01 Landing page / One-pager (EUR 1,500–3,000 · 1–2 weeks guide)
+A single, all-the-stronger page — ideal for a product, a service, a
+campaign or a focused company presence. Includes individual design (no
+template), scroll animations and a motion concept, fully responsive
+mobile-first build, baseline SEO, a contact/inquiry section and GDPR
+basics. For self-employed professionals, small businesses, campaigns and
+founders.
+
+### 02 Individual business website (EUR 3,500–7,500 · 3–5 weeks guide)
+The complete company presence: up to 6 subpages, fully individually
+designed, GSAP animations with signature moments, mobile-first build,
+technical SEO AND GAIO (llms.txt, Schema.org, AI-crawler optimization) in
+the standard scope at no surcharge, Lighthouse target 90+ in all four
+categories, GDPR-compliant basics. For established SMEs, medical
+practices, law firms, service providers and trade businesses.
+
+### 03 Corporate website (EUR 7,500–15,000 · 6–10 weeks guide)
+10+ subpages on a dedicated design system with multiple page types,
+advanced animation concepts, the complete SEO/GAIO package, CMS
+integration for self-service content editing and database integration
+(Supabase) where needed. For mid-sized companies and multi-location
+organisations.
+
+### 04 Website relaunch (EUR 3,000–8,000 · 3–6 weeks guide)
+The existing website is analysed and completely rebuilt — design,
+technology and structure — without losing Google rankings: analysis of
+the old site, new individual design, technical rebuild on a modern stack,
+content migration, and a 301 redirect map with 4 weeks of post-launch
+rank monitoring included.
+
+### 05 Logo & basic branding (EUR 800–2,500)
+Logo, colour system, typography definition and a mini style guide — as an
+add-on to website projects, not a standalone branding programme.
+
+## Part B — AI Services
+
+### 06 AI chatbot, self-hosted and GDPR-native (EUR 1,500–3,500 setup +
+EUR 50–150/month · 1–2 weeks guide)
+An AI assistant on the client's website that answers visitor questions,
+gives price orientation and forwards qualified inquiries — operated
+entirely on EU servers with no data passed to OpenAI, Google or any other
+third party. Includes a curated knowledge base (30–40 answers) from the
+client's material, a chat widget in the client's corporate design, a
+consent flow and AI disclosure per EU AI Act Art. 50, lead forwarding and
+onboarding.
+
+### 07 Web app / custom software with AI automation (EUR 8,000–25,000 ·
+4–10 weeks guide)
+Tailor-made web applications that digitalise business processes — with AI
+automation where it saves real effort and human control where decisions
+are made (human-in-the-loop). Includes requirements analysis and a
+data-flow concept with GDPR check, an individual web app (Next.js/
+Supabase), authentication and roles, 1–2 AI automations, testing,
+deployment and operations documentation. Above ~EUR 25,000 no range is
+quoted — personal scoping conversation.
+
+### 08 SaaS MVP (EUR 15,000–35,000 · 8–14 weeks guide)
+The first market-ready version of a software product — focused on a
+maximum of 3 core features: auth and multi-tenancy (Supabase RLS), Stripe
+billing, staging/production separation, a security baseline check, an
+operations runbook and launch support.
+
+## Part C — Visibility & Compliance
+
+### 09 GAIO audit & AI visibility optimisation (priced after consultation)
+Checks whether an existing website is found, understood and cited by AI
+systems such as ChatGPT, Perplexity and Google AI Overviews — and
+retrofits it without a relaunch: AI-crawler accessibility, mention
+analysis versus competitors, Schema.org check, content citability
+assessment, and a prioritised action report readable for
+non-technicians. The low-threshold entry offer.
+
+### 10 AI visibility monitoring (priced after consultation)
+Ongoing monthly monitoring: is the brand mentioned in ChatGPT, Perplexity
+and Google AI Overviews, in what context, and what do AI systems say
+about competitors — with a monthly one-page report, trend and
+recommendations, plus alerts on negative or false AI statements.
+
+### 11 Accessibility audit & remediation, BFSG (priced after consultation)
+Honestly checks whether a company is affected by Germany's Accessibility
+Strengthening Act at all (micro-enterprises are exempt for services — the
+check may result in 'no'), audits against WCAG 2.1 AA / EN 301 549, and
+remediates cleanly in code — no overlay tools. Includes the legally
+required accessibility statement. No legal advice; legal detail questions
+go to a specialised lawyer.
+
+### 12 Private company AI, self-hosted (priced after consultation)
+A private AI environment on the client's server — like ChatGPT, except no
+byte leaves the company. Staff summarise contracts, draft emails and
+search internal documents (optional RAG) — GDPR-compliant without US
+providers. Includes needs analysis, setup on the client's server or a
+managed EU VPS (Ollama + chat UI), user management, GDPR base
+documentation and team onboarding (AI literacy per Art. 4 EU AI Act).
+
+## Part D — Ongoing Care
+
+### 13 Maintenance & hosting (monthly)
+Basis EUR 49–79/month: EU hosting, SSL, updates, backups, uptime
+monitoring — the default recommendation. Komfort EUR 99–149/month: plus
+small content changes (up to 1 h/month) and priority support. Premium
+EUR 199–299/month: plus a monthly performance/SEO check, up to 3 h of
+changes and chatbot maintenance.
+
+## Binding principles
+Prices only as ranges, never fixed. No guarantees, no fixed delivery
+dates — time indications are guide values. Payment in milestones: up to
+EUR 5,000 it's 50% on commissioning and 50% on acceptance; above that
+40/40/20 (commissioning / MVP acceptance / launch); recurring services
+monthly in advance. Two revision rounds included in every project. The
+first ~8 projects are built at reference conditions at the lower end of
+the ranges in exchange for written case-study rights.

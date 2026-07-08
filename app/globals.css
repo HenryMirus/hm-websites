@@ -1,70 +1,366 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "../styles/tokens.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg: #09090F;
-  --surface: #111118;
-  --border: #1E1E2E;
-  --primary: #4F7FFF;
-  --accent: #FF4D6A;
-  --text: #EEEEFF;
-  --muted: #5A5A7A;
-}
+/* ————————————————————————————————————————————————
+   HM Labs — Leiterbahn v1.0 · Basis
+   Verbindlich: docs/spec/hm-ci-leiterbahn.md
+   ———————————————————————————————————————————————— */
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
-  /* 1px extra ensures sub-pixel footer rounding never clips the last pixel */
-  padding-bottom: 1px;
-}
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* overflow-x on body alone creates a new scroll container in some browsers,
-     preventing the page from being scrolled to the true bottom. Use html instead. */
   overflow-x: clip;
 }
 
-html {
+body {
+  background-color: var(--substrat);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
 }
 
 ::selection {
-  background: rgba(79, 127, 255, 0.3);
-  color: #EEEEFF;
+  background: rgba(192, 117, 47, 0.25); /* Kupfer, 25 % */
+  color: var(--text);
 }
 
 ::-webkit-scrollbar {
   width: 4px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--linie);
   border-radius: 2px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  background: var(--kupfer);
 }
 
+/* Sichtbarer Fokus-Ring — Teil des Designs, nie outline:none ohne Ersatz (Masterplan §9.2) */
+:focus-visible {
+  outline: 2px solid var(--kupfer-tief);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+.on-lack :focus-visible,
+[data-theme="lack"] :focus-visible {
+  outline-color: var(--kupfer-hell);
+}
+
+/* ————— Typografie-Skala (CI §3) ————— */
+
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 120%;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.75rem, 6.5vw, 6rem);
+}
+
+.h-section {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: 112%;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.875rem, 4vw, 3.5rem);
+}
+
+.h-sub {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-stretch: 100%;
+  line-height: 1.2;
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+}
+
+/* Eyebrow / Sektionslabel — Spline Sans Mono, UPPERCASE, Bestückungsdruck-Kennung */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Messwert — jede Zahl, die eine Messung ist, steht in Mono (CI §3) */
+.messwert {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ————— Gestaltungselemente (CI §4) ————— */
+
+/* Bestückungsdruck-Rahmen: Eckwinkel statt geschlossener Rahmen.
+   Farbe über --corner (Standard: Haarlinie), Hover/Aktiv: Kupfer. */
+.corner-frame {
+  --corner: var(--linie);
+  position: relative;
+}
+.corner-frame::before,
+.corner-frame::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  transition: border-color var(--dur-ui) var(--ease-out);
+}
+.corner-frame::before {
+  top: 0;
+  left: 0;
+  border-top: 1.5px solid var(--corner);
+  border-left: 1.5px solid var(--corner);
+}
+.corner-frame::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1.5px solid var(--corner);
+  border-right: 1.5px solid var(--corner);
+}
+.corner-frame:hover::before,
+.corner-frame:hover::after,
+.corner-frame:focus-within::before,
+.corner-frame:focus-within::after {
+  --corner: var(--kupfer);
+}
+.on-lack .corner-frame {
+  --corner: var(--linie-invers);
+}
+.on-lack .corner-frame:hover::before,
+.on-lack .corner-frame:hover::after {
+  --corner: var(--kupfer-hell);
+}
+
+/* Via-Hover (Pattern 4, CSS only): Kupferlinie zeichnet sich von links,
+   am Ende erscheint der Via-Punkt. */
+.via-link {
+  position: relative;
+  text-decoration: none;
+  padding-bottom: 2px;
+}
+.via-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1.5px;
+  width: calc(100% - 8px);
+  background: var(--kupfer);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s var(--ease-out);
+}
+.via-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -2.25px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--kupfer);
+  background: var(--substrat);
+  opacity: 0;
+  transition: opacity 0.1s linear 0.2s;
+}
+.via-link:hover::before,
+.via-link:focus-visible::before {
+  transform: scaleX(1);
+}
+.via-link:hover::after,
+.via-link:focus-visible::after {
+  opacity: 1;
+}
+.on-lack .via-link::before {
+  background: var(--kupfer-hell);
+}
+.on-lack .via-link::after {
+  border-color: var(--kupfer-hell);
+  background: var(--lack);
+}
+
+/* Kupfer-Pad: der einzige gefüllte Button (CI §2 Regel 2) */
+.btn-pad {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px; /* Touch-Target ≥ 44px */
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  background: var(--kupfer);
+  color: #FFFFFF;
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border: 1px solid var(--kupfer);
+  transition: background var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
+}
+.btn-pad:hover {
+  background: var(--kupfer-tief);
+  border-color: var(--kupfer-tief);
+}
+
+/* Ghost-Pad: sekundärer CTA mit Via-Hover-Linie */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-text);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border: 1px solid var(--linie);
+  transition: border-color var(--dur-ui) var(--ease-out);
+}
+.btn-ghost:hover {
+  border-color: var(--kupfer);
+}
+.on-lack .btn-ghost {
+  color: var(--text-invers);
+  border-color: var(--linie-invers);
+}
+.on-lack .btn-ghost:hover {
+  border-color: var(--kupfer-hell);
+}
+
+/* 8-px-Lochraster — nur auf dunklen Sektionen (CI §4) */
+.dot-grid {
+  background-image: radial-gradient(rgba(244, 246, 242, 0.06) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* Testpunkt-Marker */
+.testpunkt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--kupfer);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--kupfer-tief);
+  flex-shrink: 0;
+}
+.on-lack .testpunkt {
+  color: var(--kupfer-hell);
+  border-color: var(--kupfer-hell);
+}
+
+/* Silkscreen-Reveal Ausgangszustand (Pattern 3) — wird von GSAP aufgelöst.
+   Ohne JS (GAIO: Kerninhalt ohne JS sichtbar) bleibt alles sichtbar,
+   weil der Ausgangszustand erst per JS gesetzt wird. */
+
+/* Skip-Link (Masterplan §6.2) */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 100;
+  transform: translateY(-200%);
+  transition: transform 0.2s var(--ease-out);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* FAQ-Accordion: nativ per <details>, Höhe CSS-animiert (Masterplan §7) */
+.faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+.faq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--ease-out);
+}
+.faq-item[open] .faq-body {
+  grid-template-rows: 1fr;
+}
+.faq-body > div {
+  overflow: hidden;
+}
+/* Via-Punkt als Indikator statt Chevron */
+.faq-via {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--kupfer);
+  background: transparent;
+  flex-shrink: 0;
+  transition: background var(--dur-ui) var(--ease-out);
+}
+.faq-item[open] .faq-via {
+  background: var(--kupfer);
+}
+
+/* Monogramm: Stroke-Draw-on beim Laden (CI §4 Logo, 0,9 s) — CSS only */
+@keyframes monogram-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.monogram-trace {
+  stroke-dasharray: 100;
+  animation: monogram-draw 0.9s var(--ease-out) forwards;
+}
+
+/* Scroll-Hinweis-Via: pulsiert 1× (CSS, Masterplan S0) */
+@keyframes via-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.via-pulse {
+  animation: via-pulse 1.2s var(--ease-out) 1.6s 1;
+}
+
+/* Reduced Motion — verbindlich (CI §5). GSAP nutzt zusätzlich matchMedia;
+   das hier fängt reine CSS-Animationen ab. */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
@@ -73,87 +369,3 @@ html {
     transition-duration: 0.01ms !important;
   }
 }
-
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(79, 127, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79, 127, 255, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-.noise-overlay::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.4;
-}
-
-.tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--primary);
-}
-
-.glow-primary {
-  box-shadow: 0 0 40px rgba(79, 127, 255, 0.15);
-}
-
-.glow-accent {
-  box-shadow: 0 0 40px rgba(255, 77, 106, 0.2);
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Hero gradient text — last headline line */
-.hero-gradient-text {
-  background: linear-gradient(135deg, #4F7FFF 0%, #7C3AED 50%, #FF4D6A 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Shimmer animation for gradient text */
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.hero-gradient-text {
-  background-size: 200% 200%;
-  animation: shimmer 4s ease infinite;
-}
-
-/* Service card hover border animation */
-@keyframes border-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
-}
-
-/* Typewriter cursor */
-.typewriter-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 0.82em;
-  background: var(--primary);
-  margin-left: 3px;
-  vertical-align: middle;
-  border-radius: 1px;
-  animation: cursor-blink 0.75s step-end infinite;
-}
-
-@keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-

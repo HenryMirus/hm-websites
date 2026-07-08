@@ -1,0 +1,202 @@
+# HM — Preislogik v1.0
+# Stand: 06.07.2026 · Positionierung: Premium-Qualität, Referenzaufbau-Phase
+# Regel: Die Angebots-KI darf AUSSCHLIESSLICH Ranges aus dieser Datei verwenden.
+# Der Pflicht-Disclaimer wird vom Code an jede Preisnennung angehängt, nie vom Modell.
+
+meta:
+  version: 1.0
+  waehrung: EUR
+  alle_preise: netto
+  pflicht_disclaimer: >
+    Das ist eine unverbindliche Orientierung basierend auf vergleichbaren
+    Projekten — kein Angebot. Ein konkretes, verbindliches Angebot erstellt
+    Henry erst nach einem persönlichen Gespräch, in dem die genauen
+    Anforderungen geklärt werden.
+  verboten:
+    - Festpreise ohne Spanne
+    - Garantien oder Zusicherungen
+    - feste Lieferzeit-Zusagen (nur Richtwerte)
+    - Preise für Leistungen, die nicht in dieser Datei stehen (→ "klärt Henry persönlich")
+
+leistungen:
+
+  - id: landingpage
+    bezeichnung: "Landingpage / Onepager"
+    range: [1500, 3000]
+    basis_umfang: >
+      Eine Seite, individuelles Design (kein Template), Scroll-Animationen,
+      responsive, SEO-Grundoptimierung, Kontakt-/Anfrage-Sektion, DSGVO-Basics.
+    zeitrahmen_richtwert: "1–2 Wochen"
+    scope_treiber:
+      - mehrsprachigkeit: "+25–35 %"
+      - komplexe_animationen_3d: "+500–1.500 €"
+      - texterstellung_durch_hm: "+150–350 € pro Seite/Sektion"
+    optionen: [ki-chatbot, wartung]
+
+  - id: business-website
+    bezeichnung: "Individuelle Business-Website"
+    range: [3500, 7500]
+    basis_umfang: >
+      Bis 6 Unterseiten, vollständig individuelles Design, GSAP-Animationen,
+      Mobile-First, technisches SEO + GAIO (llms.txt, Schema.org),
+      Lighthouse-Ziel 90+, DSGVO-konforme Basics (Impressum/DSE-Einbindung).
+    zeitrahmen_richtwert: "3–5 Wochen"
+    scope_treiber:
+      - zusaetzliche_seiten: "+300–600 € pro Seite"
+      - mehrsprachigkeit: "+25–35 %"
+      - cms_pflegbarkeit: "+800–2.000 €"
+      - blog_integration: "+500–1.200 €"
+      - buchungs_oder_formularsystem: "+800–2.500 €"
+      - texterstellung_durch_hm: "+150–350 € pro Seite"
+    optionen: [ki-chatbot, wartung, logo-branding]
+
+  - id: corporate-website
+    bezeichnung: "Größere Corporate-Website"
+    range: [7500, 15000]
+    basis_umfang: >
+      10+ Unterseiten, Design-System, mehrere Seitentypen/Templates,
+      erweiterte Animationskonzepte, vollständiges SEO/GAIO-Paket,
+      CMS-Anbindung, ggf. einfache DB-Integration (Supabase).
+    zeitrahmen_richtwert: "6–10 Wochen"
+    scope_treiber:
+      - mehrsprachigkeit: "+25–35 %"
+      - schnittstellen_drittsysteme: "+1.000–3.000 € pro Integration"
+      - kundenportal_login: "+2.500–6.000 €"
+    optionen: [ki-chatbot, wartung]
+
+  - id: relaunch
+    bezeichnung: "Website-Relaunch"
+    range: [3000, 8000]
+    basis_umfang: >
+      Analyse der Alt-Site, neues individuelles Design, technischer Neuaufbau,
+      Content-Migration, 301-Redirect-Map, SEO-Erhalt (Ranking-Monitoring
+      4 Wochen post-launch inklusive).
+    zeitrahmen_richtwert: "3–6 Wochen"
+    scope_treiber:
+      - umfang_alt_site: "ab ~20 migrierten Seiten +100–200 € pro weitere Seite"
+      - mehrsprachigkeit: "+25–35 %"
+      - content_ueberarbeitung: "+150–350 € pro Seite"
+    hinweis_intern: >
+      SEO-Erhalt als USP aktiv verkaufen — Redirect-Map + Monitoring
+      bieten die wenigsten Wettbewerber explizit an.
+    optionen: [ki-chatbot, wartung]
+
+  - id: ki-chatbot
+    bezeichnung: "KI-Chatbot (self-hosted, DSGVO-konform)"
+    range_setup: [1500, 3500]
+    range_laufend_monat: [50, 150]
+    basis_umfang: >
+      Self-hosted auf EU-Server (keine Datenweitergabe an Drittanbieter),
+      kuratierte Wissensbasis (30–40 Antworten) aus Kundenmaterial,
+      Chat-Widget im Kunden-CI, Consent-Flow, KI-Kennzeichnung nach
+      EU AI Act Art. 50, Lead-Weiterleitung, Einweisung.
+    zeitrahmen_richtwert: "1–2 Wochen (parallel zur Website möglich)"
+    scope_treiber:
+      - erweiterte_wissensbasis: "+500–1.000 € (ab ~80 Antworten)"
+      - generative_stufe_ollama: "+1.000–2.500 € Setup, +50–100 €/Monat"
+      - crm_anbindung: "+800–2.000 €"
+    hinweis_intern: >
+      Stärkster Preishebel: Markt-SaaS kostet 500–2.500 €/Monat laufend,
+      individuelle RAG-Bots 14.000–30.000 € einmalig. Unser Setup-Preis
+      wirkt dagegen extrem attraktiv bei sehr guter Marge — im Angebot
+      den Vergleich zu SaaS-Monatskosten aktiv aufmachen.
+    optionen: [wartung]
+
+  - id: webapp-ki-automation
+    bezeichnung: "Webapp / individuelle Software mit KI-Automatisierung"
+    range: [8000, 25000]
+    basis_umfang: >
+      Anforderungsanalyse + Datenfluss-Konzept (inkl. DSGVO-Check),
+      individuelle Web-App (Next.js/Supabase), Auth + Rollen,
+      1–2 KI-Automatisierungen mit Human-in-the-loop, Testing, Deployment,
+      Betriebs-Doku.
+    zeitrahmen_richtwert: "4–10 Wochen"
+    scope_treiber:
+      - weitere_automatisierungen: "+1.500–4.000 € pro Workflow"
+      - schnittstellen: "+1.000–3.000 € pro Integration"
+      - komplexe_geschaeftslogik: "individuell — klärt Henry"
+    hinweis_intern: >
+      Ab ~25.000 € Projektvolumen keine Range mehr nennen —
+      immer persönliches Scoping-Gespräch.
+    optionen: [wartung]
+
+  - id: saas-mvp
+    bezeichnung: "SaaS-MVP"
+    range: [15000, 35000]
+    basis_umfang: >
+      Max. 3 Kern-Features, Auth + Multi-Tenancy (Supabase RLS),
+      Stripe-Billing, Staging/Prod-Trennung, Security-Baseline-Check,
+      Betriebs-Runbook, Launch-Begleitung.
+    zeitrahmen_richtwert: "8–14 Wochen"
+    scope_treiber:
+      - weitere_features: "+2.000–6.000 € pro Feature"
+      - native_mobile: "nicht im Standard — klärt Henry"
+    optionen: [wartung]
+
+  - id: wartung
+    bezeichnung: "Wartung & Hosting (monatlich)"
+    tiers:
+      - name: Basis
+        range_monat: [49, 79]
+        umfang: "Hosting (EU), SSL, Updates, Backups, Uptime-Monitoring"
+      - name: Komfort
+        range_monat: [99, 149]
+        umfang: "Basis + kleine Inhaltsänderungen (bis 1 h/Monat), Prioritäts-Support"
+      - name: Premium
+        range_monat: [199, 299]
+        umfang: "Komfort + monatlicher Performance/SEO-Check, bis 3 h Änderungen, Chatbot-Pflege"
+    hinweis_intern: >
+      Ziel: planbare monatliche Einnahmen aufbauen. Wartung in jedem
+      Angebot als Option anbieten, Basis-Tier als Default vorschlagen.
+
+  - id: logo-branding
+    bezeichnung: "Logo & Basis-Branding (Zusatzleistung)"
+    range: [800, 2500]
+    basis_umfang: >
+      Logo, Farbsystem, Typografie-Definition, Mini-Styleguide —
+      als Zusatz zu Website-Projekten, kein eigenständiges Branding-Projekt.
+    optionen: []
+
+# --- Verbindliche Regeln (kalibriert & bestätigt am 06.07.2026) ---
+
+zahlungsstruktur:
+  # Branchenstandard: Meilensteinzahlung. Niemals 100 % bei Fertigstellung.
+  bis_5000: "50 % bei Auftragserteilung, 50 % bei Abnahme"
+  ueber_5000: "40 % bei Auftragserteilung, 40 % bei MVP-Abnahme, 20 % bei Launch"
+  laufende_leistungen: "monatlich im Voraus (Wartung, Chatbot-Betrieb)"
+  hinweis_intern: >
+    Der Meilenstein "MVP-Abnahme" ist bewusst gewählt: Er passt zum
+    iterativen Arbeitsmodell (MVP bauen → mit Kunde iterieren) und
+    schafft einen klaren Zahlungspunkt mitten im Projekt.
+
+revisionsrunden:
+  inklusive: 2
+  weitere: "nach Aufwand, Richtwert 80–110 €/h — im Angebot ausweisen"
+  hinweis_intern: >
+    Ohne diese Grenze untergräbt das Iterationsmodell die Marge.
+    Die KI nennt die 2 inkludierten Runden in jedem Angebot explizit.
+
+referenzen:
+  rabattphase:
+    umfang: "die ersten ~8 Projekte (Referenzaufbau)"
+    regel: >
+      Preis am unteren Rand der Range, im Gegenzug schriftlich vereinbart:
+      Case-Study-Rechte (Projekt darf mit Screenshots, Ergebnis und
+      Kundenname als Referenz präsentiert werden).
+    friends_and_family: >
+      Erste Kunden (Freundeskreis): Preis darf unter der Range-Untergrenze
+      liegen. Aber auch hier: symbolische Anzahlung, schriftlich definierter
+      Scope, 2-Revisionsrunden-Regel und Referenzrechte — gerade lockere
+      Projekte brauchen klare Leitplanken.
+  danach_standard: >
+    Ab Projekt ~9: reguläre Preise. Jeder Vertrag enthält eine
+    Referenzklausel: HM darf das Kundenlogo auf der eigenen Website
+    zeigen und auf die Kundenwebsite verlinken (Widerspruch möglich,
+    dann ohne Rabattausgleich).
+
+schwellen:
+  keine_range_ueber: 25000
+  regel: >
+    Ab diesem geschätzten Projektvolumen nennt die KI keine Preisspanne.
+    Stattdessen: "Ein Projekt dieser Größenordnung kalkuliert Henry
+    individuell nach einem Scoping-Gespräch."
