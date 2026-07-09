@@ -9,39 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        /* ——— Leiterbahn v1.0 (docs/spec/hm-ci-leiterbahn.md §2/§8) ——— */
-        substrat: {
-          DEFAULT: "var(--substrat)",
-          tief: "var(--substrat-tief)",
-        },
-        flaeche: "var(--flaeche)",
-        lack: {
-          DEFAULT: "var(--lack)",
-          flaeche: "var(--lack-flaeche)",
-        },
-        ink: {
-          DEFAULT: "var(--text)",
-          dim: "var(--text-gedimmt)",
-          invers: "var(--text-invers)",
-          "invers-dim": "var(--text-invers-ged)",
-        },
-        kupfer: {
-          DEFAULT: "var(--kupfer)",
-          tief: "var(--kupfer-tief)",
-          hell: "var(--kupfer-hell)",
-        },
-        linie: {
-          DEFAULT: "var(--linie)",
-          invers: "var(--linie-invers)",
-        },
-        status: {
-          ok: "var(--ok)",
-          warnung: "var(--warnung)",
-          fehler: "var(--fehler)",
-        },
-
-        /* ——— Legacy (nur Portal/OS — Website nutzt ausschließlich Leiterbahn-Tokens;
-               Portal-Umstieg auf Leiterbahn ist eigener Track, CI §7) ——— */
         bg: "#09090F",
         surface: "#111118",
         border: "#1E1E2E",
@@ -53,20 +20,29 @@ const config: Config = {
         "text-dim": "#8888AA",
       },
       fontFamily: {
-        display: ["var(--font-display)"],
-        body: ["var(--font-text)"],
-        mono: ["var(--font-mono)"],
+        display: ["Space Grotesk", "sans-serif"],
+        body: ["Inter", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
       },
-      borderRadius: {
-        pad: "var(--radius)", // 2px — Pads sind eckig (CI §4)
+      animation: {
+        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "draw-line": "drawLine 2s ease-out forwards",
+        "fade-in": "fadeIn 0.6s ease-out forwards",
+        float: "float 6s ease-in-out infinite",
       },
-      transitionTimingFunction: {
-        "leiter-out": "cubic-bezier(.22,1,.36,1)",
-        "leiter-in": "cubic-bezier(.55,.06,.68,.19)",
-      },
-      maxWidth: {
-        content: "72rem", // 1152px Content-Raster
-        prose: "42rem",
+      keyframes: {
+        drawLine: {
+          from: { strokeDashoffset: "1000" },
+          to: { strokeDashoffset: "0" },
+        },
+        fadeIn: {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
       },
     },
   },

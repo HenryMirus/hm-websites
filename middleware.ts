@@ -32,19 +32,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(`${OS_BASE}${subPath}`);
   }
 
-  // Weder Portal- noch OS-Subdomain → Marketing-Site
+  // Weder Portal- noch OS-Subdomain → durchlassen (inkl. /api/v1/*)
   if (!isPortalSubdomain && !isOsSubdomain) {
-    // Altlink-Kompatibilität: ?lang=en → /en/* (301, hreflang-sauber)
-    if (
-      request.nextUrl.searchParams.get("lang") === "en" &&
-      pathname !== "/en" &&
-      !pathname.startsWith("/en/")
-    ) {
-      const url = request.nextUrl.clone();
-      url.searchParams.delete("lang");
-      url.pathname = pathname === "/" ? "/en" : `/en${pathname}`;
-      return NextResponse.redirect(url, 301);
-    }
     return NextResponse.next({ request });
   }
 

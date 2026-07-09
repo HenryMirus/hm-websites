@@ -9,14 +9,14 @@ meta:
   alle_preise: netto
   pflicht_disclaimer: >
     Das ist eine unverbindliche Orientierung basierend auf vergleichbaren
-    Projekten — kein Angebot. Ein konkretes, verbindliches Angebot erstellt
-    Henry erst nach einem persönlichen Gespräch, in dem die genauen
+    Projekten, kein Angebot. Ein konkretes, verbindliches Angebot erstelle
+    ich erst nach einem persönlichen Gespräch, in dem die genauen
     Anforderungen geklärt werden.
   verboten:
     - Festpreise ohne Spanne
     - Garantien oder Zusicherungen
     - feste Lieferzeit-Zusagen (nur Richtwerte)
-    - Preise für Leistungen, die nicht in dieser Datei stehen (→ "klärt Henry persönlich")
+    - Preise für Leistungen, die nicht in dieser Datei stehen (das kläre ich persönlich)
 
 leistungen:
 

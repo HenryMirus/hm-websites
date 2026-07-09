@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import LeistungenPage from "@/components/pages/LeistungenPage";
+import LeistungenDetail from "@/components/LeistungenDetail";
 
 export const metadata: Metadata = {
-  title: "Leistungen & Preisspannen — Websites, KI-Chatbots, Webapps",
+  title: "Leistungen & Preisspannen | Websites, KI-Chatbots, Webapps | HM Labs",
   description:
-    "HM Labs: 13 Leistungen mit transparenten Preisspannen — von der Landingpage bis zur Unternehmens-KI.",
+    "Alle 13 Leistungen von HM Labs im Detail: individuelle Websites, self-hosted KI-Chatbots, Webapps, GAIO- & BFSG-Audits, Wartung, mit transparenten Preisspannen.",
   alternates: {
-    canonical: "/leistungen",
-    languages: { "de-DE": "/leistungen", en: "/en/leistungen" },
+    canonical: "https://hm-labs.de/leistungen",
   },
 };
 
 export default function Page() {
-  return <LeistungenPage lang="de" />;
+  return <LeistungenDetail />;
 }

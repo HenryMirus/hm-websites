@@ -1,5 +1,5 @@
 # llms-full.txt for HM Labs — full service descriptions
-# Source of truth: hm-labs.de/leistungen · Prices are non-binding
+# Source of truth: hm-labs.de (services section) · Prices are non-binding
 # orientation ranges (EUR net); binding quotes only after a personal
 # consultation. HM Labs, Pantaleonstraße 20, 53567 Buchholz (Westerwald),
 # Germany — https://hm-labs.de

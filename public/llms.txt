@@ -12,12 +12,12 @@ audits. Clients are German small businesses, law firms, medical practices
 and mid-sized companies. Working language: German. Formal register (Sie).
 
 ## Key pages
-- /: Overview, positioning, quality standards
-- /leistungen: All 13 services with transparent price ranges
-- /prozess: The 5-phase project process
-- /preise: Price ranges, payment structure, no hidden costs
-- /ueber: Founder, location, working principles
-- /kontakt: Inquiry form, response within one business day
+- /: Overview, services, process, pricing FAQ, about, contact
+- /leistungen: All 13 services in detail with transparent price ranges
+- /#process: How a project runs
+- /#faq: Prices, timelines, ownership — frequent questions
+- /#contact: Inquiry form, response usually within one business day
+- /impressum, /datenschutz: Legal pages
 
 ## Expertise signals
 HM Labs specializes in:

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { computeLeadScore } from "@/lib/leadScoring";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const RATE_LIMIT_MAX = 5; // requests
@@ -38,7 +39,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name, email, company, message, subject, wizard_answers, source, budget, website } = body;
+    const { name, email, company, phone, message, subject, wizard_answers, source, budget, website } = body;
 
     // Honeypot (Masterplan §5.7): Bots füllen das unsichtbare Feld —
     // wir antworten mit Erfolg, speichern aber nichts.
@@ -62,20 +63,36 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Nachricht zu lang." }, { status: 400 });
     }
 
+    if (typeof phone === "string" && phone.length > 50) {
+      return NextResponse.json({ error: "Telefonnummer zu lang." }, { status: 400 });
+    }
+
     const supabase = await createClient();
+
+    // Lead-Score: rein interne Priorisierungshilfe (siehe lib/leadScoring.ts),
+    // serverseitig berechnet, damit er nicht durch die Anfrage manipulierbar ist.
+    const { score, tier, breakdown } = computeLeadScore({
+      wizardAnswers: wizard_answers,
+      phone,
+      message,
+    });
 
     const { error } = await supabase.from("contact_submissions").insert({
       name: name.trim(),
       email: email.trim().toLowerCase(),
       company: company?.trim() || null,
+      phone: typeof phone === "string" && phone.trim() ? phone.trim() : null,
       message: message?.trim() || "",
       subject: subject?.trim() || null,
       source_url: source || null,
+      lead_score: score,
+      lead_tier: tier,
       metadata: {
         ...(wizard_answers ? { wizard_answers } : {}),
         ...(typeof budget === "string" && budget.trim()
           ? { budget: budget.trim().slice(0, 100) }
           : {}),
+        score_breakdown: breakdown,
         submitted_at: new Date().toISOString(),
       },
     });
