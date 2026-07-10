@@ -11,7 +11,8 @@ import ServicesSection from "@/components/ServicesSection";
 import LifecycleSection from "@/components/LifecycleSection";
 import ProcessSection from "@/components/ProcessSection";
 import PortfolioSection from "@/components/PortfolioSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+// TestimonialsSection: bewusst deaktiviert bis echte, schriftlich freigegebene
+// Kundenstimmen vorliegen (Referenzphase) — keine erfundenen Testimonials.
 import CTASection from "@/components/CTASection";
 import AboutSection from "@/components/AboutSection";
 import TechStackSection from "@/components/TechStackSection";
@@ -56,7 +57,6 @@ export default function Home() {
           <LifecycleSection lang={lang} />
           <ProcessSection lang={lang} onOpenWizard={openWizard} />
           <PortfolioSection lang={lang} />
-          <TestimonialsSection lang={lang} />
           <CTASection lang={lang} onOpenWizard={openWizard} />
           <AboutSection lang={lang} />
           <TechStackSection lang={lang} />

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { EMAIL } from "@/lib/config/email";
 
 export const metadata: Metadata = {
-  title: "Datenschutzerklärung — HM Labs",
+  title: "Datenschutzerklärung | HM Labs",
   description: "Datenschutzerklärung und Informationen zur Datenverarbeitung von HM Labs.",
   robots: { index: false, follow: false },
 };
@@ -52,7 +52,7 @@ export default function DatenschutzPage() {
               Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:
             </p>
             <div className="mt-3 text-sm space-y-1">
-              <p className="font-medium">Henry Mirus — HM Labs</p>
+              <p className="font-medium">Henry Mirus, HM Labs</p>
               <p className="text-[#5A5A7A]">E-Mail:{" "}
                 <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>
               </p>
@@ -71,10 +71,16 @@ export default function DatenschutzPage() {
             </Subsection>
             <Subsection title="2.2 Kontaktformular">
               <p>
-                Wenn Sie das Kontaktformular nutzen, werden die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, Unternehmen, Nachricht)
-                zur Bearbeitung Ihrer Anfrage verarbeitet. Diese Daten werden nicht ohne Ihre Einwilligung weitergegeben und nach
-                Abschluss der Anfrage gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.
-                Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung / vorvertragliche Maßnahmen).
+                Wenn Sie das Kontaktformular oder den Projekt-Wizard nutzen, werden die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse,
+                Unternehmen, optional Telefonnummer, Nachricht sowie Ihre Antworten im Wizard) zur Bearbeitung Ihrer Anfrage verarbeitet.
+                Diese Daten werden nicht ohne Ihre Einwilligung weitergegeben und nach Abschluss der Anfrage gelöscht, sofern keine
+                gesetzlichen Aufbewahrungspflichten bestehen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung / vorvertragliche Maßnahmen).
+              </p>
+              <p className="mt-3">
+                Aus Ihren Wizard-Antworten wird intern automatisiert ein Orientierungswert berechnet, der mir hilft, eingehende Anfragen
+                zu priorisieren und mich schneller auf relevante Details vorzubereiten. Dieser Wert dient ausschließlich der internen
+                Einordnung, ist für niemanden außer mir sichtbar und hat keine automatisierte Ablehnung oder sonstige rechtliche Wirkung
+                zur Folge. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an effizienter Anfragebearbeitung).
               </p>
             </Subsection>
             <Subsection title="2.3 E-Mail-Kontakt">
@@ -150,7 +156,7 @@ export default function DatenschutzPage() {
             </Subsection>
             <Subsection title="Google Analytics 4 (nur mit Einwilligung)">
               <p>
-                Mit Ihrer Einwilligung setzen wir Google Analytics 4 ein — ein Webanalysedienst der Google Ireland Ltd.
+                Mit Ihrer Einwilligung setzen wir Google Analytics 4 ein, einen Webanalysedienst der Google Ireland Ltd.
                 (Gordon House, Barrow Street, Dublin 4, Irland). Google Analytics verwendet Cookies, um die Nutzung der
                 Website zu analysieren. Die dabei erzeugten Informationen (inkl. anonymisierter IP-Adresse) werden an
                 Google-Server übertragen. Wir haben IP-Anonymisierung aktiviert und einen AV-Vertrag gem. Art. 28 DSGVO
@@ -200,12 +206,12 @@ export default function DatenschutzPage() {
             </p>
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                { right: "Auskunftsrecht", desc: "Art. 15 DSGVO — Auskunft über verarbeitete Daten" },
-                { right: "Berichtigungsrecht", desc: "Art. 16 DSGVO — Korrektur unrichtiger Daten" },
-                { right: "Löschungsrecht", desc: "Art. 17 DSGVO — Löschung Ihrer Daten" },
-                { right: "Einschränkung", desc: "Art. 18 DSGVO — Einschränkung der Verarbeitung" },
-                { right: "Datenübertragbarkeit", desc: "Art. 20 DSGVO — Daten in maschinenlesbarem Format" },
-                { right: "Widerspruchsrecht", desc: "Art. 21 DSGVO — Widerspruch gegen Verarbeitung" },
+                { right: "Auskunftsrecht", desc: "Art. 15 DSGVO: Auskunft über verarbeitete Daten" },
+                { right: "Berichtigungsrecht", desc: "Art. 16 DSGVO: Korrektur unrichtiger Daten" },
+                { right: "Löschungsrecht", desc: "Art. 17 DSGVO: Löschung Ihrer Daten" },
+                { right: "Einschränkung", desc: "Art. 18 DSGVO: Einschränkung der Verarbeitung" },
+                { right: "Datenübertragbarkeit", desc: "Art. 20 DSGVO: Daten in maschinenlesbarem Format" },
+                { right: "Widerspruchsrecht", desc: "Art. 21 DSGVO: Widerspruch gegen Verarbeitung" },
               ].map(({ right, desc }) => (
                 <div key={right} className="rounded-lg border border-[#1E1E2E] p-3 bg-[#111118]">
                   <p className="text-xs font-semibold text-[#EEEEFF] mb-1">{right}</p>

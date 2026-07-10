@@ -9,9 +9,9 @@ const SITE_URL = "https://hm-labs.de";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "HM Labs — KI-Integration & Websites für KMU | Deutschland",
+  title: "HM Labs | KI-Integration & Websites für KMU in Deutschland",
   description:
-    "Mehr Kunden, weniger Aufwand — durch KI die nie schläft. Websites, KI-Chatbots und Automatisierungen für KMU. Festpreis. Fertig in 14 Tagen. DSGVO-konform.",
+    "Mehr Kunden, weniger Aufwand, durch KI die nie schläft. Individuelle Websites, self-hosted KI-Chatbots und Automatisierungen für KMU. Transparente Preisspannen. DSGVO-konform.",
   keywords: [
     "KI Integration KMU",
     "KI Chatbot",
@@ -32,25 +32,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: "HM Labs — Mehr Kunden durch KI, die nie schläft",
+    title: "HM Labs: Mehr Kunden durch KI, die nie schläft",
     description:
-      "Websites, KI-Chatbots & Automatisierungen für KMU. Kein Agentur-Overhead. Festpreis. Fertig in 14 Tagen.",
+      "Individuelle Websites, self-hosted KI-Chatbots & Automatisierungen für KMU. Kein Agentur-Overhead, transparente Preisspannen.",
     siteName: "HM Labs",
     images: [
       {
         url: "/hm-labs-logo-v3.png",
         width: 1024,
         height: 1024,
-        alt: "HM Labs — KI & Software für KMU",
+        alt: "HM Labs: KI & Software für KMU",
       },
     ],
     locale: "de_DE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "HM Labs — Mehr Kunden durch KI, die nie schläft",
+    title: "HM Labs: Mehr Kunden durch KI, die nie schläft",
     description:
-      "Websites, KI-Chatbots & Automatisierungen für KMU. Festpreis. 14 Tage bis zum Go-live.",
+      "Individuelle Websites, self-hosted KI-Chatbots & Automatisierungen für KMU. Transparente Preisspannen statt Lockangebote.",
     images: ["/hm-labs-logo-v3.png"],
     creator: "@hmlabs",
   },
@@ -80,7 +80,7 @@ const jsonLd = {
       url: SITE_URL,
       email: EMAIL.CONTACT,
       description:
-        "KI-Integration, Websites und Softwareentwicklung für KMU in Deutschland. Festpreis, DSGVO-konform, fertig in 14 Tagen.",
+        "Individuelle Websites, self-hosted KI-Chatbots und Softwareentwicklung für KMU in Deutschland. Transparente Preisspannen, DSGVO-konform, EU-gehostet.",
       areaServed: {
         "@type": "Country",
         name: "Germany",
@@ -147,7 +147,7 @@ const jsonLd = {
           name: "Was kostet eine Website?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Eine professionelle Website liegt je nach Umfang zwischen 2.500 und 8.000€ — als Festpreis, nicht Stundensatz. Sie wissen vor dem Start genau, was Sie zahlen.",
+            text: "Als Orientierung: Eine Landingpage liegt bei 1.500–3.000 €, eine individuelle Business-Website bei 3.500–7.500 €, eine größere Corporate-Website bei 7.500–15.000 €. Das ist eine unverbindliche Orientierung basierend auf vergleichbaren Projekten, kein Angebot. Ein konkretes, verbindliches Angebot erstelle ich erst nach einem persönlichen Gespräch, in dem die genauen Anforderungen geklärt werden. Im Angebot selbst steht dann ein fester Preis für den vereinbarten Umfang, der sich während der Umsetzung nicht mehr ändert.",
           },
         },
         {
@@ -155,7 +155,7 @@ const jsonLd = {
           name: "Wie lange dauert ein Projekt?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Eine Standard-Website ist in 14 Tagen live. Komplexere KI-Integrationen oder Web-Apps dauern 4–8 Wochen.",
+            text: "Als Richtwert: Eine Landingpage dauert 1–2 Wochen, eine Business-Website 3–5 Wochen, ein KI-Chatbot 1–2 Wochen, Web-Apps 4–10 Wochen. Zeitangaben sind Richtwerte, keine festen Zusagen.",
           },
         },
         {
@@ -179,7 +179,7 @@ const jsonLd = {
           name: "Bin ich nach dem Projekt an Sie gebunden?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Nein. Keine Mindestlaufzeiten, keine Knebelverträge. Sie können jederzeit wechseln — aber die meisten Kunden bleiben, weil es funktioniert.",
+            text: "Nein. Der Code gehört am Ende vollständig Ihnen, keine Mindestlaufzeiten, keine Knebelverträge. Sie können jederzeit mit einem anderen Dienstleister weiterarbeiten.",
           },
         },
         {
@@ -187,7 +187,7 @@ const jsonLd = {
           name: "Übernehmen Sie auch Marketing und SEO?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "SEO-Optimierung ist in jede Website eingebaut. Für laufendes Content-Marketing oder Ads empfehle ich spezialisierte Partner — ich konzentriere mich auf das was ich am besten kann.",
+            text: "SEO-Optimierung ist in jede Website eingebaut. Für laufendes Content-Marketing oder Ads empfehle ich spezialisierte Partner, ich konzentriere mich auf das, was ich am besten kann.",
           },
         },
         {
@@ -195,7 +195,7 @@ const jsonLd = {
           name: "Kann ich meine bestehende Website behalten?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit Ihnen und empfehle, was wirklich besser ist — nicht was teurer ist.",
+            text: "Oft ist ein Neustart sinnvoller. Ich analysiere das gemeinsam mit Ihnen und empfehle, was wirklich besser ist, nicht was teurer ist.",
           },
         },
         {
@@ -203,7 +203,7 @@ const jsonLd = {
           name: "Wie läuft die Zusammenarbeit ab?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Erstgespräch → Angebot → Umsetzung in 2-Wochen-Sprints → Launch. Sie sehen Fortschritte live, bevor alles fertig ist. Direkte Kommunikation, kein Ticket-System.",
+            text: "Erstgespräch → Angebot → Umsetzung → Launch. Sie zahlen in Meilensteinen (nie alles im Voraus), zwei Revisionsrunden sind inklusive, und Sie sehen Fortschritte live, bevor alles fertig ist.",
           },
         },
       ],

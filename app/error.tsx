@@ -74,7 +74,7 @@ export default function Error({ error, reset }: ErrorPageProps) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.45 }}
           >
-            Ein unerwarteter Fehler ist aufgetreten. Das passiert selten — meist hilft ein einfaches Neuladen.
+            Ein unerwarteter Fehler ist aufgetreten. Das passiert selten, meist hilft ein einfaches Neuladen.
           </motion.p>
 
           <motion.div
@@ -139,7 +139,7 @@ export default function Error({ error, reset }: ErrorPageProps) {
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
                     <span className="font-mono text-xs text-accent font-medium tracking-widest uppercase">
-                      Admin — Error Details
+                      Admin: Error Details
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">

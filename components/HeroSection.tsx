@@ -99,7 +99,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
         transition={{ duration: 0.6, delay: 1.2 }}
         className="absolute top-32 right-8 hidden lg:block bg-bg/75 backdrop-blur-md border border-border rounded-2xl px-5 py-3.5 shadow-2xl shadow-black/60 z-10"
       >
-        <div className="font-display font-bold text-3xl text-accent">+32%</div>
+        <div className="font-display font-bold text-3xl text-accent">90+</div>
         <div className="font-mono text-[11px] text-text-dim mt-0.5">
           {getText(t.hero.floating.stat1Label, lang)}
         </div>
@@ -229,8 +229,8 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
               className="flex flex-wrap gap-x-5 gap-y-2"
             >
               {(lang === "de"
-                ? ["DSGVO-konform", "EU-gehostet", "Festpreis", "Keine Bindung"]
-                : ["GDPR compliant", "EU-hosted", "Fixed price", "No commitment"]
+                ? ["DSGVO-konform", "EU-gehostet", "Transparente Preisspannen", "Keine Bindung"]
+                : ["GDPR compliant", "EU-hosted", "Transparent price ranges", "No commitment"]
               ).map((label) => (
                 <div key={label} className="flex items-center gap-1.5">
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

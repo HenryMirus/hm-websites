@@ -20,11 +20,14 @@ export default function Navigation({ lang, setLang, onOpenWizard }: NavigationPr
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  // "/#anker" statt "#anker": funktioniert auch von Unterseiten (z. B. /leistungen);
+  // auf der Startseite scrollt der Browser weiterhin smooth ohne Reload.
   const navLinks = [
-    { href: "#services", label: getText(t.nav.services, lang) },
-    { href: "#process", label: getText(t.nav.process, lang) },
-    { href: "#portfolio", label: getText(t.nav.portfolio, lang) },
-    { href: "#about", label: getText(t.nav.about, lang) },
+    { href: "/leistungen", label: getText(t.nav.services, lang) },
+    { href: "/#process", label: getText(t.nav.process, lang) },
+    { href: "/#portfolio", label: getText(t.nav.portfolio, lang) },
+    { href: "/#about", label: getText(t.nav.about, lang) },
+    { href: "/#contact", label: getText(t.nav.contact, lang) },
   ];
 
   return (
@@ -40,7 +43,7 @@ export default function Navigation({ lang, setLang, onOpenWizard }: NavigationPr
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           <picture>
             <source srcSet="/hm-labs-logo-v3.webp" type="image/webp" />
             <img src="/hm-labs-logo-v3.png" alt="HM Labs" width={36} height={36} className="rounded-lg" />

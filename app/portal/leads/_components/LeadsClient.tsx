@@ -1,16 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { ANSWER_LABELS, SUB_QUESTION_TEXT } from "@/lib/wizard";
+
+type LeadTier = "kalt" | "warm" | "heiss";
+
+type AnswerEntry = { id: string; label: string };
 
 type Lead = {
   id: string;
   name: string;
   email: string;
   company: string | null;
+  phone: string | null;
   subject: string | null;
   message: string;
   status: "new" | "read" | "replied" | "archived";
+  lead_score: number | null;
+  lead_tier: LeadTier | null;
   metadata: Record<string, unknown>;
   created_at: string;
 };
@@ -22,36 +30,43 @@ const STATUS_LABELS: Record<Lead["status"], { label: string; color: string }> = 
   archived: { label: "Archiviert", color: "bg-border/60 text-text-muted border-border" },
 };
 
-const WIZARD_KEY_LABELS: Record<string, string> = {
-  service: "Service",
-  industry: "Branche",
-  problem: "Problem",
-  size: "Unternehmensgröße",
+const TIER_LABELS: Record<LeadTier, { label: string; color: string }> = {
+  heiss: { label: "Heiß", color: "bg-accent/10 text-accent border-accent/25" },
+  warm: { label: "Warm", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
+  kalt: { label: "Kalt", color: "bg-border/60 text-text-muted border-border" },
 };
 
-const WIZARD_OPTION_LABELS: Record<string, string> = {
-  website: "Neue Website",
-  ai: "KI & Automatisierung",
-  software: "Eigene Software",
-  bundle: "Website + KI Paket",
-  trades: "Handwerk & Dienste",
-  consulting: "Beratung, Recht & Steuer",
-  "health-retail": "Gesundheit / Handel",
-  "realestate-other": "Immobilien & andere",
-  "no-visibility": "Zu wenig Sichtbarkeit",
-  "weak-website": "Schwache Website",
-  "manual-work": "Zu viel Handarbeit",
-  "clear-project": "Konkrete Idee",
-  solo: "Solo / Freelancer",
-  small: "2–10 Mitarbeiter",
-  medium: "11–50 Mitarbeiter",
-  large: "50+ Mitarbeiter",
+// Anzeigenamen für die Top-Level-Schlüssel in metadata.wizard_answers
+const KEY_LABELS: Record<string, string> = {
+  categories: "Interesse an",
+  service: "Konkrete Leistung",
+  branche: "Branche",
+  existingWebsite: "Bestehende Website",
+  problem: "Problem",
+  companySize: "Unternehmensgröße",
+  budget: "Budgetrahmen",
+  urgency: "Dringlichkeit",
+  decisionMaker: "Entscheidung",
 };
+
+function isAnswerEntry(v: unknown): v is AnswerEntry {
+  return !!v && typeof v === "object" && "id" in v && "label" in v;
+}
+
+/** Rendert einen einzelnen wizard_answers-Wert, egal ob altes (String) oder neues ({id,label}) Format. */
+function displayAnswer(value: unknown): string {
+  if (isAnswerEntry(value)) return value.label;
+  if (typeof value === "string") return ANSWER_LABELS[value]?.de ?? value;
+  if (Array.isArray(value)) return value.map(displayAnswer).join(", ");
+  return String(value);
+}
 
 export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) {
   const [leads, setLeads] = useState<Lead[]>(initialLeads);
   const [selected, setSelected] = useState<Lead | null>(null);
   const [filter, setFilter] = useState<"all" | Lead["status"]>("all");
+  const [tierFilter, setTierFilter] = useState<"all" | LeadTier>("all");
+  const [sortBy, setSortBy] = useState<"date" | "score">("date");
   const supabase = createClient();
 
   async function updateStatus(id: string, status: Lead["status"]) {
@@ -60,7 +75,16 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
     if (selected?.id === id) setSelected((s) => s ? { ...s, status } : s);
   }
 
-  const filtered = filter === "all" ? leads : leads.filter((l) => l.status === filter);
+  const filtered = useMemo(() => {
+    let result = filter === "all" ? leads : leads.filter((l) => l.status === filter);
+    if (tierFilter !== "all") result = result.filter((l) => l.lead_tier === tierFilter);
+    result = [...result].sort((a, b) => {
+      if (sortBy === "score") return (b.lead_score ?? -1) - (a.lead_score ?? -1);
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
+    return result;
+  }, [leads, filter, tierFilter, sortBy]);
+
   const counts = {
     all: leads.length,
     new: leads.filter((l) => l.status === "new").length,
@@ -68,6 +92,10 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
     replied: leads.filter((l) => l.status === "replied").length,
     archived: leads.filter((l) => l.status === "archived").length,
   };
+
+  const wizardAnswers = selected?.metadata?.wizard_answers as Record<string, unknown> | undefined;
+  const subAnswers = wizardAnswers?.sub as Record<string, AnswerEntry> | undefined;
+  const scoreBreakdown = selected?.metadata?.score_breakdown as { label: string; points: number }[] | undefined;
 
   return (
     <div className="flex h-screen">
@@ -81,8 +109,8 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
               {counts.new} neu
             </span>
           </div>
-          {/* Filter tabs */}
-          <div className="flex gap-1 overflow-x-auto">
+          {/* Status filter tabs */}
+          <div className="flex gap-1 overflow-x-auto mb-2">
             {(["all", "new", "read", "replied", "archived"] as const).map((f) => (
               <button
                 key={f}
@@ -96,6 +124,28 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                 {f === "all" ? `Alle (${counts.all})` : `${STATUS_LABELS[f].label} (${counts[f]})`}
               </button>
             ))}
+          </div>
+          {/* Tier filter + sort */}
+          <div className="flex items-center gap-1 overflow-x-auto">
+            {(["all", "heiss", "warm", "kalt"] as const).map((tf) => (
+              <button
+                key={tf}
+                onClick={() => setTierFilter(tf)}
+                className={`shrink-0 font-mono text-[11px] px-2.5 py-1.5 rounded-lg transition-colors border ${
+                  tierFilter === tf
+                    ? "bg-primary/10 text-primary border-primary/25"
+                    : "text-text-muted border-border hover:text-text-dim hover:bg-bg"
+                }`}
+              >
+                {tf === "all" ? "Alle Tiers" : TIER_LABELS[tf].label}
+              </button>
+            ))}
+            <button
+              onClick={() => setSortBy((s) => (s === "date" ? "score" : "date"))}
+              className="ml-auto shrink-0 font-mono text-[11px] px-2.5 py-1.5 rounded-lg transition-colors border border-border text-text-muted hover:text-text-dim hover:bg-bg"
+            >
+              Sortiert: {sortBy === "date" ? "Neueste" : "Score"}
+            </button>
           </div>
         </div>
 
@@ -117,9 +167,16 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
               >
                 <div className="flex items-start justify-between gap-2 mb-1">
                   <span className="font-medium text-sm text-text-primary truncate">{lead.name}</span>
-                  <span className={`shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded border ${STATUS_LABELS[lead.status].color}`}>
-                    {STATUS_LABELS[lead.status].label}
-                  </span>
+                  <div className="flex items-center gap-1 shrink-0">
+                    {lead.lead_tier && (
+                      <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded border ${TIER_LABELS[lead.lead_tier].color}`}>
+                        {lead.lead_score ?? "–"} · {TIER_LABELS[lead.lead_tier].label}
+                      </span>
+                    )}
+                    <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded border ${STATUS_LABELS[lead.status].color}`}>
+                      {STATUS_LABELS[lead.status].label}
+                    </span>
+                  </div>
                 </div>
                 <p className="text-text-muted text-xs truncate">{lead.email}</p>
                 {lead.company && (
@@ -163,7 +220,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                 </button>
               ))}
               <a
-                href={`mailto:${selected.email}?subject=Re: Ihr Projekt bei HM AI`}
+                href={`mailto:${selected.email}?subject=Re: Ihr Projekt bei HM Labs`}
                 className="ml-auto inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-white font-medium text-sm px-4 py-2 rounded-xl transition-colors"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -173,6 +230,28 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                 Antworten
               </a>
             </div>
+
+            {/* Lead-Score */}
+            {selected.lead_tier && (
+              <div className="bg-surface border border-border rounded-2xl p-6 mb-5">
+                <div className="flex items-center justify-between mb-4">
+                  <p className="font-mono text-[11px] text-text-muted uppercase tracking-wider">Lead-Score</p>
+                  <span className={`font-mono text-sm px-2.5 py-1 rounded-lg border ${TIER_LABELS[selected.lead_tier].color}`}>
+                    {selected.lead_score} / 100 · {TIER_LABELS[selected.lead_tier].label}
+                  </span>
+                </div>
+                {scoreBreakdown && scoreBreakdown.length > 0 && (
+                  <div className="space-y-1.5">
+                    {scoreBreakdown.map((f, i) => (
+                      <div key={i} className="flex items-center justify-between text-sm">
+                        <span className="text-text-dim">{f.label}</span>
+                        <span className="font-mono text-text-muted">+{f.points}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Contact info */}
             <div className="bg-surface border border-border rounded-2xl p-6 mb-5">
@@ -187,6 +266,11 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                   <a href={`mailto:${selected.email}`} className="text-primary text-sm hover:underline">
                     {selected.email}
                   </a>
+                  {selected.phone && (
+                    <p className="text-sm">
+                      <a href={`tel:${selected.phone}`} className="text-primary hover:underline">{selected.phone}</a>
+                    </p>
+                  )}
                   {selected.company && (
                     <p className="text-text-muted text-sm">{selected.company}</p>
                   )}
@@ -208,20 +292,39 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
             </div>
 
             {/* Wizard answers */}
-            {!!selected.metadata?.wizard_answers && (
-              <div className="bg-surface border border-border rounded-2xl p-6">
+            {!!wizardAnswers && (
+              <div className="bg-surface border border-border rounded-2xl p-6 mb-5">
                 <p className="font-mono text-[11px] text-text-muted uppercase tracking-wider mb-4">
                   Wizard-Antworten
                 </p>
                 <div className="grid grid-cols-2 gap-3">
-                  {Object.entries(selected.metadata.wizard_answers as Record<string, string>).map(([key, val]) => (
+                  {Object.entries(wizardAnswers)
+                    .filter(([key]) => key !== "sub")
+                    .map(([key, val]) => (
+                      <div key={key} className="bg-bg border border-border rounded-xl p-3">
+                        <p className="font-mono text-[10px] text-text-muted mb-1">
+                          {KEY_LABELS[key] ?? key}
+                        </p>
+                        <p className="text-text-primary text-sm font-medium">{displayAnswer(val)}</p>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
+            {/* Sub-wizard answers */}
+            {!!subAnswers && Object.keys(subAnswers).length > 0 && (
+              <div className="bg-surface border border-border rounded-2xl p-6">
+                <p className="font-mono text-[11px] text-text-muted uppercase tracking-wider mb-4">
+                  Zusatzfragen (optionaler Unterwizard)
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  {Object.entries(subAnswers).map(([key, val]) => (
                     <div key={key} className="bg-bg border border-border rounded-xl p-3">
                       <p className="font-mono text-[10px] text-text-muted mb-1">
-                        {WIZARD_KEY_LABELS[key] ?? key}
+                        {SUB_QUESTION_TEXT[key]?.de ?? key}
                       </p>
-                      <p className="text-text-primary text-sm font-medium">
-                        {WIZARD_OPTION_LABELS[String(val)] ?? String(val)}
-                      </p>
+                      <p className="text-text-primary text-sm font-medium">{displayAnswer(val)}</p>
                     </div>
                   ))}
                 </div>

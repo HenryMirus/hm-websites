@@ -1,69 +1,43 @@
-# HM Labs
+# llms.txt for HM Labs
+# HM Labs — custom-built websites, self-hosted AI chatbots and web
+# applications for German SMEs. No templates, no page builders.
 
-> HM Labs ist ein Ein-Mann-Betrieb von Henry Mirus aus Deutschland. Ich baue High-Converting Websites, KI-Integrationen und maßgeschneiderte Software für kleine und mittelständische Unternehmen (KMU) — ohne Agentur-Overhead, zum Festpreis, in 14 Tagen live.
+## About
+HM Labs is a web studio based in Buchholz (Westerwald), Germany, run by
+Henry Mirus. It designs and hand-builds individual websites
+(Lighthouse 90+ target, measured before every release), GDPR-native AI
+chatbots self-hosted on EU servers, custom web applications, and provides
+GAIO (Generative AI Optimization) audits and WCAG/BFSG accessibility
+audits. Clients are German small businesses, law firms, medical practices
+and mid-sized companies. Working language: German. Formal register (Sie).
 
-Meine Arbeit richtet sich an Handwerker, Steuerberater, Logistiker, Gastronomen und andere KMU, die ihre Kundenzahl erhöhen und manuelle Arbeit durch KI automatisieren möchten. Ich arbeite direkt mit dem Inhaber — kein Projektmanager, kein Zwischenhändler.
+## Key pages
+- /: Overview, services, process, pricing FAQ, about, contact
+- /leistungen: All 13 services in detail with transparent price ranges
+- /#process: How a project runs
+- /#faq: Prices, timelines, ownership — frequent questions
+- /#contact: Inquiry form, response usually within one business day
+- /impressum, /datenschutz: Legal pages
 
-## Kontakt & Standort
+## Expertise signals
+HM Labs specializes in:
+- Custom website design with GSAP animation concepts (no templates)
+- Technical SEO and GAIO (llms.txt, Schema.org, AI-crawler readiness)
+- Self-hosted, GDPR-compliant AI chatbots (EU servers, no US cloud)
+- Website relaunches with 301 redirect maps and 4-week rank monitoring
+- WCAG 2.1 AA / BFSG accessibility audits and remediation
 
-- E-Mail: mrs.hnry@gmail.com
-- Standort: Deutschland
-- Antwortzeit: innerhalb von 24 Stunden
-- Website: https://hm-labs.de
+## Pricing (non-binding orientation ranges, EUR net)
+Landing page 1,500–3,000 · Business website 3,500–7,500 · Corporate
+website 7,500–15,000 · Relaunch 3,000–8,000 · AI chatbot 1,500–3,500
+setup + 50–150/month · Web app 8,000–25,000 · SaaS MVP 15,000–35,000 ·
+Maintenance 49–299/month (three tiers). GAIO audit, AI visibility
+monitoring, accessibility audit and private company AI: priced after a
+personal consultation. Binding quotes only after a personal consultation.
 
-## Leistungen
+## Location
+Buchholz (Westerwald), Rheinland-Pfalz, Germany — serving the
+Cologne/Bonn–Koblenz region on site and all of DACH remotely.
 
-- [Websites](https://hm-labs.de/#services): High-Converting Websites mit KI-Chatbot, Mobile-first Design, SEO-Optimierung und Core Web Vitals. Fertig in 14 Tagen. Kostet zwischen 2.500 und 8.000 € (Festpreis).
-- [KI-Integration](https://hm-labs.de/#services): Einbindung von KI in bestehende Prozesse — Kundenkommunikation, Angebotserstellung, Terminbuchung, CRM-Integration. Durchschnittliche Ersparnis: 3 Stunden pro Tag.
-- [Software & SaaS](https://hm-labs.de/#services): Maßgeschneiderte Web-Apps und interne Tools, die repetitive Arbeit automatisieren und mit dem Unternehmen skalieren.
-
-## Prozess
-
-1. Kostenlose Analyse (30 Min.) — Verständnis des Geschäftsmodells, der Kunden und Wachstumshebel
-2. Umsetzung (1–4 Wochen) — Design, Entwicklung und KI-Integration in agilen 2-Wochen-Sprints
-3. Launch & Wachstum — Go-live, Monitoring und kontinuierliche Optimierung
-
-## Referenzprojekte
-
-- Sanitär & Heizung GmbH: Neue Website mit KI-Chatbot der Anfragen qualifiziert und Termine bucht — führte zu deutlich mehr Kundenanfragen
-- Steuerberatungskanzlei: KI-System beantwortet Voranfragen und klassifiziert Mandanten — 60 % weniger Telefonaufwand
-- Logistik-Dienstleister: Automatisiertes Angebots-Tool — Angebotserstellung von 45 Minuten auf 2 Minuten reduziert
-
-## Technologie-Stack
-
-- Frontend: Next.js 15, React 19, TypeScript, Tailwind CSS, Framer Motion
-- Backend & Daten: Supabase, PostgreSQL, pgvector, Drizzle ORM, Stripe, Resend
-- KI & Agenten: Claude API (Anthropic), Vercel AI SDK, LangGraph, OpenAI Embeddings, RAG
-- Automatisierung: n8n, Trigger.dev, GitHub Actions, Claude Agent SDK
-- Infrastruktur: Vercel, Hetzner VPS, Cloudflare, Docker, Coolify
-- Analytics: Posthog, Plausible, Google Tag Manager
-
-## Preise & Konditionen
-
-- Festpreis (kein Stundensatz): Websites ab 2.500 €, KI-Integrationen und Web-Apps individuell
-- Keine Mindestlaufzeit, keine Knebelverträge
-- DSGVO-konform, EU-gehostet
-- Lieferzeit: Standard-Website in 14 Tagen, komplexere Projekte in 4–8 Wochen
-
-## Häufige Fragen
-
-**Was kostet eine Website?** Zwischen 2.500 und 8.000 € als Festpreis — vor dem Start bekannt.
-
-**Wie lange dauert ein Projekt?** Eine Standard-Website ist in 14 Tagen live. KI-Integrationen und Web-Apps dauern 4–8 Wochen.
-
-**Brauche ich technisches Vorwissen?** Nein. Ich erkläre alles verständlich — kein Fachjargon.
-
-**Was passiert nach dem Launch?** Hosting, Updates, Monitoring und Optimierungen sind inklusive. Kein Alleinlassen.
-
-**Bin ich nach dem Projekt gebunden?** Nein. Keine Mindestlaufzeiten, kein Lock-in.
-
-**Übernimmst du auch SEO?** SEO ist in jede Website eingebaut. Für laufendes Content-Marketing empfehle ich spezialisierte Partner.
-
-## Über Henry Mirus
-
-Henry Mirus ist Entwickler und KI-Spezialist mit Sitz in Deutschland. Er arbeitet direkt mit Inhabern kleiner und mittelständischer Unternehmen — ohne Projektmanager dazwischen, ohne Templates, ohne versteckte Kosten. Jede Lösung wird von Grund auf für das jeweilige Unternehmen entwickelt.
-
-## Rechtliches
-
-- Impressum: https://hm-labs.de/impressum
-- Datenschutzerklärung: https://hm-labs.de/datenschutz
+## Contact
+https://hm-labs.de/kontakt

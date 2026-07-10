@@ -9,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: "https://hm-labs.de/leistungen",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: "https://hm-labs.de/impressum",
       lastModified: new Date(),
       changeFrequency: "yearly",

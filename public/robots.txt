@@ -1,3 +1,21 @@
+# HM Labs — robots.txt (GAIO-Template, hm-gaio)
+# KI-Crawler ausdrücklich erlaubt — Sichtbarkeit in KI-Suchen ist Teil des Angebots.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: *
 Allow: /
 

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { EMAIL } from "@/lib/config/email";
 
 export const metadata: Metadata = {
-  title: "Impressum — HM Labs",
+  title: "Impressum | HM Labs",
   description: "Impressum und Anbieterkennzeichnung von HM Labs.",
   robots: { index: false, follow: false },
 };
@@ -41,16 +41,18 @@ export default function ImpressumPage() {
           <p className="text-[#4F7FFF] font-mono text-xs tracking-widest uppercase mb-3">// Legal</p>
           <h1 className="text-3xl md:text-4xl font-bold text-[#EEEEFF] mb-4">Impressum</h1>
           <p className="text-[#5A5A7A] text-sm">
-            Angaben gemäß § 5 TMG und § 55 RStV
+            Angaben gemäß § 5 DDG
           </p>
         </div>
 
         <div className="space-y-10 text-[#EEEEFF]/90">
 
           <Section title="Anbieter">
-            <p>Henry Mirus</p>
+            <p>HM Labs, Inhaber: Henry Mirus</p>
+            <p className="mt-1">Pantaleonstraße 20</p>
+            <p>53567 Buchholz (Westerwald)</p>
             <p className="text-[#5A5A7A] text-sm mt-1">
-              (Einzelunternehmen / Freiberufler)
+              (Einzelunternehmen)
             </p>
           </Section>
 
@@ -65,7 +67,7 @@ export default function ImpressumPage() {
             </p>
           </Section>
 
-          <Section title="Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV">
+          <Section title="Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV">
             <p>Henry Mirus</p>
             <p className="text-[#5A5A7A] text-sm mt-1">
               (Anschrift wie oben)
@@ -74,8 +76,8 @@ export default function ImpressumPage() {
 
           <Section title="Haftung für Inhalte">
             <p className="text-sm text-[#EEEEFF]/70 leading-relaxed">
-              Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.
-              Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen
+              Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.
+              Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen
               oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von
               Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis
               einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
