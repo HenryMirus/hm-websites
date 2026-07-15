@@ -50,10 +50,10 @@ export default function Home() {
         <Navigation lang={lang} setLang={setLang} onOpenWizard={openWizard} />
         <main>
           <HeroSection lang={lang} onOpenWizard={openWizard} />
+          <ServicesSection lang={lang} />
           <TrustBar lang={lang} />
           <ReadinessCheckSection lang={lang} onOpenWizard={openWizard} />
           <ScrollRevealText lang={lang} />
-          <ServicesSection lang={lang} />
           <LifecycleSection lang={lang} />
           <ProcessSection lang={lang} onOpenWizard={openWizard} />
           <PortfolioSection lang={lang} />

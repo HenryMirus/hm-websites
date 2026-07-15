@@ -25,12 +25,12 @@ export const t = {
   // and the three floating badge overlays on the right side.
   hero: {
     tag: { de: "Für den Mittelstand · Für KMUs", en: "For SMBs · For mid-market" },
-    line1: { de: "Mehr Kunden", en: "More Clients" },
-    line2: { de: "Weniger Aufwand", en: "Less Effort" },
-    line3: { de: "Durch KI die nie schläft", en: "Through AI That Never Sleeps" },
+    line1: { de: "Ich integriere KI-Systeme", en: "I Integrate AI Systems" },
+    line2: { de: "in Unternehmen", en: "Into Businesses" },
+    line3: { de: "Mehr Kunden, weniger Aufwand", en: "More Clients, Less Effort" },
     sub: {
-      de: "Kein Agentur-Overhead, ein fester Ansprechpartner. Individuelle Websites, KI und Software, mit transparenten Preisspannen statt Lockangeboten.",
-      en: "No agency overhead, one fixed point of contact. Individual websites, AI and software, with transparent price ranges instead of bait offers.",
+      de: "Kein Agentur-Overhead, ein fester Ansprechpartner. KI-Systeme und Software für Ihren Betrieb, dazu bei Bedarf die passende Website, mit transparenten Preisspannen statt Lockangeboten.",
+      en: "No agency overhead, one fixed point of contact. AI systems and software for your business, plus a fitting website if you need one, with transparent price ranges instead of bait offers.",
     },
     cta1: { de: "Kostenlos beraten lassen", en: "Book free consultation" },
     cta2: { de: "Unsere Projekte ansehen", en: "View our work" },
@@ -639,7 +639,7 @@ export const t = {
   // restart / tryAgain: reset buttons shown during and after the quiz.
   readinessCheck: {
     tag: { de: "// Kostenloser Check", en: "// Free Check" },
-    headline: { de: "Wie digital-ready ist Ihr Unternehmen?", en: "How digital-ready is your business?" },
+    headline: { de: "Wie bereit ist Ihr Unternehmen für den Einsatz von KI?", en: "How ready is your business for using AI?" },
     sub: { de: "5 Fragen. 2 Minuten. Sofortiges Ergebnis.", en: "5 questions. 2 minutes. Instant result." },
     // Three benefit bullets on the left panel
     features: [

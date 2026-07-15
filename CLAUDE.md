@@ -5,7 +5,7 @@
 > **Owner-Entscheidung 2026-07-07: Das CI-System „Leiterbahn" ist VERWORFEN.**
 > Verbindlich ist das ursprüngliche Dark-Tech-Design (siehe Design rules) mit dem erneuerten Content.
 > Content-Quellen bleiben verbindlich: Preise `docs/spec/preislogik.yaml` (wörtlich) · Leistungstexte `docs/spec/hm-leistungsportfolio.md`
-> Last updated: 2026-07-09 (Session 4 — Lead-Qualifizierungs-Wizard + Lead-Score im Portal)
+> Last updated: 2026-07-15 (Session 6 — Hero-Klarheit: „Was mache ich?" sofort erkennbar, Sektionsreihenfolge)
 
 ---
 
@@ -77,7 +77,7 @@
 
 **Stand 2026-07-07 (Original-Design + erneuerter Content; Review Henry ausstehend):**
 
-- [x] Startseite als SPA: Hero (Typewriter) · TrustBar · ReadinessCheck · ScrollReveal · Services (3 Karten, neue Texte + Spannen) · Lifecycle (6 Probleme) · Process · Portfolio („Aus dem eigenen Labor" — 3 echte Eigenprojekte) · CTA · About (ehrliche Stats) · TechStack · FAQ (YAML-Spannen + Disclaimer) · Contact · Footer · SectionNav · ProjectWizard
+- [x] Startseite als SPA (Reihenfolge seit Session 6): Hero (Typewriter, „Ich integriere KI-Systeme in Unternehmen") · Services (3 Karten, neue Texte + Spannen — jetzt direkt nach Hero) · TrustBar · ReadinessCheck („Wie bereit ist Ihr Unternehmen für den Einsatz von KI?") · ScrollReveal · Lifecycle (6 Probleme) · Process · Portfolio („Aus dem eigenen Labor" — 3 echte Eigenprojekte) · CTA · About (ehrliche Stats) · TechStack · FAQ (YAML-Spannen + Disclaimer) · Contact · Footer · SectionNav · ProjectWizard
 - [x] TestimonialsSection deaktiviert (erfundene Zitate entfernt)
 - [x] Rechtsseiten: /impressum (auf § 5 DDG / § 18 MStV aktualisiert) · /datenschutz (Bestand, passt zum Consent-Setup)
 - [x] llms.txt (ehrlich, YAML-Preise, Single-Page-Anker) · llms-full.txt (13 Leistungen) · robots.txt mit KI-Crawlern
@@ -125,7 +125,7 @@
 
 ## Current session task
 
-Lead-Qualifizierungs-Wizard komplett neu konzipiert und gebaut (Mehrfachauswahl-Kategorien, Budget/Dringlichkeit/Entscheidungskompetenz als neue Hauptschritte, optionale zweistufige Unterwizards pro Kategorie/Service) plus serverseitiger Lead-Score, sichtbar im Portal unter `/portal/leads` mit Badge, Breakdown, Filter und Sortierung. Build grün (41 Seiten). End-to-End per direktem `/api/contact`-Request verifiziert (Score-Berechnung + DB-Insert korrekt, Testdaten wieder gelöscht); Portal-UI selbst konnte in dieser Session nicht eingeloggt/visuell geprüft werden (keine Admin-Zugangsdaten im Preview verfügbar) — Code wurde stattdessen gegen die reale DB-Row-Struktur durchgesprochen. **Nächster Schritt:** Henry prüft `/portal/leads` visuell mit echtem Login, dann Review des Wizard-Flows im Browser, dann committen.
+Owner-Feedback von Testnutzern (Freunde): Besucher verstehen aus der alten Hero-Headline nicht, was Henry eigentlich macht. Headline umgeschrieben auf direkten „Ich integriere KI-Systeme in Unternehmen"-Satz (Benefit „Mehr Kunden, weniger Aufwand" bleibt als Gradient-Akzentzeile), Services-Sektion direkt hinter den Hero gezogen (vorher 5. Sektion), TrustBar dafür einen Schritt nach hinten, ReadinessCheck-Headline von vagem „Wie digital-ready ist Ihr Unternehmen?" auf konkretes „Wie bereit ist Ihr Unternehmen für den Einsatz von KI?" präzisiert. Visuell auf Desktop (1280px) und Mobile (375px) verifiziert: kein Overflow, kein Layout-Shift, keine Console-Errors; Reihenfolge zusätzlich per DOM-Text bestätigt. Lehre als „The Clarity Test" dauerhaft in `hm-design-identity` verankert (neue Regel: Hero-Headline muss ohne Zusatzkontext beantworten, was das Geschäft konkret macht, bevor Memorability optimiert wird), damit das bei künftigen Projekten nicht wieder passiert. **Nächster Schritt:** Henry prüft die neue Headline/Reihenfolge live, dann ggf. Feedback zur Sub-Zeile und zum Services-Card-Ranking (SVC_01 „Individuelle Websites" trägt noch das „Beliebt"-Badge und steht zuerst, obwohl der Fokus jetzt auf KI-Systemen liegt — bewusst nicht angetastet, da nicht Teil des heutigen Auftrags).
 
 ---
 
