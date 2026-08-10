@@ -758,8 +758,8 @@ export const t = {
       skipQuestion:       { de: "Überspringen",             en: "Skip"                          },
       subIntroTitle:      { de: "Ein paar Details mehr?",   en: "A few more details?"           },
       subIntroSub:        {
-        de: "Damit ich mich noch besser vorbereiten kann. Dauert etwa eine Minute, ist aber optional.",
-        en: "So I can prepare even better. Takes about a minute, and it's optional.",
+        de: "So verstehe ich Ihre Ziele besser und kann Ihnen konkrete Lösungen vorschlagen. Dauert etwa eine Minute, ist aber optional.",
+        en: "This helps me understand your goals better and suggest concrete solutions. Takes about a minute, and it's optional.",
       },
       subIntroYes:        { de: "Ja, gerne",                en: "Yes, sure"                     },
       subIntroSkip:       { de: "Nein, direkt weiter",       en: "No, skip ahead"                },
