@@ -27,7 +27,7 @@
 - **Animations:** framer-motion (+ Canvas-ParticleNetwork im Hero-Hintergrund)
 - **Forms:** kontrollierte Komponenten (ContactSection, ProjectWizard) → `/api/contact` (Supabase `contact_submissions`, Honeypot, Rate-Limit)
 - **Wizard-Datenschicht:** `lib/wizard.ts` (Kategorien, Hauptschritte, Budget-Bänder aus preislogik.yaml, optionale Unterwizards Ebene 1/2) + `lib/leadScoring.ts` (serverseitige Score-Berechnung, siehe unten)
-- **Database:** Supabase (auch Portal/OS unter `app/portal`, `app/os` — eigene Tracks, nicht anfassen)
+- **Database:** Supabase (auch Portal unter `app/portal` — eigener Track, nicht anfassen). Das alte, selbstgebaute "Agent OS"-Dashboard (`app/os`, `lib/os`) wurde am 2026-08-31 entfernt, überholt durch das neue hm-agent-os-Projekt (eigenes Repo, dockt auf Paperclip-Fork). Die Subdomain `os.hm-labs.de` bleibt für dieses neue Projekt reserviert (Phase 7), wird künftig aber direkt per DNS/Reverse-Proxy dorthin gezeigt, nicht mehr über diese Next.js-App. Das Supabase-Schema `agent_os` (Tabellen `pipeline_runs`/`pipeline_steps`/`pipeline_approvals`) besteht als Daten weiter, wird aber von keinem Code hier mehr gelesen.
 - **Package manager:** npm
 - **i18n:** Client-State DE/EN via `lib/translations.ts` (`?lang=en` als hreflang-Alternate)
 - **Consent/Tracking:** CookieBanner + TrackingScripts (GA4 etc., einwilligungsbasiert) via `lib/consent.tsx`
@@ -104,7 +104,7 @@
 
 - **Design-Richtung:** Original-Design bleibt — kein erneuter CI-Umbau ohne ausdrückliche Owner-Anweisung.
 - Preis-Disclaimer wörtlich aus `preislogik.yaml`; Leistungen 09–12 ohne Spanne, bis YAML v1.1 kalibriert ist.
-- `app/portal/*` und `app/os/*` (eigene Tracks).
+- `app/portal/*` (eigener Track). `app/os/*` entfernt (2026-08-31, siehe Tech-Stack-Notiz oben).
 - Keine erfundenen Referenzen, Testimonials oder Metriken — nie wieder einführen.
 
 ---

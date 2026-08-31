@@ -5,35 +5,33 @@ const MAIN_DOMAIN = "hm-labs.de";
 const PORTAL_SUBDOMAIN = "clients.hm-labs.de";
 const PORTAL_BASE = `https://${PORTAL_SUBDOMAIN}`;
 const DEV_PORTAL_SUBDOMAIN = "clients.localhost";
-const OS_SUBDOMAIN = "os.hm-labs.de";
-const OS_BASE = `https://${OS_SUBDOMAIN}`;
-const DEV_OS_SUBDOMAIN = "os.localhost";
+// os.hm-labs.de ist reserviert für das neue hm-agent-os-Projekt (eigenes
+// Repo, eigenes Deployment — dockt auf einem Paperclip-Fork, siehe
+// hm-agent-os/docs/hm-agent-os-umsetzungsplan.md Phase 7). Das alte,
+// selbstgebaute "Agent OS"-Dashboard (app/os, lib/os) wurde entfernt
+// (2026-08-31, überholt durch hm-agent-os). Sobald Phase 7 steht, wird
+// os.hm-labs.de per DNS/Reverse-Proxy direkt auf das neue Deployment
+// gezeigt — nicht mehr über dieses Next.js-Middleware-Rewrite.
 
-// Public path suffixes (relative to the subdomain prefix, e.g. /portal or /os).
+// Public path suffixes (relative to the subdomain prefix, e.g. /portal).
 const PUBLIC_SUFFIXES = ["/login", "/auth/callback", "/auth/update-password", "/password"];
 
 export async function middleware(request: NextRequest) {
   const hostname = (request.headers.get("host") || "").replace(/:.*$/, "");
   const isPortalSubdomain =
     hostname === PORTAL_SUBDOMAIN || hostname === DEV_PORTAL_SUBDOMAIN;
-  const isOsSubdomain =
-    hostname === OS_SUBDOMAIN || hostname === DEV_OS_SUBDOMAIN;
   const isMainDomain =
     hostname === MAIN_DOMAIN || hostname === `www.${MAIN_DOMAIN}`;
   const pathname = request.nextUrl.pathname;
 
-  // Hauptdomain + /portal/* oder /os/* → redirect zur jeweiligen Subdomain
+  // Hauptdomain + /portal/* → redirect zur Portal-Subdomain
   if (isMainDomain && pathname.startsWith("/portal")) {
     const subPath = pathname.replace("/portal", "") || "/";
     return NextResponse.redirect(`${PORTAL_BASE}${subPath}`);
   }
-  if (isMainDomain && pathname.startsWith("/os")) {
-    const subPath = pathname.replace("/os", "") || "/";
-    return NextResponse.redirect(`${OS_BASE}${subPath}`);
-  }
 
-  // Weder Portal- noch OS-Subdomain → durchlassen (inkl. /api/v1/*)
-  if (!isPortalSubdomain && !isOsSubdomain) {
+  // Keine Portal-Subdomain → durchlassen (inkl. /api/v1/*)
+  if (!isPortalSubdomain) {
     return NextResponse.next({ request });
   }
 
@@ -42,8 +40,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next({ request });
   }
 
-  // Prefix je nach Subdomain. Die Auth-Logik ist für beide identisch.
-  const prefix = isOsSubdomain ? "/os" : "/portal";
+  const prefix = "/portal";
 
   // Pfad intern umschreiben: / → <prefix>, /login → <prefix>/login.
   // Wenn der Pfad bereits mit dem Prefix beginnt (z.B. Shell-Links oder Refresh
