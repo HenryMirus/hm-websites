@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+build
+.git
+.env
+.env.local
+.env.*.local
+*.md
+.DS_Store
+.playwright-cli
+.playwright-mcp
+.dev-emails
