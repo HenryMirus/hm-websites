@@ -14,11 +14,15 @@ const localCockpit = isDev
   ? " http://127.0.0.1:4517 ws://127.0.0.1:4517 http://localhost:4517 ws://localhost:4517"
   : "";
 
+// Portal-Dateien (Bilder/Videos aus dem privaten Supabase-Bucket) werden über
+// signierte URLs direkt von der Supabase-Domain geladen — deshalb steht sie
+// zusätzlich zu connect-src auch in img-src und media-src.
 const ContentSecurityPolicy = `
   default-src 'self';
   ${scriptSrc};
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.facebook.com https://px.ads.linkedin.com;
+  img-src 'self' data: blob: https://zoyvsobztyqdaqdffrbo.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://www.facebook.com https://px.ads.linkedin.com;
+  media-src 'self' blob: https://zoyvsobztyqdaqdffrbo.supabase.co;
   font-src 'self' data: https://fonts.gstatic.com;
   connect-src 'self' https://zoyvsobztyqdaqdffrbo.supabase.co wss://zoyvsobztyqdaqdffrbo.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://www.facebook.com https://px.ads.linkedin.com${localCockpit};
   frame-ancestors 'none';

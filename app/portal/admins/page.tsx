@@ -47,18 +47,18 @@ export default async function AdminsPage() {
                 <div>
                   <p className="font-semibold text-text-primary text-sm">{u.email}</p>
                   <div className="flex items-center gap-2 mt-0.5">
-                    <span className="font-mono text-[10px] text-text-muted">
+                    <span className="font-mono text-[11px] text-text-muted">
                       {u.last_sign_in_at
                         ? `Letzter Login: ${new Date(u.last_sign_in_at).toLocaleDateString("de-DE")}`
                         : "Noch nie eingeloggt"}
                     </span>
                     {!u.confirmed_at && (
-                      <span className="font-mono text-[10px] px-1.5 py-0.5 rounded border bg-orange-500/10 text-orange-400 border-orange-500/20">
+                      <span className="font-mono text-[11px] px-1.5 py-0.5 rounded border bg-orange-500/10 text-orange-400 border-orange-500/20">
                         Einladung ausstehend
                       </span>
                     )}
                     {u.id === currentUser?.id && (
-                      <span className="font-mono text-[10px] px-1.5 py-0.5 rounded border bg-primary/10 text-primary border-primary/20">
+                      <span className="font-mono text-[11px] px-1.5 py-0.5 rounded border bg-primary/10 text-primary border-primary/20">
                         Sie
                       </span>
                     )}

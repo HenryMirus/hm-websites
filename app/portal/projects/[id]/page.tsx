@@ -1,8 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getUserRole } from "@/lib/auth/getRole";
 import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../../_components/PortalShell";
 import TasksSection from "./_components/TasksSection";
+import ProjectFilesSection from "./_components/ProjectFilesSection";
 import MilestoneRow from "./_components/MilestoneRow";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -10,6 +12,8 @@ import {
   updateTaskStatusAction,
   deleteTaskAction,
 } from "../_actions";
+import { promoteFileToClientProfileAction } from "../../clients/_files_actions";
+import { FILE_COLUMNS, withSignedUrls, type PortalFile } from "@/lib/portal/files";
 
 export const revalidate = 0;
 
@@ -50,6 +54,28 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     ]);
 
   if (!project) notFound();
+
+  // Dateien erst nach dem RLS-Check auf das Projekt laden: wer das Projekt
+  // nicht sehen darf, ist oben schon bei notFound() gelandet.
+  const [{ data: rawFiles }, { data: { user } }] = await Promise.all([
+    createAdminClient()
+      .from("client_files")
+      .select(FILE_COLUMNS)
+      .eq("project_id", id)
+      .order("created_at", { ascending: false }),
+    supabase.auth.getUser(),
+  ]);
+  const files = await withSignedUrls((rawFiles ?? []) as unknown as PortalFile[]);
+
+  // Nur der Admin verschiebt Dateien zwischen Projekten — dafür braucht er die
+  // übrigen Projekte desselben Kunden als Ziel.
+  const { data: clientProjects } = isAdmin
+    ? await supabase
+        .from("projects")
+        .select("id, title")
+        .eq("client_id", project.client_id)
+        .order("created_at", { ascending: false })
+    : { data: null };
 
   const cfg = STATUS_CONFIG[project.status] ?? STATUS_CONFIG.discovery;
   const client = project.clients;
@@ -113,7 +139,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             { label: "Launch", value: project.launch_date ? new Date(project.launch_date).toLocaleDateString("de-DE") : "—" },
           ].map((m) => (
             <div key={m.label} className="bg-surface border border-border rounded-xl p-3">
-              <p className="font-mono text-[10px] text-text-muted mb-1">{m.label}</p>
+              <p className="font-mono text-[11px] text-text-muted mb-1">{m.label}</p>
               <p className="text-text-primary text-sm font-medium capitalize">{m.value}</p>
             </div>
           ))}
@@ -131,7 +157,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         {project.tech_stack && (Array.isArray(project.tech_stack) ? project.tech_stack : Object.values(project.tech_stack)).length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-8">
             {(Array.isArray(project.tech_stack) ? project.tech_stack : Object.values(project.tech_stack)).map((t: any) => (
-              <span key={t} className="font-mono text-[10px] bg-surface border border-border text-text-muted rounded px-1.5 py-0.5">
+              <span key={t} className="font-mono text-[11px] bg-surface border border-border text-text-muted rounded px-1.5 py-0.5">
                 {t}
               </span>
             ))}
@@ -150,6 +176,18 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             />
           </div>
         )}
+
+        {/* Dateien — Kunde und Admin laden hier hoch */}
+        <div className="mb-6">
+          <ProjectFilesSection
+            projectId={id}
+            initialFiles={files}
+            isAdmin={isAdmin}
+            currentUserId={user?.id ?? null}
+            promoteAction={isAdmin ? promoteFileToClientProfileAction : undefined}
+            projects={clientProjects ?? undefined}
+          />
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Meilensteine */}
@@ -186,7 +224,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 {decisions.map((d) => (
                   <div key={d.id} className="py-2 border-b border-border/50 last:border-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-mono text-[10px] text-text-muted bg-bg border border-border rounded px-1.5 py-0.5">{d.category}</span>
+                      <span className="font-mono text-[11px] text-text-muted bg-bg border border-border rounded px-1.5 py-0.5">{d.category}</span>
                       <p className="text-text-primary text-sm font-medium">{d.title}</p>
                     </div>
                     <p className="text-text-dim text-sm">{d.decision}</p>
@@ -215,10 +253,10 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   {feedback.map((f) => (
                     <div key={f.id} className="py-2 border-b border-border/50 last:border-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-mono text-[10px] text-text-muted">Runde {f.round}</span>
-                        <span className="font-mono text-[10px] text-text-muted">·</span>
-                        <span className="font-mono text-[10px] text-text-muted">{f.source}</span>
-                        <span className={`ml-auto font-mono text-[10px] px-1.5 py-0.5 rounded border ${
+                        <span className="font-mono text-[11px] text-text-muted">Runde {f.round}</span>
+                        <span className="font-mono text-[11px] text-text-muted">·</span>
+                        <span className="font-mono text-[11px] text-text-muted">{f.source}</span>
+                        <span className={`ml-auto font-mono text-[11px] px-1.5 py-0.5 rounded border ${
                           f.status === "addressed" ? "bg-green-500/10 text-green-400 border-green-500/20" :
                           f.status === "wont_fix" ? "bg-border/60 text-text-muted border-border" :
                           "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"

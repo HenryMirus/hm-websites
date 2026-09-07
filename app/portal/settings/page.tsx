@@ -46,7 +46,7 @@ export default async function SettingsPage() {
               </div>
               <div className="min-w-0">
                 <p className="text-text-primary text-sm font-medium truncate">{user?.email}</p>
-                <p className="font-mono text-[10px] text-text-muted">
+                <p className="font-mono text-[11px] text-text-muted">
                   {role === "admin" ? "Admin" : "Kunde"}
                 </p>
               </div>

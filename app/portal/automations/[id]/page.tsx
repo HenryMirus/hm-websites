@@ -106,18 +106,18 @@ export default async function AutomationDetailPage({ params }: { params: { id: s
         {/* Trigger & Schritte */}
         <div className="bg-surface border border-border rounded-2xl p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Trigger</span>
+            <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Trigger</span>
             <span className="h-px flex-1 bg-border" />
           </div>
           <p className="text-sm text-text-primary">{describeTrigger(a.trigger)}</p>
           {a.is_system && (
-            <span className="font-mono text-[10px] text-text-muted border border-border rounded px-1.5 py-0.5">
+            <span className="font-mono text-[11px] text-text-muted border border-border rounded px-1.5 py-0.5">
               System-Automation
             </span>
           )}
 
           <div className="flex items-center gap-2 pt-2">
-            <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Schritte</span>
+            <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Schritte</span>
             <span className="h-px flex-1 bg-border" />
           </div>
           {a.steps.length === 0 ? (
@@ -149,7 +149,7 @@ export default async function AutomationDetailPage({ params }: { params: { id: s
         {/* Testlauf */}
         <div className="bg-surface border border-border rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
-            <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Testlauf</span>
+            <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Testlauf</span>
             <span className="h-px flex-1 bg-border" />
           </div>
           <p className="text-sm text-text-dim mb-4">
@@ -161,9 +161,9 @@ export default async function AutomationDetailPage({ params }: { params: { id: s
         {/* Run-History */}
         <div className="bg-surface border border-border rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
-            <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Run-Verlauf</span>
+            <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Run-Verlauf</span>
             <span className="h-px flex-1 bg-border" />
-            <span className="font-mono text-[10px] text-text-muted">{runList.length} Einträge</span>
+            <span className="font-mono text-[11px] text-text-muted">{runList.length} Einträge</span>
           </div>
 
           {runList.length === 0 ? (
@@ -177,7 +177,7 @@ export default async function AutomationDetailPage({ params }: { params: { id: s
                       {run.status}
                     </span>
                     {run.is_test && (
-                      <span className="font-mono text-[10px] text-text-muted border border-border rounded px-1.5 py-0.5">
+                      <span className="font-mono text-[11px] text-text-muted border border-border rounded px-1.5 py-0.5">
                         Test
                       </span>
                     )}
@@ -188,7 +188,7 @@ export default async function AutomationDetailPage({ params }: { params: { id: s
                       </span>
                     )}
                     {run.dedupe_key && (
-                      <span className="font-mono text-[10px] text-text-muted ml-auto">
+                      <span className="font-mono text-[11px] text-text-muted ml-auto">
                         key: {run.dedupe_key}
                       </span>
                     )}
@@ -201,7 +201,7 @@ export default async function AutomationDetailPage({ params }: { params: { id: s
                       {run.steps_result.map((sr, i) => (
                         <span
                           key={i}
-                          className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${
+                          className={`text-[11px] font-mono px-1.5 py-0.5 rounded border ${
                             sr.status === "success"
                               ? "bg-green-500/10 text-green-400 border-green-500/20"
                               : sr.status === "failed"

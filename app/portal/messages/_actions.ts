@@ -6,14 +6,38 @@ import { getUserRole } from "@/lib/auth/getRole";
 import { revalidatePath } from "next/cache";
 import { dispatchEvent } from "@/lib/automations/engine";
 
-export type MessageFormState = { error?: string };
+export type MessageFormState = { error?: string; messageId?: string };
+
+/**
+ * Hängt bereits hochgeladene Dateien an die frisch erstellte Nachricht.
+ * Die IDs kommen aus dem Client, deshalb wird hier gegengeprüft, dass die
+ * Datei wirklich zu diesem Kunden gehört und noch an keiner Nachricht hängt.
+ */
+async function attachFilesToMessage(
+  admin: ReturnType<typeof createAdminClient>,
+  attachmentIds: string[],
+  messageId: string,
+  clientId: string
+): Promise<void> {
+  if (attachmentIds.length === 0) return;
+  await admin
+    .from("client_files")
+    .update({ message_id: messageId, scope: "chat" })
+    .in("id", attachmentIds)
+    .eq("client_id", clientId)
+    .is("message_id", null);
+}
 
 export async function sendMessageAction(
   _prev: MessageFormState,
   formData: FormData
 ): Promise<MessageFormState> {
-  const content = (formData.get("content") as string)?.trim();
-  if (!content) return { error: "Nachricht darf nicht leer sein." };
+  const content = ((formData.get("content") as string) ?? "").trim();
+  const attachmentIds = formData.getAll("attachment_ids").filter((v): v is string => typeof v === "string" && v.length > 0);
+  if (!content && attachmentIds.length === 0) {
+    return { error: "Nachricht darf nicht leer sein." };
+  }
+  const preview = content || `${attachmentIds.length} ${attachmentIds.length === 1 ? "Datei" : "Dateien"}`;
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -21,17 +45,23 @@ export async function sendMessageAction(
 
   const role = await getUserRole();
   const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  let messageId = "";
 
   if (role === "admin") {
     const client_id = formData.get("client_id") as string;
     if (!client_id) return { error: "Kein Kunde ausgewählt." };
 
     const admin = createAdminClient();
-    const { error } = await admin
+    const { data: message, error } = await admin
       .from("messages")
-      .insert({ sender_id: user.id, sender_role: "admin", client_id, content });
+      .insert({ sender_id: user.id, sender_role: "admin", client_id, content })
+      .select("id")
+      .single();
 
-    if (error) return { error: error.message };
+    if (error || !message) return { error: error?.message ?? "Senden fehlgeschlagen." };
+
+    await attachFilesToMessage(admin, attachmentIds, message.id, client_id);
+    messageId = message.id;
 
     // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
     if (!process.env.NOTIFY_VIA_WEBHOOK) {
@@ -44,7 +74,7 @@ export async function sendMessageAction(
             {
               portalUrl,
               client: { id: client.id, name: client.name ?? "Kunde", email: client.email },
-              message: { content: content.slice(0, 200), sender_role: "admin" },
+              message: { content: preview.slice(0, 200), sender_role: "admin" },
               vars: {},
             }
           );
@@ -67,11 +97,16 @@ export async function sendMessageAction(
     if (!clientRecord) return { error: "Kein Kunden-Profil gefunden." };
 
     const admin = createAdminClient();
-    const { error } = await admin
+    const { data: message, error } = await admin
       .from("messages")
-      .insert({ sender_id: user.id, sender_role: "client", client_id: clientRecord.id, content });
+      .insert({ sender_id: user.id, sender_role: "client", client_id: clientRecord.id, content })
+      .select("id")
+      .single();
 
-    if (error) return { error: error.message };
+    if (error || !message) return { error: error?.message ?? "Senden fehlgeschlagen." };
+
+    await attachFilesToMessage(admin, attachmentIds, message.id, clientRecord.id);
+    messageId = message.id;
 
     // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
     if (!process.env.NOTIFY_VIA_WEBHOOK) {
@@ -82,7 +117,7 @@ export async function sendMessageAction(
           {
             portalUrl,
             client: { id: clientRecord.id, name: clientRecord.name ?? "Kunde", email: null },
-            message: { content: content.slice(0, 200), sender_role: "client" },
+            message: { content: preview.slice(0, 200), sender_role: "client" },
             vars: {},
           }
         );
@@ -94,7 +129,7 @@ export async function sendMessageAction(
     revalidatePath("/portal/messages");
   }
 
-  return {};
+  return { messageId };
 }
 
 export async function markMessagesReadAction(clientId: string): Promise<void> {

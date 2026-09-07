@@ -21,7 +21,7 @@ export default function TestlaufButton({ id }: { id: string }) {
         type="button"
         onClick={run}
         disabled={pending}
-        className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
+        className="bg-primary-dark hover:bg-primary-dark/90 disabled:opacity-50 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
       >
         {pending ? "Läuft…" : "Testlauf starten"}
       </button>

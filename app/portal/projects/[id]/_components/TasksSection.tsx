@@ -137,7 +137,7 @@ export default function TasksSection({
         const cfg = STATUS_CONFIG[s];
         return (
           <div key={s} className="mb-3">
-            <p className={`font-mono text-[10px] uppercase tracking-wider mb-2 ${cfg.color}`}>
+            <p className={`font-mono text-[11px] uppercase tracking-wider mb-2 ${cfg.color}`}>
               {cfg.label} ({list.length})
             </p>
             <div className="space-y-1.5">
@@ -196,9 +196,9 @@ function TaskRow({
           <p className="text-text-muted text-xs mt-0.5">{task.description}</p>
         )}
         <div className="flex items-center gap-2 mt-0.5">
-          <span className={`font-mono text-[10px] ${pCfg.color}`}>{pCfg.label}</span>
+          <span className={`font-mono text-[11px] ${pCfg.color}`}>{pCfg.label}</span>
           {task.due_date && (
-            <span className="font-mono text-[10px] text-text-muted">
+            <span className="font-mono text-[11px] text-text-muted">
               · {new Date(task.due_date).toLocaleDateString("de-DE")}
             </span>
           )}

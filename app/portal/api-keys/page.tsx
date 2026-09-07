@@ -55,16 +55,16 @@ export default async function ApiKeysPage() {
                       {key.key_prefix}••••••••••••••••••••••••••••••••••••••••••••••••
                     </p>
                     <div className="flex items-center gap-3 mt-1.5">
-                      <span className="font-mono text-[10px] text-text-muted">
+                      <span className="font-mono text-[11px] text-text-muted">
                         Erstellt {new Date(key.created_at).toLocaleDateString("de-DE")}
                       </span>
                       {key.last_used_at && (
-                        <span className="font-mono text-[10px] text-text-muted">
+                        <span className="font-mono text-[11px] text-text-muted">
                           · Zuletzt genutzt {new Date(key.last_used_at).toLocaleDateString("de-DE")}
                         </span>
                       )}
                       {!key.last_used_at && (
-                        <span className="font-mono text-[10px] text-text-muted">· Noch nie genutzt</span>
+                        <span className="font-mono text-[11px] text-text-muted">· Noch nie genutzt</span>
                       )}
                     </div>
                   </div>
@@ -94,7 +94,7 @@ export default async function ApiKeysPage() {
               {revoked.map((key) => (
                 <div key={key.id} className="bg-surface/50 border border-border/50 rounded-xl p-4 opacity-50">
                   <p className="text-text-muted text-sm line-through">{key.name}</p>
-                  <p className="font-mono text-[10px] text-text-muted mt-0.5">
+                  <p className="font-mono text-[11px] text-text-muted mt-0.5">
                     Widerrufen {new Date(key.revoked_at!).toLocaleDateString("de-DE")}
                   </p>
                 </div>

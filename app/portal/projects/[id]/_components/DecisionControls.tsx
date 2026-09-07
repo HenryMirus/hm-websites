@@ -76,7 +76,7 @@ export default function DecisionControls({
         {decisions.map((d) => (
           <div key={d.id} className="py-2 border-b border-border/50 last:border-0">
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-[10px] text-text-muted bg-bg border border-border rounded px-1.5 py-0.5">{d.category}</span>
+              <span className="font-mono text-[11px] text-text-muted bg-bg border border-border rounded px-1.5 py-0.5">{d.category}</span>
               <p className="text-text-primary text-sm font-medium flex-1">{d.title}</p>
               <button
                 onClick={() => deleteDecisionAction(d.id, projectId)}

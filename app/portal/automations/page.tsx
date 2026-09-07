@@ -53,7 +53,7 @@ export default async function AutomationsPage() {
             <RunTickButton />
             <Link
               href="/portal/automations/new"
-              className="bg-primary hover:bg-primary/90 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              className="bg-primary-dark hover:bg-primary-dark/90 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
             >
               + Neue Automation
             </Link>
@@ -78,13 +78,13 @@ export default async function AutomationsPage() {
                     {a.name}
                   </Link>
                   {a.is_system && (
-                    <span className="font-mono text-[10px] text-text-muted border border-border rounded px-1.5 py-0.5">
+                    <span className="font-mono text-[11px] text-text-muted border border-border rounded px-1.5 py-0.5">
                       System
                     </span>
                   )}
                   {a.last_run_status && (
                     <span
-                      className={`font-mono text-[10px] px-1.5 py-0.5 rounded border ${
+                      className={`font-mono text-[11px] px-1.5 py-0.5 rounded border ${
                         STATUS_BADGE[a.last_run_status] ?? "bg-border text-text-dim border-border"
                       }`}
                     >

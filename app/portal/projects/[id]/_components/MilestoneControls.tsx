@@ -117,12 +117,12 @@ export default function MilestoneControls({
                   {ms.title}
                 </p>
                 {ms.due_date && (
-                  <p className="font-mono text-[10px] text-text-muted mt-0.5">
+                  <p className="font-mono text-[11px] text-text-muted mt-0.5">
                     {new Date(ms.due_date).toLocaleDateString("de-DE")}
                   </p>
                 )}
               </div>
-              <span className={`font-mono text-[10px] shrink-0 ${cfg.color}`}>{cfg.label}</span>
+              <span className={`font-mono text-[11px] shrink-0 ${cfg.color}`}>{cfg.label}</span>
               <button
                 onClick={() => deleteMilestoneAction(ms.id, projectId)}
                 className="shrink-0 p-1 text-text-muted hover:text-accent transition-colors"

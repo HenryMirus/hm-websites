@@ -20,6 +20,9 @@ export default function LoginPage() {
     if (params.get("pw") === "changed") {
       setSuccessMsg("Passwort erfolgreich geändert. Sie können sich jetzt einloggen.");
     }
+    if (params.get("registered") === "1") {
+      setSuccessMsg("Konto erfolgreich eingerichtet. Sie können sich jetzt einloggen.");
+    }
     if (params.get("error") === "exchange_failed") {
       setError("Der Reset-Link ist abgelaufen oder wurde bereits verwendet. Bitte fordere einen neuen an.");
       setForgotMode(true);
@@ -124,7 +127,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading || !email.trim()}
-                  className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-primary-dark hover:bg-primary-dark/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
@@ -180,7 +183,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading || !email.trim() || !password}
-                  className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-primary-dark hover:bg-primary-dark/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />

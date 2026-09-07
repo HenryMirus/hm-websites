@@ -1,9 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
-import { cookies } from "next/headers";
-import { verifyRecoveryToken } from "@/lib/auth/recoveryToken";
+import { setPasswordWithRecoveryToken } from "@/lib/auth/setPasswordWithRecoveryToken";
 import { redirect } from "next/navigation";
 
 export async function updatePasswordAction(
@@ -13,46 +10,11 @@ export async function updatePasswordAction(
   const password = (formData.get("password") as string) ?? "";
   const confirm = (formData.get("confirm") as string) ?? "";
 
-  if (password.length < 8) {
-    return { error: "Das Passwort muss mindestens 8 Zeichen lang sein." };
-  }
-  if (password !== confirm) {
-    return { error: "Die Passwörter stimmen nicht überein." };
-  }
-
-  // 1. Aktuelle Session prüfen
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return { error: "Keine gültige Session. Bitte den Reset-Link erneut anfordern." };
-  }
-
-  // 2. HMAC-signiertes Recovery-Cookie verifizieren
-  const cookieStore = await cookies();
-  const rawToken = cookieStore.get("sb_recovery")?.value;
-
-  if (!rawToken || !verifyRecoveryToken(rawToken, user.id)) {
-    return {
-      error: "Ungültiger oder abgelaufener Reset-Link. Bitte ein neues Passwort-Reset anfordern.",
-    };
-  }
-
-  // 3. Passwort aktualisieren
-  const { error: updateError } = await supabase.auth.updateUser({ password });
-  if (updateError) {
-    return { error: updateError.message };
-  }
-
-  // 4. Recovery-Cookie sofort löschen (Single-Use)
-  cookieStore.delete("sb_recovery");
-
-  // 5. Alle Sessions global abmelden (alle Geräte)
-  const admin = createAdminClient();
-  await admin.auth.admin.signOut(user.id);
+  const result = await setPasswordWithRecoveryToken(password, confirm);
+  if (result.error) return { error: result.error };
 
   // Absolute URL erzwingt eine vollständige Server-Navigation statt client-seitiger
   // SPA-Navigation — verhindert kurzen 404-Flash, weil /login im Client-Router nicht existiert
-  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://clients.localhost:3001";
+  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://clients.localhost:3000";
   redirect(`${portalBase}/login?pw=changed`);
 }

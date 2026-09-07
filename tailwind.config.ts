@@ -15,9 +15,12 @@ const config: Config = {
         primary: "#4F7FFF",
         "primary-dark": "#2A5CE8",
         accent: "#FF4D6A",
-        "text-primary": "#EEEEFF",
-        "text-muted": "#5A5A7A",
-        "text-dim": "#8888AA",
+        // Über CSS-Variablen, damit das Portal eigene, kontraststarke Werte
+        // setzen kann, ohne die Marketing-Seite anzufassen. Die Standardwerte
+        // in app/globals.css sind exakt die bisherigen Hexwerte.
+        "text-primary": "rgb(var(--color-text-primary) / <alpha-value>)",
+        "text-muted": "rgb(var(--color-text-muted) / <alpha-value>)",
+        "text-dim": "rgb(var(--color-text-dim) / <alpha-value>)",
       },
       fontFamily: {
         display: ["Space Grotesk", "sans-serif"],

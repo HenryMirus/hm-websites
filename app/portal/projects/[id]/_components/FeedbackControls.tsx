@@ -84,10 +84,10 @@ export default function FeedbackControls({
         {feedback.map((f) => (
           <div key={f.id} className="py-2 border-b border-border/50 last:border-0">
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-[10px] text-text-muted">Runde {f.round}</span>
-              <span className="font-mono text-[10px] text-text-muted">·</span>
-              <span className="font-mono text-[10px] text-text-muted">{f.source}</span>
-              <span className={`ml-auto font-mono text-[10px] px-1.5 py-0.5 rounded border ${
+              <span className="font-mono text-[11px] text-text-muted">Runde {f.round}</span>
+              <span className="font-mono text-[11px] text-text-muted">·</span>
+              <span className="font-mono text-[11px] text-text-muted">{f.source}</span>
+              <span className={`ml-auto font-mono text-[11px] px-1.5 py-0.5 rounded border ${
                 f.status === "addressed" ? "bg-green-500/10 text-green-400 border-green-500/20" :
                 f.status === "wont_fix" ? "bg-border/60 text-text-muted border-border" :
                 "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"

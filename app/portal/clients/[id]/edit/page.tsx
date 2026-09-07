@@ -5,6 +5,8 @@ import { getUnreadMessageCount } from "@/lib/portal/getUnreadMessageCount";
 import PortalShell from "../../../_components/PortalShell";
 import ClientForm from "../../_components/ClientForm";
 import FilesSection from "../../_components/FilesSection";
+import { promoteFileToClientProfileAction } from "../../_files_actions";
+import { FILE_COLUMNS, withSignedUrls, type PortalFile } from "@/lib/portal/files";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
@@ -44,20 +46,17 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
       .order("created_at", { ascending: false }),
     admin
       .from("client_files")
-      .select("id, file_name, mime_type, category, size_bytes, storage_path, created_at")
+      .select(FILE_COLUMNS)
       .eq("client_id", id)
       .order("created_at", { ascending: false }),
   ]);
 
-  // Generate signed URLs (1 h)
-  const files = await Promise.all(
-    (rawFiles ?? []).map(async (f) => {
-      const { data } = await admin.storage
-        .from("client-files")
-        .createSignedUrl(f.storage_path, 3600);
-      return { ...f, signedUrl: data?.signedUrl ?? undefined };
-    })
-  );
+  // Signierte URLs (1 h) — der Bucket bleibt privat
+  const files = await withSignedUrls((rawFiles ?? []) as unknown as PortalFile[]);
+  const profileFiles = files.filter((f) => f.scope === "client");
+  const projectFiles = files.filter((f) => f.scope === "project");
+  const chatFiles = files.filter((f) => f.scope === "chat");
+  const projectTitles = Object.fromEntries((projects ?? []).map((p) => [p.id, p.title]));
 
   if (!client) notFound();
 
@@ -112,12 +111,12 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-text-primary truncate">{p.title}</p>
                         {p.deadline && (
-                          <p className="font-mono text-[10px] text-text-muted mt-0.5">
+                          <p className="font-mono text-[11px] text-text-muted mt-0.5">
                             ⏱ {new Date(p.deadline).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })}
                           </p>
                         )}
                       </div>
-                      <span className={`shrink-0 font-mono text-[10px] px-2 py-0.5 rounded-md border ${cfg.color}`}>
+                      <span className={`shrink-0 font-mono text-[11px] px-2 py-0.5 rounded-md border ${cfg.color}`}>
                         {cfg.label}
                       </span>
                       <div className="flex items-center gap-1 shrink-0">
@@ -161,7 +160,14 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
 
         {/* Untere Sektion: Dateien (volle Breite) */}
         <div className="max-w-5xl mt-8">
-          <FilesSection clientId={id} files={files} />
+          <FilesSection
+            clientId={id}
+            profileFiles={profileFiles}
+            projectFiles={projectFiles}
+            chatFiles={chatFiles}
+            projectTitles={projectTitles}
+            promoteAction={promoteFileToClientProfileAction}
+          />
         </div>
       </div>
     </PortalShell>

@@ -131,7 +131,7 @@ export default function AutomationForm({ automation, templates }: Props) {
       {/* Trigger */}
       <div className="bg-surface border border-border rounded-2xl p-6 space-y-4">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Trigger</span>
+          <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Trigger</span>
           <span className="h-px flex-1 bg-border" />
         </div>
         <div className="grid grid-cols-3 gap-2">
@@ -165,7 +165,7 @@ export default function AutomationForm({ automation, templates }: Props) {
       {/* Schritte */}
       <div className="bg-surface border border-border rounded-2xl p-6 space-y-4">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Schritte</span>
+          <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Schritte</span>
           <span className="h-px flex-1 bg-border" />
         </div>
 
@@ -217,7 +217,7 @@ export default function AutomationForm({ automation, templates }: Props) {
           type="button"
           onClick={submit}
           disabled={pending}
-          className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+          className="bg-primary-dark hover:bg-primary-dark/90 disabled:opacity-50 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
         >
           {pending ? "Speichern…" : automation ? "Speichern" : "Anlegen"}
         </button>

@@ -9,7 +9,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+      className="w-full bg-primary-dark hover:bg-primary-dark/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
     >
       {pending ? (
         <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />

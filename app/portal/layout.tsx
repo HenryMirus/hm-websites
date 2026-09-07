@@ -30,5 +30,7 @@ export default async function PortalLayout({ children }: { children: React.React
     }
   }
 
-  return <>{children}</>;
+  // .portal-contrast hebt die Text-Tokens auf weiße Stufen an (app/globals.css).
+  // Der Wrapper umschließt jede Portal-Route, auch Login und Registrierung.
+  return <div className="portal-contrast">{children}</div>;
 }

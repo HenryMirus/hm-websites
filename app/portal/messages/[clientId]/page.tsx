@@ -5,6 +5,7 @@ import { markMessagesReadAction } from "../_actions";
 import PortalShell from "../../_components/PortalShell";
 import ConversationList from "../_components/ConversationList";
 import ChatThread from "../_components/ChatThread";
+import { getMessageAttachments } from "@/lib/portal/files";
 import { notFound } from "next/navigation";
 
 export const revalidate = 0;
@@ -37,6 +38,8 @@ export default async function AdminChatPage({ params }: { params: Promise<{ clie
     ]);
 
   if (!client) notFound();
+
+  const attachments = await getMessageAttachments(clientId);
 
   const conversations = (clients ?? []).map((c) => {
     const msgs = (allMessages ?? []).filter((m) => m.client_id === c.id);
@@ -71,6 +74,7 @@ export default async function AdminChatPage({ params }: { params: Promise<{ clie
           <div className="flex-1 overflow-hidden">
             <ChatThread
               initialMessages={messages ?? []}
+              initialAttachments={attachments}
               clientId={clientId}
               currentUserRole="admin"
               clientName={client.company_name || client.name}

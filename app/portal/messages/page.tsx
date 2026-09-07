@@ -5,6 +5,7 @@ import { markMessagesReadAction } from "./_actions";
 import PortalShell from "../_components/PortalShell";
 import ConversationList from "./_components/ConversationList";
 import ChatThread from "./_components/ChatThread";
+import { getMessageAttachments } from "@/lib/portal/files";
 
 export const revalidate = 0;
 
@@ -89,6 +90,8 @@ export default async function MessagesPage() {
 
   await markMessagesReadAction(clientRecord.id);
 
+  const attachments = await getMessageAttachments(clientRecord.id);
+
   return (
     <PortalShell role="client" unreadMessages={0}>
       <div className="flex flex-col h-full">
@@ -99,6 +102,7 @@ export default async function MessagesPage() {
         <div className="flex-1 overflow-hidden">
           <ChatThread
             initialMessages={messages ?? []}
+            initialAttachments={attachments}
             clientId={clientRecord.id}
             currentUserRole="client"
             clientName={clientRecord.name}

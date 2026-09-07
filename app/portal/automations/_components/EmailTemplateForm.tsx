@@ -61,7 +61,7 @@ export default function EmailTemplateForm({ template }: { template: TemplateRow 
       {/* Metadaten */}
       <div className="bg-surface border border-border rounded-2xl p-6 space-y-4">
         <div className="flex items-center gap-2 mb-2">
-          <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Metadaten</span>
+          <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Metadaten</span>
           <span className="h-px flex-1 bg-border" />
         </div>
         <div>
@@ -94,7 +94,7 @@ export default function EmailTemplateForm({ template }: { template: TemplateRow 
       {/* Inhalt */}
       <div className="bg-surface border border-border rounded-2xl p-6 space-y-4">
         <div className="flex items-center gap-2 mb-2">
-          <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Inhalt</span>
+          <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Inhalt</span>
           <span className="h-px flex-1 bg-border" />
         </div>
         <div>
@@ -131,7 +131,7 @@ export default function EmailTemplateForm({ template }: { template: TemplateRow 
       {/* CTA */}
       <div className="bg-surface border border-border rounded-2xl p-6 space-y-4">
         <div className="flex items-center gap-2 mb-2">
-          <span className="font-mono text-[10px] text-primary uppercase tracking-wider">Call-to-Action</span>
+          <span className="font-mono text-[11px] text-primary uppercase tracking-wider">Call-to-Action</span>
           <span className="h-px flex-1 bg-border" />
         </div>
         <div>
@@ -168,7 +168,7 @@ export default function EmailTemplateForm({ template }: { template: TemplateRow 
           type="button"
           onClick={submit}
           disabled={pending}
-          className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+          className="bg-primary-dark hover:bg-primary-dark/90 disabled:opacity-50 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
         >
           {pending ? "Speichern…" : "Speichern"}
         </button>

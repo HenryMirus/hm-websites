@@ -14,7 +14,7 @@ const DEV_PORTAL_SUBDOMAIN = "clients.localhost";
 // gezeigt — nicht mehr über dieses Next.js-Middleware-Rewrite.
 
 // Public path suffixes (relative to the subdomain prefix, e.g. /portal).
-const PUBLIC_SUFFIXES = ["/login", "/auth/callback", "/auth/update-password", "/password"];
+const PUBLIC_SUFFIXES = ["/login", "/auth/callback", "/auth/update-password", "/password", "/register"];
 
 export async function middleware(request: NextRequest) {
   const hostname = (request.headers.get("host") || "").replace(/:.*$/, "");

@@ -1,8 +1,8 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/auth/getRole";
+import { grantClientPortalAccess } from "@/lib/portal/grantClientPortalAccess";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
@@ -33,16 +33,11 @@ export async function createClientAction(
   }
 
   // Invite-Email senden
-  const admin = createAdminClient();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
-  const { error: inviteError } = await admin.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${portalUrl}/auth/callback`,
-    data: { name },
-  });
+  const { error: inviteError } = await grantClientPortalAccess(email, name);
 
   if (inviteError) {
     // Eintrag war erfolgreich, Invite schlug fehl → trotzdem weiter
-    console.error("Invite-Fehler:", inviteError.message);
+    console.error("Invite-Fehler:", inviteError);
   }
 
   revalidatePath("/portal/clients");
@@ -76,20 +71,24 @@ export async function updateClientAction(
   redirect("/portal/clients");
 }
 
-export async function deleteClientAction(id: string): Promise<void> {
+export type DeleteClientState = { error?: string };
+
+export async function deleteClientAction(id: string): Promise<DeleteClientState> {
   await requireAdmin();
   const supabase = await createClient();
-  await supabase.from("clients").delete().eq("id", id);
+  const { data, error } = await supabase.from("clients").delete().eq("id", id).select("id");
+
+  if (error) return { error: error.message };
+  if (!data || data.length === 0) {
+    // Kein Fehler, aber auch keine Zeile betroffen — z.B. RLS hat gefiltert, ohne das als Fehler zu melden.
+    return { error: "Löschen hatte keine Wirkung (0 Zeilen betroffen). Bitte Seite neu laden und erneut versuchen." };
+  }
+
   revalidatePath("/portal/clients");
+  return {};
 }
 
 export async function resendInviteAction(email: string): Promise<{ error?: string }> {
   await requireAdmin();
-  const admin = createAdminClient();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
-  const { error } = await admin.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${portalUrl}/auth/callback`,
-  });
-  if (error) return { error: error.message };
-  return {};
+  return grantClientPortalAccess(email);
 }

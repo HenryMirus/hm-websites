@@ -46,7 +46,7 @@ export default function ConversationList({
                   {conv.companyName || conv.clientName}
                 </p>
                 {conv.unreadCount > 0 && (
-                  <span className="shrink-0 bg-accent text-white font-mono text-[10px] rounded-full px-1.5 min-w-[18px] text-center">
+                  <span className="shrink-0 bg-accent text-white font-mono text-[11px] rounded-full px-1.5 min-w-[18px] text-center">
                     {conv.unreadCount}
                   </span>
                 )}
@@ -55,7 +55,7 @@ export default function ConversationList({
                 <p className="text-text-muted text-xs truncate">{conv.lastMessage}</p>
               )}
               {conv.lastMessageAt && (
-                <p className="font-mono text-[10px] text-text-dim mt-0.5">
+                <p className="font-mono text-[11px] text-text-dim mt-0.5">
                   {new Date(conv.lastMessageAt).toLocaleDateString("de-DE", { day: "2-digit", month: "short" })}
                 </p>
               )}

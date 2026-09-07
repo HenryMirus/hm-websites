@@ -51,7 +51,7 @@ export default async function EmailTemplatesPage() {
                   <p className="text-xs text-text-muted mt-0.5 truncate">{t.subject}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="font-mono text-[10px] text-text-muted border border-border rounded px-1.5 py-0.5">
+                  <span className="font-mono text-[11px] text-text-muted border border-border rounded px-1.5 py-0.5">
                     {t.key}
                   </span>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-text-muted group-hover:text-primary transition-colors">

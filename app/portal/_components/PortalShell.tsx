@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import RealtimeRefresh from "./RealtimeRefresh";
 import type { UserRole } from "@/lib/auth/getRole";
 
 const MESSAGES_ICON = (
@@ -108,6 +109,34 @@ const CLIENT_NAV = [
   },
 ];
 
+/**
+ * Tabellen, deren Änderungen eine Portal-Ansicht veralten lassen.
+ * Realtime liefert nur, was die RLS-Policies dem angemeldeten Nutzer ohnehin
+ * zeigen würden — Kunden bekommen also nur ihre eigenen Zeilen. Leads und die
+ * Kundenliste sieht nur der Admin, deshalb stehen sie nicht in der Client-Liste.
+ */
+const ADMIN_REALTIME_TABLES = [
+  "messages",
+  "contact_submissions",
+  "clients",
+  "projects",
+  "tasks",
+  "project_milestones",
+  "project_decisions",
+  "project_feedback",
+  "client_files",
+];
+
+const CLIENT_REALTIME_TABLES = [
+  "messages",
+  "projects",
+  "tasks",
+  "project_milestones",
+  "project_decisions",
+  "project_feedback",
+  "client_files",
+];
+
 interface NavItemType {
   href: string;
   label: string;
@@ -142,6 +171,8 @@ export default function PortalShell({ children, role, unreadMessages = 0 }: Port
 
   return (
     <div className="flex h-screen overflow-hidden">
+      <RealtimeRefresh tables={isAdmin ? ADMIN_REALTIME_TABLES : CLIENT_REALTIME_TABLES} />
+
       {/* Sidebar */}
       <aside className="w-56 shrink-0 border-r border-border bg-surface flex flex-col h-screen">
         {/* Logo */}
@@ -155,7 +186,7 @@ export default function PortalShell({ children, role, unreadMessages = 0 }: Port
               HM <span className="text-primary">Labs</span>
             </span>
           </Link>
-          <span className="ml-2 font-mono text-[10px] text-text-muted border border-border rounded px-1.5 py-0.5">
+          <span className="ml-2 font-mono text-[11px] text-text-muted border border-border rounded px-1.5 py-0.5">
             Portal
           </span>
         </div>
@@ -172,7 +203,7 @@ export default function PortalShell({ children, role, unreadMessages = 0 }: Port
           {/* Admin-Tools Section */}
           {isAdmin && (
             <div className="pt-4 mt-2 border-t border-border/50">
-              <p className="font-mono text-[10px] text-text-muted uppercase tracking-wider px-3 mb-2">
+              <p className="font-mono text-[11px] text-text-muted uppercase tracking-wider px-3 mb-2">
                 Admin
               </p>
               {ADMIN_TOOLS.map((item) => {
@@ -187,7 +218,7 @@ export default function PortalShell({ children, role, unreadMessages = 0 }: Port
         <div className="px-3 py-4 border-t border-border space-y-0.5">
           {!isAdmin && (
             <div className="px-3 py-1.5 mb-0.5">
-              <span className="font-mono text-[10px] text-text-muted">Kunden-Portal</span>
+              <span className="font-mono text-[11px] text-text-muted">Kunden-Portal</span>
             </div>
           )}
           <Link
@@ -235,7 +266,7 @@ function NavItem({ item, active }: { item: NavItemType; active: boolean }) {
       <span className={active ? "text-primary" : "text-text-muted"}>{item.icon}</span>
       <span className="flex-1">{item.label}</span>
       {item.badge != null && item.badge > 0 && (
-        <span className="bg-accent text-white font-mono text-[10px] rounded-full px-1.5 min-w-[18px] text-center leading-5">
+        <span className="bg-accent text-white font-mono text-[11px] rounded-full px-1.5 min-w-[18px] text-center leading-5">
           {item.badge}
         </span>
       )}

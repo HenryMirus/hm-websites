@@ -1,8 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { ANSWER_LABELS, SUB_QUESTION_TEXT } from "@/lib/wizard";
+import { convertLeadToClientAction } from "../_actions";
 
 type LeadTier = "kalt" | "warm" | "heiss";
 
@@ -67,7 +69,20 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
   const [filter, setFilter] = useState<"all" | Lead["status"]>("all");
   const [tierFilter, setTierFilter] = useState<"all" | LeadTier>("all");
   const [sortBy, setSortBy] = useState<"date" | "score">("date");
+  const [convertState, setConvertState] = useState<
+    Record<string, { status: "idle" | "loading" | "done" | "error"; error?: string; clientId?: string }>
+  >({});
   const supabase = createClient();
+
+  async function handleConvert(leadId: string) {
+    setConvertState((s) => ({ ...s, [leadId]: { status: "loading" } }));
+    const result = await convertLeadToClientAction(leadId);
+    if (result.error) {
+      setConvertState((s) => ({ ...s, [leadId]: { status: "error", error: result.error, clientId: result.clientId } }));
+    } else {
+      setConvertState((s) => ({ ...s, [leadId]: { status: "done", clientId: result.clientId } }));
+    }
+  }
 
   async function updateStatus(id: string, status: Lead["status"]) {
     await supabase.from("contact_submissions").update({ status }).eq("id", id);
@@ -169,11 +184,11 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                   <span className="font-medium text-sm text-text-primary truncate">{lead.name}</span>
                   <div className="flex items-center gap-1 shrink-0">
                     {lead.lead_tier && (
-                      <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded border ${TIER_LABELS[lead.lead_tier].color}`}>
+                      <span className={`font-mono text-[11px] px-1.5 py-0.5 rounded border ${TIER_LABELS[lead.lead_tier].color}`}>
                         {lead.lead_score ?? "–"} · {TIER_LABELS[lead.lead_tier].label}
                       </span>
                     )}
-                    <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded border ${STATUS_LABELS[lead.status].color}`}>
+                    <span className={`font-mono text-[11px] px-1.5 py-0.5 rounded border ${STATUS_LABELS[lead.status].color}`}>
                       {STATUS_LABELS[lead.status].label}
                     </span>
                   </div>
@@ -185,7 +200,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                 <p className="text-text-dim text-xs mt-1.5 line-clamp-2 leading-relaxed">
                   {lead.subject || lead.message}
                 </p>
-                <p className="font-mono text-[10px] text-text-muted mt-1.5">
+                <p className="font-mono text-[11px] text-text-muted mt-1.5">
                   {new Date(lead.created_at).toLocaleDateString("de-DE", {
                     day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
                   })}
@@ -219,9 +234,15 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                   {STATUS_LABELS[s].label}
                 </button>
               ))}
+              <ConvertToClientButton
+                state={convertState[selected.id]?.status ?? "idle"}
+                error={convertState[selected.id]?.error}
+                clientId={convertState[selected.id]?.clientId}
+                onClick={() => handleConvert(selected.id)}
+              />
               <a
                 href={`mailto:${selected.email}?subject=Re: Ihr Projekt bei HM Labs`}
-                className="ml-auto inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-white font-medium text-sm px-4 py-2 rounded-xl transition-colors"
+                className="ml-auto inline-flex items-center gap-1.5 bg-primary-dark hover:bg-primary-dark/90 text-white font-medium text-sm px-4 py-2 rounded-xl transition-colors"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <rect x="1" y="2" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2"/>
@@ -302,7 +323,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                     .filter(([key]) => key !== "sub")
                     .map(([key, val]) => (
                       <div key={key} className="bg-bg border border-border rounded-xl p-3">
-                        <p className="font-mono text-[10px] text-text-muted mb-1">
+                        <p className="font-mono text-[11px] text-text-muted mb-1">
                           {KEY_LABELS[key] ?? key}
                         </p>
                         <p className="text-text-primary text-sm font-medium">{displayAnswer(val)}</p>
@@ -321,7 +342,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                 <div className="grid grid-cols-2 gap-3">
                   {Object.entries(subAnswers).map(([key, val]) => (
                     <div key={key} className="bg-bg border border-border rounded-xl p-3">
-                      <p className="font-mono text-[10px] text-text-muted mb-1">
+                      <p className="font-mono text-[11px] text-text-muted mb-1">
                         {SUB_QUESTION_TEXT[key]?.de ?? key}
                       </p>
                       <p className="text-text-primary text-sm font-medium">{displayAnswer(val)}</p>
@@ -333,6 +354,74 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function ConvertToClientButton({
+  state, error, clientId, onClick,
+}: {
+  state: "idle" | "loading" | "done" | "error";
+  error?: string;
+  clientId?: string;
+  onClick: () => void;
+}) {
+  if (state === "done" && clientId) {
+    return (
+      <Link
+        href={`/portal/clients/${clientId}/edit`}
+        className="inline-flex items-center gap-1.5 bg-green-500/10 text-green-400 border border-green-500/25 font-medium text-sm px-4 py-2 rounded-xl transition-colors hover:bg-green-500/15"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2.5 7.5l3 3 6-6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Einladung gesendet
+      </Link>
+    );
+  }
+
+  // Kunde existiert (neu oder schon vorher), nur der Invite-Versand schlug fehl — nicht
+  // erneut anlegen, sondern zur Kundenliste schicken (dort per ResendInviteButton nachholbar).
+  if (state === "error" && clientId) {
+    return (
+      <div className="flex flex-col gap-1">
+        <Link
+          href={`/portal/clients/${clientId}/edit`}
+          className="inline-flex items-center gap-1.5 bg-accent/10 text-accent border border-accent/25 font-medium text-sm px-4 py-2 rounded-xl transition-colors hover:bg-accent/15"
+        >
+          Kunde vorhanden, Einladung fehlgeschlagen
+        </Link>
+        <span className="text-accent text-xs max-w-[220px]">
+          {error} — erneut senden über die Kundenliste.
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-1">
+      <button
+        onClick={onClick}
+        disabled={state === "loading"}
+        title={
+          state === "error"
+            ? "Fehlgeschlagen — Einladung ggf. über die Kundenliste erneut senden"
+            : "Legt bei Bedarf einen Kunden mit diesen Daten an und verschickt (bzw. wiederholt) die Einladungs-E-Mail"
+        }
+        className={`inline-flex items-center gap-1.5 font-medium text-sm px-4 py-2 rounded-xl border transition-colors disabled:opacity-50 ${
+          state === "error"
+            ? "bg-accent/10 text-accent border-accent/25 hover:bg-accent/15"
+            : "border-border text-text-dim hover:bg-bg"
+        }`}
+      >
+        {state === "loading" && (
+          <span className="w-3.5 h-3.5 border-2 border-current/40 border-t-current rounded-full animate-spin" />
+        )}
+        {state === "error" ? "Erneut versuchen" : "Als Kunde anlegen & einladen"}
+      </button>
+      {state === "error" && error && (
+        <span className="text-accent text-xs max-w-[220px]">{error}</span>
+      )}
     </div>
   );
 }

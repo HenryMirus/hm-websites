@@ -64,7 +64,7 @@ export default async function ProjectsPage() {
             {role === "admin" && (
               <Link
                 href="/portal/projects/new"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-primary text-white hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-primary-dark text-white hover:bg-primary-dark/90 transition-colors"
               >
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                   <path d="M6.5 1v11M1 6.5h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -122,7 +122,7 @@ function ProjectCard({ project }: { project: any }) {
             <h3 className="font-display font-semibold text-text-primary group-hover:text-primary transition-colors truncate">
               {project.title}
             </h3>
-            <span className={`shrink-0 font-mono text-[10px] px-2 py-0.5 rounded-md border ${cfg.color}`}>
+            <span className={`shrink-0 font-mono text-[11px] px-2 py-0.5 rounded-md border ${cfg.color}`}>
               {cfg.label}
             </span>
           </div>
@@ -149,7 +149,7 @@ function ProjectCard({ project }: { project: any }) {
       {project.tech_stack && Object.keys(project.tech_stack).length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-3">
           {(Array.isArray(project.tech_stack) ? project.tech_stack : Object.values(project.tech_stack)).slice(0, 5).map((t: any) => (
-            <span key={t} className="font-mono text-[10px] bg-bg border border-border text-text-muted rounded px-1.5 py-0.5">
+            <span key={t} className="font-mono text-[11px] bg-bg border border-border text-text-muted rounded px-1.5 py-0.5">
               {t}
             </span>
           ))}

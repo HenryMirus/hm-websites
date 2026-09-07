@@ -12,6 +12,41 @@
   --accent: #FF4D6A;
   --text: #EEEEFF;
   --muted: #5A5A7A;
+
+  /* Kanalwerte für die Tailwind-Text-Tokens (siehe tailwind.config.ts).
+     Das sind exakt die bisherigen Hexwerte der Marketing-Seite:
+     #EEEEFF, #5A5A7A, #8888AA. */
+  --color-text-primary: 238 238 255;
+  --color-text-muted: 90 90 122;
+  --color-text-dim: 136 136 170;
+}
+
+/*
+ * Portal: Schrift bleibt weiß, Hierarchie kommt über Größe und Gewicht.
+ *
+ * Die grauen Abstufungen der Marketing-Seite (#5A5A7A auf #09090F sind rund
+ * 3,4:1) waren bei Sonnenlicht oder gedrosselter Bildschirmhelligkeit nicht
+ * mehr lesbar. Im Portal wird deshalb nur noch im Weißton unterschieden, alle
+ * drei Stufen liegen über 14:1. Symbole erben das über `currentColor` mit.
+ *
+ * Bewusst nur hier: `.portal-contrast` sitzt in app/portal/layout.tsx und
+ * umschließt jede Portal-Route. Die Marketing-Seite behält ihre Werte.
+ */
+.portal-contrast {
+  --color-text-primary: 255 255 255;
+  --color-text-dim: 238 238 248;
+  --color-text-muted: 220 220 236;
+}
+
+/*
+ * Einzige Ausnahme von „immer weiß": der Platzhalter in Eingabefeldern. Auf
+ * derselben Helligkeit wie ein echter Wert sähe ein leeres Feld ausgefüllt
+ * aus. Deshalb weiß mit Deckkraft statt eines Grautons — der Farbton bleibt
+ * weiß, nur die Deckkraft nimmt ab (rund 9:1 auf #09090F, weit über der
+ * WCAG-Schwelle).
+ */
+.portal-contrast ::placeholder {
+  color: rgb(255 255 255 / 0.55);
 }
 
 * {

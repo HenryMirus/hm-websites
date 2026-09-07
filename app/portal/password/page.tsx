@@ -46,7 +46,7 @@ export default async function PasswordPage() {
             </p>
             <a
               href="/login"
-              className="inline-block w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl transition-colors text-sm"
+              className="inline-block w-full bg-primary-dark hover:bg-primary-dark/90 text-white font-semibold py-3 rounded-xl transition-colors text-sm"
             >
               Zurück zum Login
             </a>

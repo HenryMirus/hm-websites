@@ -32,7 +32,7 @@ export default async function ClientsPage() {
             <span className="font-mono text-xs text-text-muted">{clients?.length ?? 0} gesamt</span>
             <Link
               href="/portal/clients/new"
-              className="bg-primary hover:bg-primary/90 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors flex items-center gap-2"
+              className="bg-primary-dark hover:bg-primary-dark/90 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors flex items-center gap-2"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -63,11 +63,11 @@ export default async function ClientsPage() {
                         <h3 className="font-display font-semibold text-text-primary">
                           {client.company_name || client.name}
                         </h3>
-                        <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded border ${cfg.color}`}>
+                        <span className={`font-mono text-[11px] px-1.5 py-0.5 rounded border ${cfg.color}`}>
                           {cfg.label}
                         </span>
                         {!client.auth_user_id && (
-                          <span className="font-mono text-[10px] px-1.5 py-0.5 rounded border bg-orange-500/10 text-orange-400 border-orange-500/20">
+                          <span className="font-mono text-[11px] px-1.5 py-0.5 rounded border bg-orange-500/10 text-orange-400 border-orange-500/20">
                             Einladung ausstehend
                           </span>
                         )}
