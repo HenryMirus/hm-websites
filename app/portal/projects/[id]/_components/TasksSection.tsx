@@ -120,8 +120,8 @@ export default function TasksSection({
             </select>
           )}
           <label className="flex items-center gap-2 text-sm text-text-dim select-none">
-            <input type="checkbox" name="kundensichtbar" defaultChecked className="accent-primary" />
-            Für den Kunden sichtbar
+            <input type="checkbox" name="kundensichtbar" className="accent-primary" />
+            Für den Kunden sichtbar (Standard: nur intern)
           </label>
           <div className="flex gap-3">
             <select

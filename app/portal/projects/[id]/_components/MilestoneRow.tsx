@@ -36,18 +36,26 @@ export default function MilestoneRow({
   projectId,
   isAdmin,
   tasks = [],
+  done,
+  total,
 }: {
   ms: Milestone;
   projectId: string;
   isAdmin: boolean;
-  /** Die Aufgaben dieses Meilensteins. Leer heißt: noch keine zugeordnet. */
+  /**
+   * Die *sichtbaren* Aufgaben dieses Meilensteins — die Liste zum Aufklappen.
+   * Für einen Kunden ist sie leer, sobald die Aufgaben intern sind; dann bleibt
+   * der Balken stehen, aber es gibt nichts aufzuklappen. Bewusst getrennt von
+   * done/total: der Fortschritt zählt *alle* Aufgaben, damit Kunde und Admin
+   * denselben Stand sehen, ohne dass der Kunde die Titel liest.
+   */
   tasks?: MilestoneTask[];
+  done: number;
+  total: number;
 }) {
   const cfg = MS_STATUS[ms.status] ?? MS_STATUS.pending;
   const [open, setOpen] = useState(false);
-
-  const done = tasks.filter((t) => t.status === "done").length;
-  const total = tasks.length;
+  const expandable = tasks.length > 0;
 
   return (
     <div className="py-2 border-b border-border/50 last:border-0">
@@ -69,7 +77,7 @@ export default function MilestoneRow({
             <p className={`text-sm font-medium ${ms.status === "completed" ? "text-text-muted line-through" : "text-text-primary"}`}>
               {ms.title}
             </p>
-            {total > 0 && (
+            {total > 0 && (expandable ? (
               <button
                 onClick={() => setOpen((v) => !v)}
                 className="font-mono text-[11px] text-text-muted hover:text-primary transition-colors shrink-0"
@@ -78,7 +86,9 @@ export default function MilestoneRow({
               >
                 {done}/{total} {open ? "▴" : "▾"}
               </button>
-            )}
+            ) : (
+              <span className="font-mono text-[11px] text-text-muted shrink-0">{done}/{total}</span>
+            ))}
           </div>
 
           {total > 0 && <ProgressBar done={done} total={total} className="mt-1.5 max-w-[240px]" />}
@@ -104,7 +114,7 @@ export default function MilestoneRow({
         )}
       </div>
 
-      {open && total > 0 && (
+      {open && expandable && (
         <ul className="mt-2 ml-7 space-y-1 border-l border-border/50 pl-3">
           {tasks.map((t) => {
             const ti = TASK_ICON[t.status] ?? TASK_ICON.todo;

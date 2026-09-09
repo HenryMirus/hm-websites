@@ -45,21 +45,30 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
   const isAdmin = role === "admin";
 
-  const [{ data: project }, { data: milestones }, { data: decisions }, { data: feedback }, { data: tasks }] =
+  const [{ data: project }, { data: milestones }, { data: decisions }, { data: feedback }] =
     await Promise.all([
       supabase.from("projects").select("*, clients(*)").eq("id", id).single(),
       supabase.from("project_milestones").select("*").eq("project_id", id).order("sort_order"),
       supabase.from("project_decisions").select("*").eq("project_id", id).order("decided_at", { ascending: false }),
       supabase.from("project_feedback").select("*").eq("project_id", id).order("given_at", { ascending: false }),
-      supabase.from("tasks").select("*").eq("project_id", id).order("sort_order"),
     ]);
 
   if (!project) notFound();
 
-  // `kundensichtbar` steht seit jeher in der Tabelle, wurde aber weder von der
-  // RLS-Richtlinie noch hier ausgewertet — der Kunde sah dadurch *jede* Aufgabe.
+  // Aufgaben bewusst mit dem Admin-Client, und erst nach dem Zugriffscheck oben:
+  // Die RLS-Richtlinie zeigt einem Kunden nur noch kundensichtbare Aufgaben.
+  // Für die Anzeige ist das richtig, für den Fortschritt nicht — der soll alle
+  // zählen, damit Kunde und Admin denselben Projektstand sehen. Was der Kunde
+  // nicht sehen darf, wird unten herausgefiltert und erreicht seinen Browser nie.
+  const { data: tasks } = await createAdminClient()
+    .from("tasks")
+    .select("*")
+    .eq("project_id", id)
+    .order("sort_order");
+
   // Gefiltert wird auf dem Server: was hier wegfällt, wird nicht an den Browser
   // serialisiert, ist also nicht nur ausgeblendet, sondern gar nicht erst da.
+  // Zusammen mit der RLS-Richtlinie zwei unabhängige Schichten.
   const allTasks = tasks ?? [];
   const visibleTasks = isAdmin ? allTasks : allTasks.filter((t) => t.kundensichtbar !== false);
 
@@ -69,12 +78,27 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   const tasksDone = allTasks.filter((t) => t.status === "done").length;
   const msDone = (milestones ?? []).filter((m) => m.status === "completed").length;
 
-  const tasksByMilestone = new Map<string, { id: string; title: string; status: string }[]>();
+  // Zwei getrennte Auswertungen je Meilenstein, mit Absicht:
+  //   msCount  — aus ALLEN Aufgaben, treibt Zaehler und Balken
+  //   msTasks  — nur aus den sichtbaren, das ist die aufklappbare Liste
+  // Ohne die Trennung stuende der Fortschritt beim Kunden anders als beim
+  // Admin — oder der Kunde bekaeme beim Aufklappen interne Aufgabentitel zu
+  // sehen, die die Liste unten gerade ausblendet.
+  const msCount = new Map<string, { done: number; total: number }>();
   for (const t of allTasks) {
     if (!t.milestone_id) continue;
-    const list = tasksByMilestone.get(t.milestone_id) ?? [];
+    const c = msCount.get(t.milestone_id) ?? { done: 0, total: 0 };
+    c.total += 1;
+    if (t.status === "done") c.done += 1;
+    msCount.set(t.milestone_id, c);
+  }
+
+  const msTasks = new Map<string, { id: string; title: string; status: string }[]>();
+  for (const t of visibleTasks) {
+    if (!t.milestone_id) continue;
+    const list = msTasks.get(t.milestone_id) ?? [];
     list.push({ id: t.id, title: t.title, status: t.status });
-    tasksByMilestone.set(t.milestone_id, list);
+    msTasks.set(t.milestone_id, list);
   }
 
   // Dateien erst nach dem RLS-Check auf das Projekt laden: wer das Projekt
@@ -251,7 +275,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             {milestones?.length ? (
               <div className="space-y-2">
                 {milestones.map((ms) => (
-                  <MilestoneRow key={ms.id} ms={ms} projectId={id} isAdmin={isAdmin} tasks={tasksByMilestone.get(ms.id) ?? []} />
+                  <MilestoneRow key={ms.id} ms={ms} projectId={id} isAdmin={isAdmin} tasks={msTasks.get(ms.id) ?? []} done={msCount.get(ms.id)?.done ?? 0} total={msCount.get(ms.id)?.total ?? 0} />
                 ))}
               </div>
             ) : (
