@@ -188,11 +188,17 @@ export async function createTaskAction(
   const description = (formData.get("description") as string)?.trim() || null;
   const priority = (formData.get("priority") as string) || "medium";
   const due_date = (formData.get("due_date") as string) || null;
+  // Leerer Select bedeutet "keinem Meilenstein zugeordnet", nicht der leere String —
+  // die Spalte ist eine UUID-Fremdschlüsselreferenz und nimmt nur NULL oder eine UUID.
+  const milestone_id = (formData.get("milestone_id") as string) || null;
+  // Standard ist sichtbar (wie der Spaltenvorgabewert). Eine nicht angehakte
+  // Checkbox sendet gar nichts, deshalb wird auf Anwesenheit geprüft.
+  const kundensichtbar = formData.get("kundensichtbar") !== null;
 
   const admin = createAdminClient();
   const { error } = await admin
     .from("tasks")
-    .insert({ project_id: projectId, title, description, priority, due_date });
+    .insert({ project_id: projectId, title, description, priority, due_date, milestone_id, kundensichtbar });
 
   if (error) return { error: error.message };
 

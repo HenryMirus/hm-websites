@@ -6,6 +6,7 @@ import PortalShell from "../../_components/PortalShell";
 import TasksSection from "./_components/TasksSection";
 import ProjectFilesSection from "./_components/ProjectFilesSection";
 import MilestoneRow from "./_components/MilestoneRow";
+import ProgressBar from "../../_components/ProgressBar";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -54,6 +55,27 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     ]);
 
   if (!project) notFound();
+
+  // `kundensichtbar` steht seit jeher in der Tabelle, wurde aber weder von der
+  // RLS-Richtlinie noch hier ausgewertet — der Kunde sah dadurch *jede* Aufgabe.
+  // Gefiltert wird auf dem Server: was hier wegfällt, wird nicht an den Browser
+  // serialisiert, ist also nicht nur ausgeblendet, sondern gar nicht erst da.
+  const allTasks = tasks ?? [];
+  const visibleTasks = isAdmin ? allTasks : allTasks.filter((t) => t.kundensichtbar !== false);
+
+  // Fortschritt wird bewusst über *alle* Aufgaben gerechnet, nicht über die
+  // sichtbaren: sonst zeigte das Portal dem Kunden einen anderen Projektstand
+  // als dem Admin, und interne Arbeit würde den Fortschritt nicht bewegen.
+  const tasksDone = allTasks.filter((t) => t.status === "done").length;
+  const msDone = (milestones ?? []).filter((m) => m.status === "completed").length;
+
+  const tasksByMilestone = new Map<string, { id: string; title: string; status: string }[]>();
+  for (const t of allTasks) {
+    if (!t.milestone_id) continue;
+    const list = tasksByMilestone.get(t.milestone_id) ?? [];
+    list.push({ id: t.id, title: t.title, status: t.status });
+    tasksByMilestone.set(t.milestone_id, list);
+  }
 
   // Dateien erst nach dem RLS-Check auf das Projekt laden: wer das Projekt
   // nicht sehen darf, ist oben schon bei notFound() gelandet.
@@ -131,6 +153,33 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           )}
         </div>
 
+        {/* Gesamtfortschritt — Aufgaben tragen den Balken, Meilensteine stehen daneben.
+            Aufgaben sind das feinere Maß: zwölf Meilensteine bewegen sich selten,
+            vierundsechzig Aufgaben zeigen Bewegung schon innerhalb einer Woche. */}
+        {(allTasks.length > 0 || (milestones?.length ?? 0) > 0) && (
+          <div className="bg-surface border border-border rounded-2xl p-6 mb-8">
+            <div className="flex items-baseline justify-between gap-4 mb-3">
+              <h2 className="font-display font-semibold text-text-primary">Fortschritt</h2>
+              <div className="flex items-baseline gap-3 font-mono text-[11px] text-text-muted">
+                {allTasks.length > 0 && (
+                  <span>
+                    <span className="text-text-primary">{tasksDone}</span>/{allTasks.length} Aufgaben
+                  </span>
+                )}
+                {(milestones?.length ?? 0) > 0 && (
+                  <span>
+                    <span className="text-text-primary">{msDone}</span>/{milestones!.length} Meilensteine
+                  </span>
+                )}
+              </div>
+            </div>
+            <ProgressBar
+              done={allTasks.length > 0 ? tasksDone : msDone}
+              total={allTasks.length > 0 ? allTasks.length : (milestones?.length ?? 0)}
+            />
+          </div>
+        )}
+
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
           {[
             { label: "Typ", value: project.type ?? "—" },
@@ -165,10 +214,11 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         )}
 
         {/* Aufgaben — für Admin mit CRUD, für Client read-only */}
-        {(isAdmin || (tasks && tasks.length > 0)) && (
+        {(isAdmin || visibleTasks.length > 0) && (
           <div className="mb-6">
             <TasksSection
-              tasks={tasks ?? []}
+              tasks={visibleTasks}
+              milestones={milestones ?? []}
               projectId={id}
               isAdmin={isAdmin}
               updateTaskStatusAction={isAdmin ? updateTaskStatusAction : undefined}
@@ -201,7 +251,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             {milestones?.length ? (
               <div className="space-y-2">
                 {milestones.map((ms) => (
-                  <MilestoneRow key={ms.id} ms={ms} projectId={id} isAdmin={isAdmin} />
+                  <MilestoneRow key={ms.id} ms={ms} projectId={id} isAdmin={isAdmin} tasks={tasksByMilestone.get(ms.id) ?? []} />
                 ))}
               </div>
             ) : (

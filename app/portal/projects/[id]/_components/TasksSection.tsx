@@ -23,12 +23,21 @@ interface Task {
   status: string;
   priority: string;
   due_date: string | null;
+  milestone_id?: string | null;
+  kundensichtbar?: boolean;
+}
+
+interface MilestoneOption {
+  id: string;
+  title: string;
 }
 
 interface TasksSectionProps {
   tasks: Task[];
   projectId: string;
   isAdmin: boolean;
+  /** Für die Zuordnung im Anlegen-Formular und das Etikett an der Aufgabe. */
+  milestones?: MilestoneOption[];
   createTaskAction?: (projectId: string, prev: ProjectFormState, formData: FormData) => Promise<ProjectFormState>;
   updateTaskStatusAction?: (id: string, projectId: string, status: string) => Promise<void>;
   deleteTaskAction?: (id: string, projectId: string) => Promise<void>;
@@ -38,6 +47,7 @@ export default function TasksSection({
   tasks,
   projectId,
   isAdmin,
+  milestones = [],
   createTaskAction,
   updateTaskStatusAction,
   deleteTaskAction,
@@ -48,6 +58,8 @@ export default function TasksSection({
     boundCreate ?? (async (_: ProjectFormState, __: FormData) => ({} as ProjectFormState)),
     {} as ProjectFormState
   );
+
+  const msTitle = new Map(milestones.map((m) => [m.id, m.title]));
 
   const grouped = {
     todo: tasks.filter((t) => t.status === "todo"),
@@ -95,6 +107,22 @@ export default function TasksSection({
             placeholder="Beschreibung (optional)"
             className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-text-primary placeholder:text-text-muted text-sm outline-none focus:border-primary transition-colors"
           />
+          {milestones.length > 0 && (
+            <select
+              name="milestone_id"
+              defaultValue=""
+              className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-text-primary text-sm outline-none focus:border-primary transition-colors"
+            >
+              <option value="">Keinem Meilenstein zugeordnet</option>
+              {milestones.map((m) => (
+                <option key={m.id} value={m.id}>{m.title}</option>
+              ))}
+            </select>
+          )}
+          <label className="flex items-center gap-2 text-sm text-text-dim select-none">
+            <input type="checkbox" name="kundensichtbar" defaultChecked className="accent-primary" />
+            Für den Kunden sichtbar
+          </label>
           <div className="flex gap-3">
             <select
               name="priority"
@@ -147,6 +175,7 @@ export default function TasksSection({
                   task={task}
                   projectId={projectId}
                   isAdmin={isAdmin}
+                  milestoneTitle={task.milestone_id ? msTitle.get(task.milestone_id) : undefined}
                   updateTaskStatusAction={updateTaskStatusAction}
                   deleteTaskAction={deleteTaskAction}
                 />
@@ -163,12 +192,14 @@ function TaskRow({
   task,
   projectId,
   isAdmin,
+  milestoneTitle,
   updateTaskStatusAction,
   deleteTaskAction,
 }: {
   task: Task;
   projectId: string;
   isAdmin: boolean;
+  milestoneTitle?: string;
   updateTaskStatusAction?: (id: string, projectId: string, status: string) => Promise<void>;
   deleteTaskAction?: (id: string, projectId: string) => Promise<void>;
 }) {
@@ -195,8 +226,18 @@ function TaskRow({
         {task.description && (
           <p className="text-text-muted text-xs mt-0.5">{task.description}</p>
         )}
-        <div className="flex items-center gap-2 mt-0.5">
+        <div className="flex items-center flex-wrap gap-2 mt-0.5">
           <span className={`font-mono text-[11px] ${pCfg.color}`}>{pCfg.label}</span>
+          {milestoneTitle && (
+            <span className="font-mono text-[11px] text-text-muted bg-bg border border-border rounded px-1.5 py-0.5">
+              {milestoneTitle}
+            </span>
+          )}
+          {isAdmin && task.kundensichtbar === false && (
+            <span className="font-mono text-[11px] text-accent border border-accent/30 rounded px-1.5 py-0.5">
+              intern
+            </span>
+          )}
           {task.due_date && (
             <span className="font-mono text-[11px] text-text-muted">
               · {new Date(task.due_date).toLocaleDateString("de-DE")}
