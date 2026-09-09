@@ -35,3 +35,4 @@ npm-debug.log*
 
 # Dev-Mode Email-Previews (siehe lib/email/send.ts)
 .dev-emails/
+.vercel
