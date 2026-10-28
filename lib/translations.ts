@@ -228,79 +228,60 @@ export const t = {
   },
 
   // ─── Portfolio Section ────────────────────────────────────────────────────────
-  // Section tag, headline, subtext, three case study cards.
+  // Kundenprojekte: Section tag, headline, subtext and the UI labels of the
+  // rotating project tiles. The projects themselves live in lib/kundenprojekte.ts
+  // (only entries with published: true are rendered anywhere).
   portfolio: {
-    tag: { de: "// Lab Projects", en: "// Lab Projects" },
-    headline: { de: "Aus dem eigenen Labor", en: "From our own lab" },
+    tag: { de: "// Client Projects", en: "// Client Projects" },
+    headline: { de: "Gebaut für echte Betriebe", en: "Built for real businesses" },
     sub: {
-      de: "HM Labs ist ein junges Studio in der Referenzphase, Kunden-Case-Studies folgen. Bis dahin gilt: Diese Systeme haben wir für uns selbst gebaut, und sie laufen produktiv.",
-      en: "HM Labs is a young studio in its reference phase, client case studies will follow. Until then: these systems were built for ourselves, and they run in production.",
+      de: "Hier zeige ich Projekte, die ich für Kunden umgesetzt habe, jeweils mit deren Zustimmung. Ein Klick auf die Kachel führt zu den Details: was gebraucht wurde, was entstanden ist und warum.",
+      en: "Here I show projects I have built for clients, each with their consent. Click a tile for the details: what was needed, what was built and why.",
     },
-    items: [
-      {
-        caseId: "LAB_01",
-        client: { de: "HM Labs (Eigenprojekt)", en: "HM Labs (own project)" },
-        type: { de: "Web-App / Kundenportal", en: "Web app / client portal" },
-        title: {
-          de: "Kundenportal mit CRM und Projektstatus",
-          en: "Client portal with CRM and project status",
-        },
-        desc: {
-          de: "Eigenes Portal für Kunden und Leads: Projekte, Nachrichten, Dateien und Automatisierungen an einem Ort, dieselbe Architektur, die Kundenprojekte bekommen.",
-          en: "Our own portal for clients and leads: projects, messages, files and automations in one place, the same architecture client projects get.",
-        },
-        tags: [
-          { de: "Next.js", en: "Next.js" },
-          { de: "Supabase", en: "Supabase" },
-          { de: "Auth & Rollen", en: "Auth & roles" },
-        ],
-        metric: "",
-        metricLabel: { de: "", en: "" },
-        timeframe: { de: "", en: "" },
-      },
-      {
-        caseId: "LAB_02",
-        client: { de: "HM Labs (Eigenprojekt)", en: "HM Labs (own project)" },
-        type: { de: "KI-Automatisierung", en: "AI automation" },
-        title: {
-          de: "Automations-Engine mit Human-in-the-loop",
-          en: "Automation engine with human-in-the-loop",
-        },
-        desc: {
-          de: "Interne Engine für wiederkehrende Abläufe: KI erledigt die Routine, Freigaben bleiben beim Menschen. Genau das Prinzip, das wir in Kundenprojekte einbauen.",
-          en: "Internal engine for recurring workflows: AI handles the routine, approvals stay with a human. Exactly the principle we build into client projects.",
-        },
-        tags: [
-          { de: "Claude API", en: "Claude API" },
-          { de: "Workflows", en: "Workflows" },
-          { de: "Human-in-the-loop", en: "Human-in-the-loop" },
-        ],
-        metric: "",
-        metricLabel: { de: "", en: "" },
-        timeframe: { de: "", en: "" },
-      },
-      {
-        caseId: "LAB_03",
-        client: { de: "hm-labs.de", en: "hm-labs.de" },
-        type: { de: "Website in eigener Sache", en: "Our own website" },
-        title: {
-          de: "Diese Website: Exponat Nummer eins",
-          en: "This website: exhibit number one",
-        },
-        desc: {
-          de: "Individuell entworfen und von Hand gebaut, mit technischem SEO und GAIO: llms.txt, Schema.org und KI-Crawler-Zugang. Prüfen Sie es nach, die Belege sind verlinkt.",
-          en: "Individually designed and hand-built, with technical SEO and GAIO: llms.txt, Schema.org and AI-crawler access. Verify it yourself, the evidence is linked.",
-        },
-        tags: [
-          { de: "Next.js", en: "Next.js" },
-          { de: "SEO + GAIO", en: "SEO + GAIO" },
-          { de: "llms.txt", en: "llms.txt" },
-        ],
-        metric: "",
-        metricLabel: { de: "", en: "" },
-        timeframe: { de: "", en: "" },
-      },
-    ],
+    carouselLabel: { de: "Kundenprojekte", en: "Client projects" },
+    slideOf: { de: "von", en: "of" },
+    prev: { de: "Vorheriges Projekt", en: "Previous project" },
+    next: { de: "Nächstes Projekt", en: "Next project" },
+    goTo: { de: "Projekt anzeigen:", en: "Show project:" },
+    pause: { de: "Automatischen Wechsel anhalten", en: "Pause automatic rotation" },
+    play: { de: "Automatischen Wechsel fortsetzen", en: "Resume automatic rotation" },
+    viewProject: { de: "Projekt ansehen", en: "View project" },
+    year: { de: "Jahr", en: "Year" },
+  },
+
+  // ─── Client Logo Bar ──────────────────────────────────────────────────────────
+  // Band of client logos below the TrustBar. Only published clients.
+  clientLogos: {
+    label: { de: "Kunden, für die ich gebaut habe", en: "Clients I have built for" },
+    linkPrefix: { de: "Kundenprojekt ansehen:", en: "View client project:" },
+  },
+
+  // ─── Project Detail Page (/projekte/[slug]) ───────────────────────────────────
+  projektDetail: {
+    skipLink: { de: "Zum Inhalt springen", en: "Skip to content" },
+    tag: { de: "// Client Project", en: "// Client Project" },
+    back: { de: "Alle Projekte", en: "All projects" },
+    client: { de: "Kunde", en: "Client" },
+    industry: { de: "Branche", en: "Industry" },
+    year: { de: "Jahr", en: "Year" },
+    live: { de: "Live ansehen", en: "View live" },
+    needTag: { de: "// Ausgangslage", en: "// Starting point" },
+    needHeadline: { de: "Was der Betrieb brauchte", en: "What the business needed" },
+    builtTag: { de: "// Build Log", en: "// Build Log" },
+    builtHeadline: { de: "Was ich gebaut habe", en: "What I built" },
+    decisionsTag: { de: "// Decisions", en: "// Decisions" },
+    decisionsHeadline: { de: "Entscheidungen, kurz erklärt", en: "Decisions, briefly explained" },
+    servicesLabel: { de: "Beteiligte Leistungen", en: "Services involved" },
+    moreTag: { de: "// More Projects", en: "// More Projects" },
+    moreHeadline: { de: "Weitere Projekte", en: "More projects" },
+    ctaTag: { de: "// Get Started", en: "// Get Started" },
+    ctaHeadline: { de: "Ähnliches vor?", en: "Planning something similar?" },
+    ctaSub: {
+      de: "Erzählen Sie mir kurz, worum es geht. Sie bekommen eine unverbindliche Einschätzung, was sinnvoll ist und in welchem Rahmen es sich bewegt.",
+      en: "Tell me briefly what it is about. You get a non-binding assessment of what makes sense and the range it falls into.",
+    },
+    ctaPrimary: { de: "Kostenlos beraten lassen", en: "Book a free call" },
+    ctaSecondary: { de: "Alle Leistungen ansehen", en: "See all services" },
   },
 
   // ─── Testimonials Section ─────────────────────────────────────────────────────
