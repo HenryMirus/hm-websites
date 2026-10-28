@@ -161,45 +161,89 @@ export const KUNDENPROJEKTE: KundenProjekt[] = [
     published: true,
   },
 
-  // ─── TMR Resource ───────────────────────────────────────────────────────────
-  // NICHT veröffentlichen: keine Freigabe, Projekt nicht abgeschlossen.
-  // Platzhalter, damit das Gerüst steht. Quelle: Kunden/TMR/website/README.md.
+  // ─── TMR Unternehmensberatung ───────────────────────────────────────────────
+  // Veröffentlicht nur auf dem Preview-Branch (Vorgabe Henry 28.10.2026: erst
+  // Dev, nicht live). TODO(Henry): Vor dem Merge in den Live-Branch die
+  // schriftliche Freigabe des Kunden bestätigen und den öffentlichen Namen
+  // prüfen (Henry nannte "TMR Resource", die Website selbst nennt sich
+  // "TMR Unternehmensberatung").
+  // Quellen: Kunden/TMR/website (README.md, public/*.html, git log 01–04/2026).
   {
-    slug: "tmr-resource",
+    slug: "tmr",
     caseId: "CLIENT_02",
-    // TODO(Henry): offizieller Kundenname und Rechtsform.
-    kunde: "TMR Resource",
-    // TODO(Henry): Branche.
-    branche: { de: "", en: "" },
+    kunde: "TMR Unternehmensberatung",
+    branche: { de: "Beratung für Abfallmanagement", en: "Waste management consultancy" },
     logo: {
       src: "/kunden/tmr-logo.webp",
       width: 640,
       height: 334,
-      alt: { de: "Logo von TMR Resource", en: "TMR Resource logo" },
+      alt: { de: "Logo von TMR Unternehmensberatung", en: "TMR Unternehmensberatung logo" },
     },
-    // TODO(Henry): Teaser, sobald das Projekt abgeschlossen und freigegeben ist.
-    teaser: { de: "", en: "" },
-    // TODO(Henry): Ausgangslage.
-    ausgangslage: { de: "", en: "" },
+    teaser: {
+      de: "Unternehmenswebsite für einen unabhängigen Berater im Abfallmanagement: schnell, klar gegliedert und auch offline vorführbar.",
+      en: "Company website for an independent waste management consultant: fast, clearly structured and presentable offline too.",
+    },
+    ausgangslage: {
+      de: "TMR ist eine Unternehmensberatung für Abfallmanagement. Der Inhaber begleitet Unternehmen als externer Abfallbeauftragter, von der Dokumentation bis zur Einhaltung von Gewerbeabfallverordnung und Kreislaufwirtschaftsgesetz. Gebraucht wurde ein seriöser Auftritt, der die Leistungen klar erklärt und Interessenten den Weg zur Anfrage zeigt.",
+      en: "TMR is a consultancy for waste management. The owner supports companies as an external waste management officer, from documentation to compliance with German commercial waste and circular economy law. The business needed a professional presence that explains the services clearly and shows prospects the way to an inquiry.",
+    },
     gebaut: [
       {
         titel: { de: "Unternehmenswebsite", en: "Company website" },
-        // TODO(Henry): Text prüfen und ergänzen. Laut README: statische,
-        // deutschsprachige Website mit Start, Über uns, Leistungen, Kontakt,
-        // Impressum und Datenschutz.
         text: {
-          de: "Statische, deutschsprachige Unternehmenswebsite mit Startseite, Über uns, Leistungen, Kontakt, Impressum und Datenschutz.",
-          en: "Static, German-language company website with home, about, services, contact, imprint and privacy pages.",
+          de: "Startseite, Über mich, Leistungen, Kontakt, Impressum und Datenschutz. Kopf- und Fußbereich sind einmal angelegt und werden auf allen Seiten wiederverwendet.",
+          en: "Home, about, services, contact, imprint and privacy pages. Header and footer are built once and reused on every page.",
+        },
+      },
+      {
+        titel: { de: "Suchmaschinen-Grundlagen", en: "Search engine basics" },
+        text: {
+          de: "Jede Seite hat eigene Titel, Beschreibungen und Vorschaubilder für Links in sozialen Netzwerken. Strukturierte Daten beschreiben das Unternehmen für Suchmaschinen, dazu kommen Sitemap und robots.txt.",
+          en: "Every page has its own title, description and preview image for links on social networks. Structured data describes the business for search engines, alongside a sitemap and robots.txt.",
+        },
+      },
+      {
+        titel: { de: "Schnelle Bilder", en: "Fast images" },
+        text: {
+          de: "Ein Skript erzeugt aus jedem Foto moderne Bildformate in mehreren Größen. Der Browser lädt nur, was zum Bildschirm passt, und der sichtbare Bereich steht, bevor der Rest der Gestaltung geladen ist.",
+          en: "A script turns every photo into modern image formats in several sizes. The browser only loads what fits the screen, and the visible area is ready before the rest of the styling has loaded.",
+        },
+      },
+      {
+        titel: { de: "Vorführversion für Windows und macOS", en: "Demo version for Windows and macOS" },
+        text: {
+          de: "Die Website lässt sich als Programm für Windows und als App für macOS mitgeben. Ein Doppelklick öffnet sie im Browser, ganz ohne Installation oder Internetverbindung.",
+          en: "The website can be handed over as a program for Windows and an app for macOS. A double click opens it in the browser, without installation or an internet connection.",
         },
       },
     ],
-    // TODO(Henry): Entscheidungen.
-    entscheidungen: [],
-    leistungen: [{ de: "Unternehmenswebsite", en: "Company website" }],
-    // TODO(Henry): Jahr und Live-URL.
-    jahr: undefined,
+    entscheidungen: [
+      {
+        titel: { de: "Das Sichtbare zuerst", en: "The visible part first" },
+        text: {
+          de: "Die Gestaltung für den ersten Bildschirm ist abgetrennt und wird vor allem anderen geladen. Besucher sehen sofort eine fertige Seite, statt auf das komplette Layout zu warten.",
+          en: "The styling for the first screen is split off and loaded before everything else. Visitors see a finished page right away instead of waiting for the complete layout.",
+        },
+      },
+      {
+        titel: { de: "Statisch statt Baukasten", en: "Static instead of a site builder" },
+        text: {
+          de: "Für eine Beratung mit wenigen, gut gepflegten Seiten braucht es kein Redaktionssystem. Fertige Seiten aus reinem HTML sind schnell, sicher und lassen sich bei jedem Hoster betreiben.",
+          en: "A consultancy with a few well-kept pages does not need a content management system. Finished pages in plain HTML are fast, secure and can run with any host.",
+        },
+      },
+    ],
+    leistungen: [
+      { de: "Unternehmenswebsite", en: "Company website" },
+      { de: "SEO-Grundlagen", en: "SEO basics" },
+      { de: "Bildoptimierung", en: "Image optimization" },
+      { de: "Rechtsseiten", en: "Legal pages" },
+    ],
+    jahr: 2026,
+    // TODO(Henry): Live-URL. Im Projekt ist https://www.tmr-beratung.de
+    // hinterlegt, die Adresse war am 28.10.2026 aber nicht erreichbar.
     liveUrl: undefined,
-    published: false,
+    published: true,
   },
 ];
 
