@@ -70,7 +70,7 @@ export default function CookieBanner() {
               </div>
               <div>
                 <p className="text-[#EEEEFF] text-sm font-medium">Diese Website verwendet Cookies</p>
-                <p className="text-[#5A5A7A] text-xs leading-relaxed mt-0.5">
+                <p className="text-[#7C7CA0] text-xs leading-relaxed mt-0.5">
                   Wir nutzen Cookies, um Ihnen die beste Erfahrung zu bieten. Notwendige Cookies sind immer aktiv.{" "}
                   <Link href="/datenschutz" className="underline hover:text-[#4F7FFF] transition-colors">
                     Datenschutzerklärung
@@ -81,13 +81,13 @@ export default function CookieBanner() {
             <div className="flex flex-wrap gap-2 shrink-0">
               <button
                 onClick={() => save(false, false)}
-                className="px-4 py-2 rounded-lg border border-[#1E1E2E] text-[#5A5A7A] text-sm hover:border-[#4F7FFF] hover:text-[#EEEEFF] transition-all"
+                className="px-4 py-2 rounded-lg border border-[#1E1E2E] text-[#7C7CA0] text-sm hover:border-[#4F7FFF] hover:text-[#EEEEFF] transition-all"
               >
                 Nur Notwendige
               </button>
               <button
                 onClick={openSettings}
-                className="px-4 py-2 rounded-lg border border-[#1E1E2E] text-[#5A5A7A] text-sm hover:border-[#4F7FFF] hover:text-[#EEEEFF] transition-all"
+                className="px-4 py-2 rounded-lg border border-[#1E1E2E] text-[#7C7CA0] text-sm hover:border-[#4F7FFF] hover:text-[#EEEEFF] transition-all"
               >
                 Einstellungen
               </button>
@@ -122,12 +122,12 @@ export default function CookieBanner() {
                   </div>
                   <button
                     onClick={() => setShowPopup(false)}
-                    className="w-6 h-6 rounded-md flex items-center justify-center text-[#5A5A7A] hover:text-[#EEEEFF] hover:bg-[#1E1E2E] transition-all text-lg leading-none"
+                    className="w-6 h-6 rounded-md flex items-center justify-center text-[#7C7CA0] hover:text-[#EEEEFF] hover:bg-[#1E1E2E] transition-all text-lg leading-none"
                   >
                     ×
                   </button>
                 </div>
-                <p className="text-[#5A5A7A] text-xs mt-1 leading-relaxed">
+                <p className="text-[#7C7CA0] text-xs mt-1 leading-relaxed">
                   DSGVO-konform · Ihre Auswahl wird lokal gespeichert
                 </p>
               </div>
@@ -161,7 +161,7 @@ export default function CookieBanner() {
               <div className="p-4 pt-0 flex gap-2">
                 <button
                   onClick={() => save(localAnalytics, localMarketing)}
-                  className="flex-1 px-3 py-2 rounded-lg border border-[#1E1E2E] text-[#5A5A7A] text-xs hover:border-[#4F7FFF] hover:text-[#EEEEFF] transition-all"
+                  className="flex-1 px-3 py-2 rounded-lg border border-[#1E1E2E] text-[#7C7CA0] text-xs hover:border-[#4F7FFF] hover:text-[#EEEEFF] transition-all"
                 >
                   Auswahl speichern
                 </button>
@@ -176,7 +176,7 @@ export default function CookieBanner() {
               <div className="pb-3 text-center">
                 <Link
                   href="/datenschutz"
-                  className="text-[#5A5A7A] text-[10px] hover:text-[#4F7FFF] transition-colors underline"
+                  className="text-[#7C7CA0] text-[10px] hover:text-[#4F7FFF] transition-colors underline"
                   onClick={() => setShowPopup(false)}
                 >
                   Datenschutzerklärung ansehen
@@ -217,7 +217,7 @@ function ToggleRow({
     <div className="flex items-start justify-between gap-3">
       <div>
         <p className="text-[#EEEEFF] text-xs font-medium">{label}</p>
-        <p className="text-[#5A5A7A] text-[11px] mt-0.5 leading-relaxed">{description}</p>
+        <p className="text-[#7C7CA0] text-[11px] mt-0.5 leading-relaxed">{description}</p>
       </div>
       <button
         role="switch"

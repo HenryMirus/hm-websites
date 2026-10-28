@@ -46,6 +46,10 @@ export async function removeAdminAction(userId: string): Promise<AdminFormState>
   if (user?.id === userId) return { error: "Sie können Ihren eigenen Account nicht entfernen." };
 
   const admin = createAdminClient();
+  // Nur Admin-Konten: sonst ließe sich hierüber auch ein Kunden-Login löschen.
+  const { data: profile } = await admin.from("profiles").select("role").eq("id", userId).maybeSingle();
+  if (profile?.role !== "admin") return { error: "Dieses Konto ist kein Admin." };
+
   const { error } = await admin.auth.admin.deleteUser(userId);
   if (error) return { error: error.message };
 

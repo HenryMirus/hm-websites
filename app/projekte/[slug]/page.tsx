@@ -33,11 +33,8 @@ export function generateMetadata({ params }: PageProps): Metadata {
     description,
     alternates: {
       canonical: url,
-      // Seitenbezogen, nicht auf die Startseite (EN läuft clientseitig über ?lang=en).
-      languages: {
-        "de-DE": url,
-        "en-US": `${url}?lang=en`,
-      },
+      // Kein hreflang: Englisch gibt es nur clientseitig unter derselben URL
+      // (siehe app/layout.tsx).
     },
     openGraph: {
       type: "article",

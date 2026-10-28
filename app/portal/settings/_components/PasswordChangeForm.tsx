@@ -29,10 +29,24 @@ export default function PasswordChangeForm() {
   return (
     <form ref={formRef} action={action} className="space-y-4">
       <div>
-        <label className="block font-mono text-[11px] text-text-muted uppercase tracking-wider mb-1.5">
+        <label htmlFor="pw-current" className="block font-mono text-[11px] text-text-muted uppercase tracking-wider mb-1.5">
+          Aktuelles Passwort
+        </label>
+        <input
+          id="pw-current"
+          type="password"
+          name="current"
+          autoComplete="current-password"
+          required
+          className="w-full bg-bg border border-border rounded-xl px-4 py-3 text-text-primary placeholder:text-text-muted text-sm outline-none focus:border-primary transition-colors"
+        />
+      </div>
+      <div>
+        <label htmlFor="pw-new" className="block font-mono text-[11px] text-text-muted uppercase tracking-wider mb-1.5">
           Neues Passwort
         </label>
         <input
+          id="pw-new"
           type="password"
           name="password"
           placeholder="Mindestens 8 Zeichen"
@@ -43,10 +57,11 @@ export default function PasswordChangeForm() {
         />
       </div>
       <div>
-        <label className="block font-mono text-[11px] text-text-muted uppercase tracking-wider mb-1.5">
+        <label htmlFor="pw-confirm" className="block font-mono text-[11px] text-text-muted uppercase tracking-wider mb-1.5">
           Passwort bestätigen
         </label>
         <input
+          id="pw-confirm"
           type="password"
           name="confirm"
           placeholder="Passwort wiederholen"

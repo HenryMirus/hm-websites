@@ -93,12 +93,15 @@ export async function runAutomationTestAction(
     .select("id, name, email, projects(id, title, status)")
     .limit(1)
     .maybeSingle();
+  // Test-Mails an den Kunden gehen an den ausführenden Admin, nie an den echten
+  // Kunden, dessen Daten nur als Beispielkontext dienen.
+  const { data: { user: me } } = await (await createClient()).auth.getUser();
   if (client) {
     const proj = (client as any).projects?.[0];
     ctx = {
       portalUrl,
       vars: {},
-      client: { id: client.id, name: client.name, email: client.email },
+      client: { id: client.id, name: client.name, email: me?.email ?? null },
       project: proj ? { id: proj.id, title: proj.title, status: proj.status } : undefined,
       message: { content: "Test-Vorschau dieser Automation.", sender_role: "admin" },
       milestone: { id: "test", title: "Test-Meilenstein" },

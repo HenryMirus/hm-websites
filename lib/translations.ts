@@ -258,7 +258,6 @@ export const t = {
 
   // ─── Project Detail Page (/projekte/[slug]) ───────────────────────────────────
   projektDetail: {
-    skipLink: { de: "Zum Inhalt springen", en: "Skip to content" },
     tag: { de: "// Client Project", en: "// Client Project" },
     back: { de: "Alle Projekte", en: "All projects" },
     client: { de: "Kunde", en: "Client" },

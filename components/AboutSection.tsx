@@ -78,7 +78,7 @@ export default function AboutSection({ lang }: AboutSectionProps) {
                   <div className="w-24 h-24 rounded-2xl overflow-hidden border border-primary/25 shadow-xl shadow-primary/15">
                     <picture>
                       <source srcSet="/henry-portrait-new.webp" type="image/webp" />
-                      <img src="/henry-portrait-new.jpg" alt="Henry Mirus, KI-Entwickler" width={96} height={96} className="w-full h-full object-cover object-top" loading="lazy" />
+                      <img src="/henry-portrait-new.webp" alt="Henry Mirus, KI-Entwickler" width={96} height={96} className="w-full h-full object-cover object-top" loading="lazy" />
                     </picture>
                   </div>
                 </div>

@@ -250,7 +250,7 @@ export default function ServicesSection({ lang }: ServicesSectionProps) {
         >
           <picture>
             <source srcSet="/services-visual.webp" type="image/webp" />
-            <img src="/services-visual.jpg" alt={getText(t.services.imageAlt, lang)} width={1440} height={320} className="w-full object-cover" style={{ maxHeight: "320px" }} loading="lazy" />
+            <img src="/services-visual.webp" alt={getText(t.services.imageAlt, lang)} width={1440} height={320} className="w-full object-cover" style={{ maxHeight: "320px" }} loading="lazy" />
           </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-bg/30 via-transparent to-bg/30" />

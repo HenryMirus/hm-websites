@@ -269,7 +269,7 @@ export default function LeistungenDetail() {
           onOpenWizard={openWizard}
         />
 
-        <main className="mx-auto max-w-7xl px-6 pb-24 pt-36">
+        <main id="main" className="mx-auto max-w-7xl px-6 pb-24 pt-36">
           {/* Header */}
           <motion.header
             initial={{ opacity: 0, y: 24 }}

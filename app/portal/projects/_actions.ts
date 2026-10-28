@@ -130,10 +130,24 @@ export async function updateMilestoneStatusAction(
 ): Promise<void> {
   await requireAdmin();
   const admin = createAdminClient();
-  await admin.from("project_milestones").update({ status }).eq("id", id);
+  // Nur bei einem echten Wechsel auf "completed" benachrichtigen: das Update
+  // trifft eine Zeile nur, wenn sie vorher noch nicht abgeschlossen war. Sonst
+  // bekäme der Kunde bei jedem Hin- und Herschalten eine neue Mail.
+  let becameCompleted = false;
+  if (status === "completed") {
+    const { data: changed } = await admin
+      .from("project_milestones")
+      .update({ status })
+      .eq("id", id)
+      .neq("status", "completed")
+      .select("id");
+    becameCompleted = (changed?.length ?? 0) > 0;
+  } else {
+    await admin.from("project_milestones").update({ status }).eq("id", id);
+  }
 
   // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
-  if (status === "completed" && !process.env.NOTIFY_VIA_WEBHOOK) {
+  if (becameCompleted && !process.env.NOTIFY_VIA_WEBHOOK) {
     try {
       const portalBase = PORTAL_URL;
       const { data: ms } = await admin

@@ -248,7 +248,7 @@ export default function PortalShell({ children, role, unreadMessages = 0 }: Port
       </aside>
 
       {/* Main */}
-      <main className="flex-1 min-h-0 overflow-auto">{children}</main>
+      <main id="main" className="flex-1 min-h-0 overflow-auto">{children}</main>
     </div>
   );
 }

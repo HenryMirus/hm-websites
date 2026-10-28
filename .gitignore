@@ -25,6 +25,11 @@ npm-debug.log*
 *.png
 *.jpeg
 *.jpg
+# …außer echten Website-Assets: der VPS baut aus dem Git-Checkout, ohne diese
+# Ausnahme fehlten dort Logo, Favicon, OG-Bild und der Logo-Anhang der Mails.
+!public/**/*.png
+!public/**/*.jpg
+!public/**/*.jpeg
 
 # Claude Code / Playwright logs
 .claude/

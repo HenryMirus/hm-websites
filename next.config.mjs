@@ -20,10 +20,10 @@ const localCockpit = isDev
 const ContentSecurityPolicy = `
   default-src 'self';
   ${scriptSrc};
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  style-src 'self' 'unsafe-inline';
   img-src 'self' data: blob: https://zoyvsobztyqdaqdffrbo.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://www.facebook.com https://px.ads.linkedin.com;
   media-src 'self' blob: https://zoyvsobztyqdaqdffrbo.supabase.co;
-  font-src 'self' data: https://fonts.gstatic.com;
+  font-src 'self' data:;
   connect-src 'self' https://zoyvsobztyqdaqdffrbo.supabase.co wss://zoyvsobztyqdaqdffrbo.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://www.facebook.com https://px.ads.linkedin.com${localCockpit};
   frame-ancestors 'none';
   base-uri 'self';
@@ -32,6 +32,7 @@ const ContentSecurityPolicy = `
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
   async headers() {
     return [
       {
@@ -41,6 +42,8 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" },
         ],
       },
     ];

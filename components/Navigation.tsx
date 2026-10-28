@@ -70,6 +70,7 @@ export default function Navigation({ lang, setLang, onOpenWizard }: NavigationPr
         <div className="flex items-center gap-3">
           <button
             onClick={() => setLang(lang === "de" ? "en" : "de")}
+            aria-label={lang === "de" ? "Switch to English" : "Auf Deutsch wechseln"}
             className="font-mono text-xs text-text-dim hover:text-primary transition-colors border border-border rounded-md px-2.5 py-1.5 hover:border-primary/30"
           >
             {lang === "de" ? "EN" : "DE"}
@@ -86,7 +87,8 @@ export default function Navigation({ lang, setLang, onOpenWizard }: NavigationPr
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden w-8 h-8 flex flex-col gap-1.5 items-center justify-center"
-            aria-label="Toggle menu"
+            aria-label={lang === "de" ? "Menü" : "Menu"}
+            aria-expanded={menuOpen}
           >
             <span className={`w-5 h-px bg-text-dim transition-all duration-200 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
             <span className={`w-5 h-px bg-text-dim transition-all duration-200 ${menuOpen ? "opacity-0" : ""}`} />

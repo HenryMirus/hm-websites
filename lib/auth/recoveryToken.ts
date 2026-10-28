@@ -1,8 +1,10 @@
 import { createHmac, timingSafeEqual, randomBytes } from "crypto";
 
 function secret(): string {
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!key) throw new Error("SUPABASE_SERVICE_ROLE_KEY missing");
+  // Eigenes Secret, damit der Service-Role-Key nicht nebenbei als HMAC-Schlüssel
+  // dient. Fallback nur, solange RECOVERY_TOKEN_SECRET noch nicht gesetzt ist.
+  const key = process.env.RECOVERY_TOKEN_SECRET?.trim() || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!key) throw new Error("RECOVERY_TOKEN_SECRET missing");
   return key;
 }
 

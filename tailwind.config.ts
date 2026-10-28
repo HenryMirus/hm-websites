@@ -23,9 +23,9 @@ const config: Config = {
         "text-dim": "rgb(var(--color-text-dim) / <alpha-value>)",
       },
       fontFamily: {
-        display: ["Space Grotesk", "sans-serif"],
-        body: ["Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        display: ["var(--font-display)", "Space Grotesk", "sans-serif"],
+        body: ["var(--font-body)", "Inter", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
       animation: {
         "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",

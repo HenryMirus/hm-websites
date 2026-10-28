@@ -150,11 +150,19 @@ export async function markMessagesReadAction(clientId: string): Promise<void> {
       .eq("sender_role", "client")
       .eq("is_read", false);
   } else {
-    // Client liest → markiere alle admin-gesendeten Nachrichten als gelesen
+    // Client liest → markiere alle admin-gesendeten Nachrichten als gelesen.
+    // Die client_id kommt aus der Session, nie aus dem Aufruf: sonst könnte ein
+    // Kunde Nachrichten anderer Kunden als gelesen markieren.
+    const { data: own } = await supabase
+      .from("clients")
+      .select("id")
+      .eq("auth_user_id", user.id)
+      .single();
+    if (!own) return;
     await admin
       .from("messages")
       .update({ is_read: true })
-      .eq("client_id", clientId)
+      .eq("client_id", own.id)
       .eq("sender_role", "admin")
       .eq("is_read", false);
   }

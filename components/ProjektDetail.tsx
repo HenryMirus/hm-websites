@@ -72,19 +72,12 @@ export default function ProjektDetail({ projekt, weitere }: ProjektDetailProps) 
 
   return (
     <div className="min-h-screen">
-      {/* Skip-Link: erstes fokussierbares Element, sichtbar nur im Fokus */}
-      <a
-        href="#inhalt"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-primary-dark focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
-      >
-        {getText(T.skipLink, lang)}
-      </a>
-
+      {/* Skip-Link kommt global aus app/layout.tsx und springt auf #main */}
       <ParticleNetwork />
       <div className="relative z-[1]">
         <Navigation lang={lang} setLang={setLang} onOpenWizard={openWizard} />
 
-        <main id="inhalt" tabIndex={-1} className="mx-auto max-w-7xl px-6 pb-24 pt-36 focus:outline-none">
+        <main id="main" tabIndex={-1} className="mx-auto max-w-7xl px-6 pb-24 pt-36 focus:outline-none">
           {/* Header */}
           <motion.header
             initial={{ opacity: 0, y: 24 }}

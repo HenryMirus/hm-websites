@@ -66,7 +66,7 @@ export default function SectionNav() {
             animate={{
               width: active === id ? 8 : 5,
               height: active === id ? 8 : 5,
-              backgroundColor: active === id ? "#4F7FFF" : hovered === id ? "#5A5A7A" : "#1E1E2E",
+              backgroundColor: active === id ? "#4F7FFF" : hovered === id ? "#7C7CA0" : "#1E1E2E",
             }}
             transition={{ duration: 0.2 }}
             className="rounded-full border border-border shrink-0"

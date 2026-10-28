@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 
 export type SettingsState = { error?: string; success?: string };
@@ -53,15 +54,31 @@ export async function changePasswordAction(
   _prev: SettingsState,
   formData: FormData
 ): Promise<SettingsState> {
+  const current = (formData.get("current") as string) ?? "";
   const password = (formData.get("password") as string) ?? "";
   const confirm = (formData.get("confirm") as string) ?? "";
 
+  if (!current) return { error: "Bitte geben Sie Ihr aktuelles Passwort ein." };
   if (password.length < 8) return { error: "Mindestens 8 Zeichen erforderlich." };
   if (password !== confirm) return { error: "Passwörter stimmen nicht überein." };
 
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user?.email) return { error: "Nicht angemeldet." };
+
+  // Aktuelles Passwort prüfen, ohne die laufende Session anzufassen: Mit einem
+  // gestohlenen Access-Token allein soll sich das Passwort nicht ändern lassen.
+  const verifier = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { auth: { persistSession: false, autoRefreshToken: false } }
+  );
+  const { error: verifyError } = await verifier.auth.signInWithPassword({ email: user.email, password: current });
+  if (verifyError) return { error: "Das aktuelle Passwort stimmt nicht." };
+  await verifier.auth.signOut({ scope: "local" });
+
   const { error } = await supabase.auth.updateUser({ password });
 
-  if (error) return { error: error.message };
+  if (error) return { error: "Das Passwort konnte nicht geändert werden. Bitte versuchen Sie es erneut." };
   return { success: "Passwort erfolgreich geändert." };
 }

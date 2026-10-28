@@ -2,7 +2,7 @@
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { sendEmail } from "@/lib/email/send";
-import { renderTemplate, interpolate, type EmailTemplateRow } from "@/lib/email/templates";
+import { renderTemplate, interpolate, escapeHtml, type EmailTemplateRow } from "@/lib/email/templates";
 import { getAdminRecipients } from "@/lib/email/recipients";
 import { buildVars, type AutomationStep, type RunContext, type StepResult } from "./types";
 
@@ -47,8 +47,13 @@ async function runSendEmail(
     return { type: "send_email", status: "skipped", detail: "Keine Empfänger-Adresse." };
   }
 
-  // ctx.vars stammen aus vorherigen Schritten (ai_generate liefert bewusst HTML).
-  const { subject, html } = renderTemplate(template, vars, Object.keys(ctx.vars));
+  // ctx.vars stammen aus vorherigen Schritten, z. B. ai_generate. Deren Text
+  // kann über den Prompt ({{preview}} = Kundennachricht) beeinflusst werden und
+  // wird deshalb maskiert; nur Zeilenumbrüche werden zu <br/>.
+  const stepKeys = Object.keys(ctx.vars);
+  const safeVars = { ...vars };
+  for (const k of stepKeys) safeVars[k] = escapeHtml(vars[k] ?? "").replace(/\r?\n/g, "<br/>");
+  const { subject, html } = renderTemplate(template, safeVars, stepKeys);
   await sendEmail({ to: recipients, subject, html });
   return { type: "send_email", status: "success", detail: `→ ${recipients.join(", ")}` };
 }

@@ -2,7 +2,6 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createServerClient } from "@supabase/ssr";
-import { EMAIL } from "@/lib/config/email";
 import { cookies } from "next/headers";
 import { PORTAL_URL } from "@/lib/config/site";
 
@@ -20,12 +19,9 @@ export async function requestPasswordReset(
 
   if (rpcError) return { error: "Fehler beim Prüfen der E-Mail." };
 
-  if (!exists) {
-    return {
-      error:
-        `Kein Konto mit dieser E-Mail-Adresse gefunden. Wenden Sie sich an ${EMAIL.CONTACT}.`,
-    };
-  }
+  // Gleiche Antwort wie bei Erfolg: sonst ließe sich über dieses Formular
+  // abfragen, welche Adressen einen Portal-Zugang haben.
+  if (!exists) return {};
 
   // E-Mail existiert → Reset-Link senden
   const cookieStore = cookies();

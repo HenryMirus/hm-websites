@@ -1,11 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { EMAIL } from "@/lib/config/email";
+import { MAIN_DOMAIN } from "@/lib/config/site";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung | HM Labs",
   description: "Datenschutzerklärung und Informationen zur Datenverarbeitung von HM Labs.",
   robots: { index: false, follow: false },
+  alternates: { canonical: "/datenschutz" },
 };
 
 export default function DatenschutzPage() {
@@ -25,7 +27,7 @@ export default function DatenschutzPage() {
           </Link>
           <Link
             href="/"
-            className="flex items-center gap-2 text-[#5A5A7A] text-sm hover:text-[#EEEEFF] transition-colors"
+            className="flex items-center gap-2 text-[#7C7CA0] text-sm hover:text-[#EEEEFF] transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -36,12 +38,12 @@ export default function DatenschutzPage() {
       </header>
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-6 py-16">
+      <main id="main" className="max-w-4xl mx-auto px-6 py-16">
         <div className="mb-12">
           <p className="text-[#4F7FFF] font-mono text-xs tracking-widest uppercase mb-3">// Privacy</p>
           <h1 className="text-3xl md:text-4xl font-bold text-[#EEEEFF] mb-4">Datenschutzerklärung</h1>
-          <p className="text-[#5A5A7A] text-sm">
-            Stand: {new Date().toLocaleDateString("de-DE", { month: "long", year: "numeric" })}
+          <p className="text-[#7C7CA0] text-sm">
+            Stand: Oktober 2026
           </p>
         </div>
 
@@ -53,10 +55,11 @@ export default function DatenschutzPage() {
             </p>
             <div className="mt-3 text-sm space-y-1">
               <p className="font-medium">Henry Mirus, HM Labs</p>
-              <p className="text-[#5A5A7A]">E-Mail:{" "}
+              <p className="text-[#7C7CA0]">Pantaleonstraße 20, 53567 Buchholz (Westerwald)</p>
+              <p className="text-[#7C7CA0]">E-Mail:{" "}
                 <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>
               </p>
-              <p className="text-[#5A5A7A]">Website: hm-labs.tech</p>
+              <p className="text-[#7C7CA0]">Website: {MAIN_DOMAIN}</p>
             </div>
           </Section>
 
@@ -81,6 +84,12 @@ export default function DatenschutzPage() {
                 zu priorisieren und mich schneller auf relevante Details vorzubereiten. Dieser Wert dient ausschließlich der internen
                 Einordnung, ist für niemanden außer mir sichtbar und hat keine automatisierte Ablehnung oder sonstige rechtliche Wirkung
                 zur Folge. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an effizienter Anfragebearbeitung).
+              </p>
+              <p className="mt-3">
+                Nach dem Absenden erhalten Sie an die angegebene E-Mail-Adresse eine automatische Eingangsbestätigung, und ich
+                werde per E-Mail über die Anfrage benachrichtigt. Beide E-Mails werden über das E-Mail-Postfach von HM Labs bei
+                Hostinger (siehe Abschnitt 4) versendet und dort gespeichert, bis die Anfrage abgeschlossen ist und keine
+                Aufbewahrungspflichten mehr bestehen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO.
               </p>
             </Subsection>
             <Subsection title="2.3 E-Mail-Kontakt">
@@ -122,19 +131,21 @@ export default function DatenschutzPage() {
                 optional
               />
             </div>
-            <p className="text-sm text-[#5A5A7A] mt-4">
-              Sie können Ihre Cookie-Einwilligung jederzeit über das Cookie-Icon links unten auf der Seite ändern oder widerrufen.
+            <p className="text-sm text-[#7C7CA0] mt-4">
+              Sie können Ihre Cookie-Einwilligung jederzeit über das Cookie-Icon rechts unten auf der Seite ändern oder widerrufen.
             </p>
           </Section>
 
           <Section title="4. Hosting & Drittanbieter">
-            <Subsection title="Vercel">
+            <Subsection title="Hostinger (Server und E-Mail)">
               <p>
-                Diese Website wird bei Vercel Inc. (340 Pine Street, Suite 701, San Francisco, CA 94104, USA) gehostet.
-                Vercel verarbeitet Verbindungsdaten zur Bereitstellung des Angebots. Ein Datenschutzabkommen (DPA) ist abgeschlossen.
-                Weitere Informationen:{" "}
-                <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
-                  vercel.com/legal/privacy-policy
+                Diese Website läuft auf einem eigenen Server bei der Hostinger International Ltd. (61 Lordou Vironos Street,
+                6023 Larnaca, Zypern). Über Hostinger laufen außerdem die E-Mail-Postfächer von HM Labs, also auch E-Mails, die
+                Sie mir schreiben oder die das Kontaktformular auslöst. Hostinger verarbeitet dabei Verbindungs- und
+                Inhaltsdaten in meinem Auftrag (Art. 28 DSGVO). Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (sicherer und
+                zuverlässiger Betrieb). Weitere Informationen:{" "}
+                <a href="https://www.hostinger.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  hostinger.com/legal/privacy-policy
                 </a>
               </p>
             </Subsection>
@@ -147,11 +158,10 @@ export default function DatenschutzPage() {
                 </a>
               </p>
             </Subsection>
-            <Subsection title="Google Fonts">
+            <Subsection title="Schriftarten">
               <p>
-                Diese Website nutzt Google Fonts (Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA).
-                Beim Laden der Seite wird eine Verbindung zu Googles Servern hergestellt, wobei Ihre IP-Adresse übertragen werden kann.
-                Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.
+                Die verwendeten Schriftarten liegen auf dem Server dieser Website. Beim Laden der Seite wird keine Verbindung
+                zu Google oder anderen Schriftanbietern hergestellt.
               </p>
             </Subsection>
             <Subsection title="Google Analytics 4 (nur mit Einwilligung)">
@@ -215,11 +225,11 @@ export default function DatenschutzPage() {
               ].map(({ right, desc }) => (
                 <div key={right} className="rounded-lg border border-[#1E1E2E] p-3 bg-[#111118]">
                   <p className="text-xs font-semibold text-[#EEEEFF] mb-1">{right}</p>
-                  <p className="text-[10px] text-[#5A5A7A] leading-relaxed">{desc}</p>
+                  <p className="text-[10px] text-[#7C7CA0] leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
-            <p className="text-sm text-[#5A5A7A] mt-4">
+            <p className="text-sm text-[#7C7CA0] mt-4">
               Zur Ausübung Ihrer Rechte wenden Sie sich an:{" "}
               <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>.
               Sie haben außerdem das Recht, bei der zuständigen Datenschutzaufsichtsbehörde Beschwerde einzulegen.
@@ -229,8 +239,8 @@ export default function DatenschutzPage() {
           <Section title="6. Datensicherheit">
             <p className="text-sm leading-relaxed text-[#EEEEFF]/70">
               Diese Website nutzt SSL-Verschlüsselung (HTTPS) für die Übertragung Ihrer Daten. Wir ergreifen technische und
-              organisatorische Maßnahmen gemäß Art. 32 DSGVO, um Ihre Daten zu schützen. Unsere Infrastruktur befindet sich
-              in der EU (Hetzner, Frankfurt) und wird regelmäßig auf Sicherheitslücken geprüft.
+              organisatorische Maßnahmen gemäß Art. 32 DSGVO, um Ihre Daten zu schützen. Die Website läuft auf einem eigenen
+              Server bei Hostinger, die Datenbank bei Supabase in der EU (Frankfurt).
             </p>
           </Section>
 
@@ -253,11 +263,11 @@ export default function DatenschutzPage() {
 
         {/* Footer */}
         <div className="mt-16 pt-8 border-t border-[#1E1E2E] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="font-mono text-xs text-[#5A5A7A]">
+          <span className="font-mono text-xs text-[#7C7CA0]">
             © {new Date().getFullYear()} HM Labs · Alle Rechte vorbehalten.
           </span>
           <div className="flex gap-6">
-            <Link href="/impressum" className="text-xs text-[#5A5A7A] hover:text-[#EEEEFF] transition-colors">Impressum</Link>
+            <Link href="/impressum" className="text-xs text-[#7C7CA0] hover:text-[#EEEEFF] transition-colors">Impressum</Link>
             <Link href="/datenschutz" className="text-xs text-[#4F7FFF]">Datenschutz</Link>
           </div>
         </div>
@@ -306,7 +316,7 @@ function CookieCategory({
         <span
           className={`text-[10px] px-2 py-0.5 rounded-full font-mono ${
             optional
-              ? "bg-[#1E1E2E] text-[#5A5A7A]"
+              ? "bg-[#1E1E2E] text-[#7C7CA0]"
               : "bg-[#4F7FFF]/15 text-[#4F7FFF]"
           }`}
         >
@@ -314,18 +324,18 @@ function CookieCategory({
         </span>
       </div>
       <div className="px-4 py-3 space-y-2">
-        <p className="text-xs text-[#5A5A7A]">
+        <p className="text-xs text-[#7C7CA0]">
           <span className="text-[#EEEEFF]/50">Rechtsgrundlage:</span> {basis}
         </p>
         <p className="text-xs text-[#EEEEFF]/60 leading-relaxed">{description}</p>
         <div className="flex flex-wrap gap-1.5 pt-1">
           {examples.map((ex) => (
-            <span key={ex} className="text-[10px] px-2 py-0.5 rounded bg-[#1E1E2E] text-[#5A5A7A] font-mono">
+            <span key={ex} className="text-[10px] px-2 py-0.5 rounded bg-[#1E1E2E] text-[#7C7CA0] font-mono">
               {ex}
             </span>
           ))}
         </div>
-        <p className="text-[10px] text-[#5A5A7A]">
+        <p className="text-[10px] text-[#7C7CA0]">
           <span className="text-[#EEEEFF]/40">Speicherdauer:</span> {retention}
         </p>
       </div>

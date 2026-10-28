@@ -3,19 +3,19 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { t, getText, Lang } from "@/lib/translations";
+import Link from "next/link";
 import TypewriterText from "./TypewriterText";
-import { useAdminRole } from "@/lib/hooks/useAdminRole";
 
 interface ContactSectionProps {
   lang: Lang;
 }
 
 export default function ContactSection({ lang }: ContactSectionProps) {
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
+  // website = Honeypot: für Menschen unsichtbar, Bots füllen es aus (siehe /api/contact).
+  const [form, setForm] = useState({ name: "", email: "", company: "", message: "", website: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { isAdmin } = useAdminRole();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ export default function ContactSection({ lang }: ContactSectionProps) {
       }
       setSubmitted(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Fehler beim Senden. Bitte versuche es erneut.");
+      setError(err instanceof Error ? err.message : "Fehler beim Senden. Bitte versuchen Sie es erneut.");
     } finally {
       setLoading(false);
     }
@@ -125,10 +125,13 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                   >
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="block font-mono text-xs text-text-dim mb-2 tracking-wider uppercase">
+                        <label htmlFor="contact-name" className="block font-mono text-xs text-text-dim mb-2 tracking-wider uppercase">
                           {getText(t.contact.form.name, lang)}
                         </label>
                         <input
+                          id="contact-name"
+                          name="name"
+                          autoComplete="name"
                           type="text"
                           required
                           value={form.name}
@@ -138,10 +141,13 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                         />
                       </div>
                       <div>
-                        <label className="block font-mono text-xs text-text-dim mb-2 tracking-wider uppercase">
+                        <label htmlFor="contact-email" className="block font-mono text-xs text-text-dim mb-2 tracking-wider uppercase">
                           {getText(t.contact.form.email, lang)}
                         </label>
                         <input
+                          id="contact-email"
+                          name="email"
+                          autoComplete="email"
                           type="email"
                           required
                           value={form.email}
@@ -153,10 +159,13 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                     </div>
 
                     <div>
-                      <label className="block font-mono text-xs text-text-dim mb-2 tracking-wider uppercase">
+                      <label htmlFor="contact-company" className="block font-mono text-xs text-text-dim mb-2 tracking-wider uppercase">
                         {getText(t.contact.form.company, lang)}
                       </label>
                       <input
+                        id="contact-company"
+                        name="company"
+                        autoComplete="organization"
                         type="text"
                         value={form.company}
                         onChange={(e) => setForm({ ...form, company: e.target.value })}
@@ -166,10 +175,12 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                     </div>
 
                     <div>
-                      <label className="block font-mono text-xs text-text-dim mb-2 tracking-wider uppercase">
+                      <label htmlFor="contact-message" className="block font-mono text-xs text-text-dim mb-2 tracking-wider uppercase">
                         {getText(t.contact.form.message, lang)}
                       </label>
                       <textarea
+                        id="contact-message"
+                        name="message"
                         required
                         rows={5}
                         value={form.message}
@@ -179,10 +190,23 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                       />
                     </div>
 
+                    <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+                      <label htmlFor="contact-website">Website</label>
+                      <input
+                        id="contact-website"
+                        name="website"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={form.website}
+                        onChange={(e) => setForm({ ...form, website: e.target.value })}
+                      />
+                    </div>
+
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full bg-primary hover:bg-primary-dark disabled:opacity-60 transition-all duration-200 text-white font-medium py-3.5 rounded-xl flex items-center justify-center gap-2 glow-primary"
+                      className="w-full bg-primary-dark hover:bg-primary disabled:opacity-60 transition-all duration-200 text-white font-medium py-3.5 rounded-xl flex items-center justify-center gap-2 glow-primary"
                     >
                       {loading ? (
                         <>
@@ -205,9 +229,23 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                       )}
                     </button>
 
-                    {error && isAdmin && (
-                      <p className="text-sm text-red-400 text-center pt-1">{error}</p>
+                    {error && (
+                      <p role="alert" className="text-sm text-red-400 text-center pt-1">
+                        {error}{" "}
+                        {lang === "de" ? "Alternativ erreichen Sie mich direkt per E-Mail an " : "Alternatively, email me directly at "}
+                        <a href={`mailto:${t.contact.info.email}`} className="underline">{t.contact.info.email}</a>.
+                      </p>
                     )}
+
+                    <p className="text-xs text-text-dim text-center">
+                      {lang === "de"
+                        ? "Ihre Angaben verwende ich nur zur Bearbeitung der Anfrage. Details in der "
+                        : "I only use your details to handle your inquiry. Details in the "}
+                      <Link href="/datenschutz" className="underline hover:text-primary">
+                        {lang === "de" ? "Datenschutzerklärung" : "privacy policy"}
+                      </Link>
+                      .
+                    </p>
                   </motion.form>
                 ) : (
                   <motion.div

@@ -23,11 +23,12 @@ export default function Footer({ lang }: FooterProps) {
   };
 
   const links = [
-    { href: "#services", label: getText(t.nav.services, lang) },
-    { href: "#process", label: getText(t.nav.process, lang) },
-    { href: "#portfolio", label: getText(t.nav.portfolio, lang) },
-    { href: "#about", label: getText(t.nav.about, lang) },
-    { href: "#contact", label: getText(t.nav.contact, lang) },
+    // Absolut ("/#…"), damit die Links auch von Unterseiten wie /leistungen funktionieren.
+    { href: "/leistungen", label: getText(t.nav.services, lang) },
+    { href: "/#process", label: getText(t.nav.process, lang) },
+    { href: "/#portfolio", label: getText(t.nav.portfolio, lang) },
+    { href: "/#about", label: getText(t.nav.about, lang) },
+    { href: "/#contact", label: getText(t.nav.contact, lang) },
   ];
 
   return (
@@ -80,13 +81,13 @@ export default function Footer({ lang }: FooterProps) {
             © {year} HM Labs · {getText(t.footer.copy, lang)}
           </span>
           <div className="flex items-center gap-4">
-            <a href="/impressum" className="font-mono text-xs text-text-muted/60 hover:text-text-muted transition-colors">
+            <a href="/impressum" className="font-mono text-xs text-text-dim hover:text-text-primary transition-colors">
               {getText(t.footer.impressum, lang)}
             </a>
-            <a href="/datenschutz" className="font-mono text-xs text-text-muted/60 hover:text-text-muted transition-colors">
+            <a href="/datenschutz" className="font-mono text-xs text-text-dim hover:text-text-primary transition-colors">
               {getText(t.footer.datenschutz, lang)}
             </a>
-            <span className="font-mono text-xs text-text-muted/50">
+            <span className="font-mono text-xs text-text-muted">
               Built with Next.js · Powered by AI
             </span>
           </div>
