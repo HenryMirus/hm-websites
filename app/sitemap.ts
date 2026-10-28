@@ -1,35 +1,36 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/config/site";
 import { VEROEFFENTLICHTE_PROJEKTE } from "@/lib/kundenprojekte";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://hm-labs.de",
+      url: `${SITE_URL}`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
     },
     {
-      url: "https://hm-labs.de/leistungen",
+      url: `${SITE_URL}/leistungen`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
     // Kundenprojekte: nur veröffentlichte (published: true)
     ...VEROEFFENTLICHTE_PROJEKTE.map((p) => ({
-      url: `https://hm-labs.de/projekte/${p.slug}`,
+      url: `${SITE_URL}/projekte/${p.slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
     {
-      url: "https://hm-labs.de/impressum",
+      url: `${SITE_URL}/impressum`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.2,
     },
     {
-      url: "https://hm-labs.de/datenschutz",
+      url: `${SITE_URL}/datenschutz`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.2,

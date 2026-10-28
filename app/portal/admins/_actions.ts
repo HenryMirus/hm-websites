@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin, getUserRole } from "@/lib/auth/getRole";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export type AdminFormState = { error?: string; success?: boolean };
 
@@ -18,7 +19,7 @@ export async function inviteAdminAction(
   if (!email) return { error: "E-Mail ist ein Pflichtfeld." };
 
   const admin = createAdminClient();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = PORTAL_URL;
 
   const { data, error } = await admin.auth.admin.inviteUserByEmail(email, {
     redirectTo: `${portalUrl}/auth/callback`,

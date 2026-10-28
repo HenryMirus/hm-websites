@@ -2,6 +2,7 @@
 
 import { setPasswordWithRecoveryToken } from "@/lib/auth/setPasswordWithRecoveryToken";
 import { redirect } from "next/navigation";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export async function updatePasswordAction(
   _prevState: { error?: string } | null,
@@ -15,6 +16,6 @@ export async function updatePasswordAction(
 
   // Absolute URL erzwingt eine vollständige Server-Navigation statt client-seitiger
   // SPA-Navigation — verhindert kurzen 404-Flash, weil /login im Client-Router nicht existiert
-  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://clients.localhost:3000";
+  const portalBase = PORTAL_URL;
   redirect(`${portalBase}/login?pw=changed`);
 }

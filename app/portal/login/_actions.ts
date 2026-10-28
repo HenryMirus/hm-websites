@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { createServerClient } from "@supabase/ssr";
 import { EMAIL } from "@/lib/config/email";
 import { cookies } from "next/headers";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export async function requestPasswordReset(
   email: string
@@ -44,7 +45,7 @@ export async function requestPasswordReset(
   );
 
   const portalUrl =
-    process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+    PORTAL_URL;
   const { error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, {
     redirectTo: `${portalUrl}/auth/callback?type=recovery`,
   });

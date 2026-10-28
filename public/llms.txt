@@ -17,6 +17,8 @@ and mid-sized companies. Working language: German. Formal register (Sie).
 - /#process: How a project runs
 - /#faq: Prices, timelines, ownership — frequent questions
 - /#contact: Inquiry form, response usually within one business day
+- /projekte/skm-brennholz: Client project, website with order assistant for a regional firewood business
+- /projekte/tmr: Client project, company website for a waste management consultancy
 - /impressum, /datenschutz: Legal pages
 
 ## Expertise signals
@@ -40,4 +42,4 @@ Buchholz (Westerwald), Rheinland-Pfalz, Germany — serving the
 Cologne/Bonn–Koblenz region on site and all of DACH remotely.
 
 ## Contact
-https://hm-labs.de/kontakt
+https://hm-labs.tech/kontakt

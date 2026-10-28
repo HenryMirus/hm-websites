@@ -34,7 +34,7 @@ export default async function ApiKeysPage() {
         {/* Usage hint */}
         <div className="bg-bg border border-border rounded-xl p-4 mb-8 font-mono text-xs text-text-dim">
           <p className="text-text-muted mb-2">Verwendung:</p>
-          <p>curl -X POST https://clients.hm-labs.de/api/v1/clients \</p>
+          <p>curl -X POST https://clients.hm-labs.tech/api/v1/clients \</p>
           <p className="pl-4">-H &quot;Authorization: Bearer hm_live_...&quot; \</p>
           <p className="pl-4">-H &quot;Content-Type: application/json&quot; \</p>
           <p className="pl-4">-d &apos;&#123;&quot;name&quot;:&quot;Max&quot;,&quot;email&quot;:&quot;max@firma.de&quot;&#125;&apos;</p>

@@ -6,7 +6,7 @@ import {
   getVeroeffentlichtesProjekt,
 } from "@/lib/kundenprojekte";
 
-const SITE_URL = "https://hm-labs.de";
+import { SITE_URL } from "@/lib/config/site";
 
 interface PageProps {
   params: { slug: string };

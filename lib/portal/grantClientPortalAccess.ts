@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/admin";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export type GrantAccessResult = { error?: string };
 
@@ -13,7 +14,7 @@ export type GrantAccessResult = { error?: string };
  */
 export async function grantClientPortalAccess(email: string, name?: string): Promise<GrantAccessResult> {
   const admin = createAdminClient();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = PORTAL_URL;
 
   const { error: inviteError } = await admin.auth.admin.inviteUserByEmail(email, {
     redirectTo: `${portalUrl}/auth/callback`,

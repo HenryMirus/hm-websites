@@ -5,7 +5,7 @@ import TrackingScripts from "@/components/TrackingScripts";
 import { ConsentProvider } from "@/lib/consent";
 import { EMAIL } from "@/lib/config/email";
 
-const SITE_URL = "https://hm-labs.de";
+import { SITE_URL } from "@/lib/config/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

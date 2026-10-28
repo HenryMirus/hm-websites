@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { isWebhookAuthorized } from "@/lib/auth/webhookAuth";
 import { dispatchEvent } from "@/lib/automations/engine";
 import type { RunContext } from "@/lib/automations/types";
+import { PORTAL_URL } from "@/lib/config/site";
 
 // Supabase Webhook Payload — Typ für messages-Tabelle
 interface MessageRecord {
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const { record } = payload;
-  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalBase = PORTAL_URL;
   const admin = createAdminClient();
 
   try {

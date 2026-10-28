@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { writeFile, mkdir, readFile } from "fs/promises";
 import path from "path";
+import { EMAIL } from "@/lib/config/email";
 
 interface SendEmailOptions {
   to: string | string[];
@@ -29,11 +30,15 @@ function createTransport() {
     port,
     secure: port === 465,
     auth: { user, pass },
+    // Ohne Grenzen hängt ein nicht erreichbarer SMTP-Server die Anfrage des
+    // Formulars oder das Senden einer Portal-Nachricht minutenlang auf.
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 20_000,
   });
 }
 
-const FROM =
-  process.env.SMTP_FROM ?? `HM Labs <no-reply@hm-labs.de>`;
+const FROM = EMAIL.FROM;
 
 export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions): Promise<void> {
   if (process.env.NODE_ENV === "development" && !process.env.SMTP_HOST) {

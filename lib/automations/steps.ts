@@ -3,20 +3,11 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { sendEmail } from "@/lib/email/send";
 import { renderTemplate, interpolate, type EmailTemplateRow } from "@/lib/email/templates";
+import { getAdminRecipients } from "@/lib/email/recipients";
 import { buildVars, type AutomationStep, type RunContext, type StepResult } from "./types";
 
 type Admin = SupabaseClient;
 export type StepOutcome = StepResult & { stop?: boolean };
-
-async function getAdminEmails(admin: Admin): Promise<string[]> {
-  const { data: profiles } = await admin.from("profiles").select("id").eq("role", "admin");
-  if (!profiles || profiles.length === 0) return [];
-  const adminIds = profiles.map((p) => p.id as string);
-  const { data } = await admin.auth.admin.listUsers({ perPage: 200 });
-  return (data?.users ?? [])
-    .filter((u) => adminIds.includes(u.id) && u.email)
-    .map((u) => u.email as string);
-}
 
 async function firstAdminId(admin: Admin): Promise<string | null> {
   const { data } = await admin.from("profiles").select("id").eq("role", "admin").limit(1).single();
@@ -41,7 +32,7 @@ async function runSendEmail(
 
   let recipients: string[] = [];
   if (config.recipient === "admins") {
-    recipients = await getAdminEmails(admin);
+    recipients = await getAdminRecipients(admin);
   } else if (config.recipient === "custom") {
     recipients = interpolate(String(config.to ?? ""), vars)
       .split(",")
@@ -56,7 +47,8 @@ async function runSendEmail(
     return { type: "send_email", status: "skipped", detail: "Keine Empfänger-Adresse." };
   }
 
-  const { subject, html } = renderTemplate(template, vars);
+  // ctx.vars stammen aus vorherigen Schritten (ai_generate liefert bewusst HTML).
+  const { subject, html } = renderTemplate(template, vars, Object.keys(ctx.vars));
   await sendEmail({ to: recipients, subject, html });
   return { type: "send_email", status: "success", detail: `→ ${recipients.join(", ")}` };
 }

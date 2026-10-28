@@ -4,20 +4,31 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { executeStep } from "./steps";
 import { getMatchingEventAutomations } from "./triggers";
 import type { Automation, RunContext, StepResult } from "./types";
+import { sendDefaultPortalNotification } from "@/lib/email/portalNotifications";
 
 /**
  * Feuert alle aktiven event-Automationen für ein Ereignis. Genutzt von den
  * Supabase-Webhooks UND dem Inline-Fallback in den Server Actions, damit es
  * genau einen Ausführungspfad gibt.
+ *
+ * Ist für das Ereignis keine Automation mit E-Mail-Schritt eingerichtet (auch
+ * keine pausierte), geht die Standard-Benachrichtigung raus — sonst bliebe eine
+ * neue Nachricht ohne Mail an die Gegenseite, bloß weil im Portal nichts
+ * konfiguriert ist.
  */
 export async function dispatchEvent(
   event: string,
   facts: Record<string, string | null | undefined>,
   ctx: RunContext
 ): Promise<{ fired: number }> {
-  const automations = await getMatchingEventAutomations(event, facts);
+  const configured = await getMatchingEventAutomations(event, facts, { includeDisabled: true });
+  const automations = configured.filter((a) => a.enabled);
   for (const automation of automations) {
     await runAutomation(automation, ctx);
+  }
+  const hasEmailAutomation = configured.some((a) => a.steps?.some((s) => s.type === "send_email"));
+  if (!hasEmailAutomation) {
+    await sendDefaultPortalNotification(event, facts, ctx, createAdminClient());
   }
   return { fired: automations.length };
 }
