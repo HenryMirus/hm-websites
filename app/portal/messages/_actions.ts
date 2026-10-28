@@ -5,6 +5,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getUserRole } from "@/lib/auth/getRole";
 import { revalidatePath } from "next/cache";
 import { dispatchEvent } from "@/lib/automations/engine";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export type MessageFormState = { error?: string; messageId?: string };
 
@@ -44,7 +45,7 @@ export async function sendMessageAction(
   if (!user) return { error: "Nicht angemeldet." };
 
   const role = await getUserRole();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = PORTAL_URL;
   let messageId = "";
 
   if (role === "admin") {

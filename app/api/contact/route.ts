@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { computeLeadScore } from "@/lib/leadScoring";
+import { notifyContactSubmission } from "@/lib/email/contactNotifications";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const RATE_LIMIT_MAX = 5; // requests
@@ -101,6 +102,17 @@ export async function POST(req: NextRequest) {
       console.error("Supabase insert error:", error);
       return NextResponse.json({ error: "Fehler beim Speichern." }, { status: 500 });
     }
+
+    await notifyContactSubmission({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      company: company?.trim() || null,
+      phone: typeof phone === "string" && phone.trim() ? phone.trim() : null,
+      subject: subject?.trim() || null,
+      message: message?.trim() || "",
+      leadScore: score,
+      leadTier: tier,
+    });
 
     return NextResponse.json({ success: true });
   } catch (err) {

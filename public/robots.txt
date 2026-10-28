@@ -19,4 +19,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://hm-labs.de/sitemap.xml
+Sitemap: https://hm-labs.tech/sitemap.xml

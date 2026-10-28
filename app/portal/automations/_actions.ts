@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { runAutomation } from "@/lib/automations/engine";
 import { findDueAutomations } from "@/lib/automations/triggers";
 import type { Automation, AutomationStep, AutomationTrigger, RunContext } from "@/lib/automations/types";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export interface AutomationInput {
   id?: string;
@@ -82,7 +83,7 @@ export async function runAutomationTestAction(
     .single<Automation>();
   if (!automation) return { error: "Automation nicht gefunden." };
 
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = PORTAL_URL;
   let ctx: RunContext = { portalUrl, vars: {} };
 
   // Für Datums-Trigger: ersten realen fälligen Kontext suchen (ohne Datum-Check

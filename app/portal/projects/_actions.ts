@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/auth/getRole";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { dispatchEvent } from "@/lib/automations/engine";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export type ProjectFormState = { error?: string };
 
@@ -134,7 +135,7 @@ export async function updateMilestoneStatusAction(
   // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
   if (status === "completed" && !process.env.NOTIFY_VIA_WEBHOOK) {
     try {
-      const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+      const portalBase = PORTAL_URL;
       const { data: ms } = await admin
         .from("project_milestones")
         .select("title")

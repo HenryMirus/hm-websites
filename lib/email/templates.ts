@@ -5,7 +5,18 @@
 // Templates liegen in der DB-Tabelle `email_templates`; ihre Felder füllen die
 // Slots des Shells. Platzhalter wie {{client_name}} werden interpoliert.
 
+import { SITE_URL, MAIN_DOMAIN } from "@/lib/config/site";
+
 const FONT = `'Helvetica Neue',Helvetica,Arial,sans-serif`;
+
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 export interface EmailTemplateRow {
   key: string;
@@ -70,7 +81,7 @@ export function emailShell({
 
   <!-- Logo -->
   <tr><td align="center" style="padding-bottom:36px;">
-    <a href="https://hm-labs.de" target="_blank" style="text-decoration:none;">
+    <a href="${SITE_URL}" target="_blank" style="text-decoration:none;">
       <table cellpadding="0" cellspacing="0" border="0" align="center"><tr>
         <td style="vertical-align:middle;padding-right:10px;">
           <img src="cid:hm-labs-logo" alt="HM Labs" width="36" height="36" style="display:block;border:0;border-radius:8px;"/>
@@ -129,12 +140,12 @@ export function emailShell({
   <!-- Footer -->
   <tr><td align="center" style="padding-top:28px;">
     <p style="margin:0;font-size:12px;color:#5A5A7A;line-height:2.0;">
-      <strong style="color:#8888AA;">HM Labs</strong> &mdash; KI-Integration &amp; Softwareentwicklung<br/>
-      <a href="https://hm-labs.de" style="color:#4F7FFF;text-decoration:none;">hm-labs.de</a>
+      <strong style="color:#8888AA;">HM Labs</strong> &middot; KI-Integration &amp; Softwareentwicklung<br/>
+      <a href="${SITE_URL}" style="color:#4F7FFF;text-decoration:none;">${MAIN_DOMAIN}</a>
       &nbsp;&middot;&nbsp;
-      <a href="https://hm-labs.de/impressum" style="color:#5A5A7A;text-decoration:none;">Impressum</a>
+      <a href="${SITE_URL}/impressum" style="color:#5A5A7A;text-decoration:none;">Impressum</a>
       &nbsp;&middot;&nbsp;
-      <a href="https://hm-labs.de/datenschutz" style="color:#5A5A7A;text-decoration:none;">Datenschutz</a>
+      <a href="${SITE_URL}/datenschutz" style="color:#5A5A7A;text-decoration:none;">Datenschutz</a>
     </p>
   </td></tr>
 
@@ -144,24 +155,33 @@ export function emailShell({
 </html>`;
 }
 
-/** Rendert ein DB-Template mit Variablen zu fertigem { subject, html }. */
+/**
+ * Rendert ein DB-Template mit Variablen zu fertigem { subject, html }.
+ * Variablen werden für die HTML-Teile maskiert, außer den in `rawHtmlKeys`
+ * genannten (z. B. von ai_generate erzeugtes HTML). Der Betreff ist Klartext
+ * und bekommt die Werte unmaskiert.
+ */
 export function renderTemplate(
   template: EmailTemplateRow,
-  vars: Record<string, string>
+  vars: Record<string, string>,
+  rawHtmlKeys: string[] = []
 ): { subject: string; html: string } {
-  const subject = interpolate(template.subject, vars);
+  const htmlVars = Object.fromEntries(
+    Object.entries(vars).map(([k, v]) => [k, rawHtmlKeys.includes(k) ? v : escapeHtml(v)])
+  );
+  const subject = interpolate(template.subject, vars).replace(/[\r\n]+/g, " ");
   const html = emailShell({
-    preheader: interpolate(template.preheader, vars),
+    preheader: interpolate(template.preheader, htmlVars),
     accentGradient: template.accent,
     iconChar: template.icon_char,
     iconBg: template.icon_bg,
     iconBorder: template.icon_border,
-    heading: interpolate(template.heading, vars),
-    body: interpolate(template.body_html, vars),
-    ctaHref: interpolate(template.cta_href, vars),
-    ctaLabel: interpolate(template.cta_label, vars),
+    heading: interpolate(template.heading, htmlVars),
+    body: interpolate(template.body_html, htmlVars),
+    ctaHref: interpolate(template.cta_href, htmlVars),
+    ctaLabel: interpolate(template.cta_label, htmlVars),
     ctaBg: template.cta_bg,
-    noteText: template.note_text ? interpolate(template.note_text, vars) : undefined,
+    noteText: template.note_text ? interpolate(template.note_text, htmlVars) : undefined,
   });
   return { subject, html };
 }

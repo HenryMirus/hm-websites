@@ -2,6 +2,7 @@
 
 import { setPasswordWithRecoveryToken } from "@/lib/auth/setPasswordWithRecoveryToken";
 import { redirect } from "next/navigation";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export async function registerAction(
   _prevState: { error?: string } | null,
@@ -13,6 +14,6 @@ export async function registerAction(
   const result = await setPasswordWithRecoveryToken(password, confirm);
   if (result.error) return { error: result.error };
 
-  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://clients.localhost:3000";
+  const portalBase = PORTAL_URL;
   redirect(`${portalBase}/login?registered=1`);
 }

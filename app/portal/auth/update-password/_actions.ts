@@ -5,6 +5,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { cookies } from "next/headers";
 import { verifyRecoveryToken } from "@/lib/auth/recoveryToken";
 import { redirect } from "next/navigation";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export async function updatePasswordAction(
   _prevState: { error?: string } | null,
@@ -54,6 +55,6 @@ export async function updatePasswordAction(
   const admin = createAdminClient();
   await admin.auth.admin.signOut(user.id);
 
-  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://clients.localhost:3001";
+  const portalBase = PORTAL_URL;
   redirect(`${portalBase}/login?pw=changed`);
 }

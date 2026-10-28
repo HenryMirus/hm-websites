@@ -56,7 +56,7 @@ export default function DatenschutzPage() {
               <p className="text-[#5A5A7A]">E-Mail:{" "}
                 <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>
               </p>
-              <p className="text-[#5A5A7A]">Website: hm-labs.de</p>
+              <p className="text-[#5A5A7A]">Website: hm-labs.tech</p>
             </div>
           </Section>
 

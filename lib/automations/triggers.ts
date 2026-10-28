@@ -3,8 +3,7 @@
 import { CronExpressionParser } from "cron-parser";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { Automation, RunContext } from "./types";
-
-const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+import { PORTAL_URL } from "@/lib/config/site";
 
 interface DueItem {
   automation: Automation;
@@ -26,13 +25,20 @@ function addDays(dateStr: string, days: number): Date {
 
 // ─── Event-Trigger (von den Webhooks genutzt) ───────────────────────────────
 
-/** Lädt aktive event-Automationen für ein Ereignis und matched den Filter. */
+/**
+ * Lädt event-Automationen für ein Ereignis und matched den Filter. Standardmäßig
+ * nur aktive; mit includeDisabled auch pausierte (für die Frage, ob für das
+ * Ereignis überhaupt etwas eingerichtet ist).
+ */
 export async function getMatchingEventAutomations(
   event: string,
-  facts: Record<string, string | null | undefined>
+  facts: Record<string, string | null | undefined>,
+  { includeDisabled = false }: { includeDisabled?: boolean } = {}
 ): Promise<Automation[]> {
   const admin = createAdminClient();
-  const { data } = await admin.from("automations").select("*").eq("enabled", true);
+  let query = admin.from("automations").select("*");
+  if (!includeDisabled) query = query.eq("enabled", true);
+  const { data } = await query;
 
   const list = (data ?? []) as Automation[];
   return list.filter((a) => {

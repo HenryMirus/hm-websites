@@ -1,10 +1,8 @@
 # Marketing site + client portal (one Next.js app, subdomain-routed via
-# middleware.ts — clients.hm-labs.de is /portal/*, the main domain is
-# everything else, see that file's own comments). Production today is
-# Vercel; this Dockerfile exists purely so this app can run alongside the
-# hm-agent-os deploy stack for combined local testing (see
-# hm-agent-os/deploy/docker-compose.yml's "website" service) — it does
-# NOT replace the Vercel deployment.
+# middleware.ts — clients.hm-labs.tech is /portal/*, the main domain is
+# everything else, see that file's own comments). Production runs on the
+# VPS behind nginx; hm-agent-os/deploy/docker-compose.yml's "website"
+# service builds this image.
 #
 # No local database: this app talks directly to the real Supabase project
 # (zoyvsobztyqdaqdffrbo) over HTTPS, in every environment including this
@@ -25,6 +23,7 @@ COPY . .
 # server-only env var.
 ARG NEXT_PUBLIC_SUPABASE_URL
 ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ARG NEXT_PUBLIC_SITE_URL
 ARG NEXT_PUBLIC_PORTAL_URL
 ARG NEXT_PUBLIC_OS_URL
 ARG NEXT_PUBLIC_EMAIL_CONTACT
@@ -33,6 +32,7 @@ ARG NEXT_PUBLIC_LINKEDIN_PARTNER_ID
 ARG NEXT_PUBLIC_META_PIXEL_ID
 ENV NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL} \
   NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY} \
+  NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
   NEXT_PUBLIC_PORTAL_URL=${NEXT_PUBLIC_PORTAL_URL} \
   NEXT_PUBLIC_OS_URL=${NEXT_PUBLIC_OS_URL} \
   NEXT_PUBLIC_EMAIL_CONTACT=${NEXT_PUBLIC_EMAIL_CONTACT} \

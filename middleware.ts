@@ -1,17 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { MAIN_DOMAIN, PORTAL_HOST, PORTAL_URL } from "@/lib/config/site";
 
-const MAIN_DOMAIN = "hm-labs.de";
-const PORTAL_SUBDOMAIN = "clients.hm-labs.de";
-const PORTAL_BASE = `https://${PORTAL_SUBDOMAIN}`;
+const PORTAL_SUBDOMAIN = PORTAL_HOST;
+const PORTAL_BASE = PORTAL_URL;
 const DEV_PORTAL_SUBDOMAIN = "clients.localhost";
-// os.hm-labs.de ist reserviert für das neue hm-agent-os-Projekt (eigenes
-// Repo, eigenes Deployment — dockt auf einem Paperclip-Fork, siehe
-// hm-agent-os/docs/hm-agent-os-umsetzungsplan.md Phase 7). Das alte,
-// selbstgebaute "Agent OS"-Dashboard (app/os, lib/os) wurde entfernt
-// (2026-08-31, überholt durch hm-agent-os). Sobald Phase 7 steht, wird
-// os.hm-labs.de per DNS/Reverse-Proxy direkt auf das neue Deployment
-// gezeigt — nicht mehr über dieses Next.js-Middleware-Rewrite.
+// os.<domain> ist reserviert für das hm-agent-os-Projekt (eigenes Repo,
+// eigenes Deployment) und wird per DNS/Reverse-Proxy direkt dorthin
+// gezeigt — nicht über dieses Next.js-Middleware-Rewrite.
 
 // Public path suffixes (relative to the subdomain prefix, e.g. /portal).
 const PUBLIC_SUFFIXES = ["/login", "/auth/callback", "/auth/update-password", "/password", "/register"];

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createRecoveryToken } from "@/lib/auth/recoveryToken";
+import { PORTAL_URL } from "@/lib/config/site";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -10,7 +11,7 @@ export async function GET(request: NextRequest) {
   const refreshToken = searchParams.get("refresh_token");
   const type = searchParams.get("type");
 
-  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalBase = PORTAL_URL;
 
   if (!code && !accessToken) {
     // Dieses Supabase-Projekt liefert die Tokens als URL-Fragment
@@ -19,17 +20,33 @@ export async function GET(request: NextRequest) {
     // Request ab) - diese kleine Bridge liest das Fragment im Browser aus
     // und stellt sich selbst mit den Werten als Query-Parameter erneut an,
     // damit der Handler unten sie server-seitig verarbeiten kann.
+    // Erst nach Klick einlösen: Link-Scanner (z. B. Defender Safe Links) rendern
+    // Mail-Links samt JS vorab und würden den Einmal-Token sonst verbrauchen.
     return new NextResponse(
-      `<!doctype html><html><body><script>
-        var h = new URLSearchParams(location.hash.slice(1));
-        var qs = new URLSearchParams();
-        ["access_token", "refresh_token", "type"].forEach(function (k) {
-          if (h.get(k)) qs.set(k, h.get(k));
-        });
-        if (qs.has("access_token")) {
-          location.replace(location.pathname + "?" + qs.toString());
-        } else {
-          location.replace("/login?error=missing_code");
+      `<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+        body { font-family: system-ui, sans-serif; display: flex; min-height: 100vh;
+          align-items: center; justify-content: center; margin: 0; background: #09090F; }
+        button { font-size: 1rem; font-weight: 600; padding: 0.9rem 2rem; border-radius: 0.75rem;
+          border: none; background: #4F7FFF; color: #fff; cursor: pointer; }
+        button:disabled { opacity: 0.5; cursor: default; }
+      </style></head><body>
+      <button id="go" onclick="proceed()">Weiter zum Portal</button>
+      <script>
+        function proceed() {
+          var btn = document.getElementById("go");
+          btn.disabled = true;
+          btn.textContent = "Wird geladen …";
+          var h = new URLSearchParams(location.hash.slice(1));
+          var qs = new URLSearchParams();
+          ["access_token", "refresh_token", "type"].forEach(function (k) {
+            if (h.get(k)) qs.set(k, h.get(k));
+          });
+          if (qs.has("access_token")) {
+            location.replace(location.pathname + "?" + qs.toString());
+          } else {
+            location.replace("/login?error=missing_code");
+          }
         }
       </script></body></html>`,
       { headers: { "content-type": "text/html; charset=utf-8" } }
