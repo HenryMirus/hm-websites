@@ -30,7 +30,7 @@ function MockupWebsite() {
         <span className="w-2 h-2 rounded-full bg-[#FF4D6A]/60" />
         <span className="w-2 h-2 rounded-full bg-[#F59E0B]/40" />
         <span className="w-2 h-2 rounded-full bg-[#10B981]/40" />
-        <span className="text-[#5A5A7A] ml-2 flex-1 text-center">hm-sanitaer.de</span>
+        <span className="text-[#7C7CA0] ml-2 flex-1 text-center">hm-sanitaer.de</span>
       </div>
       <div className="p-4 space-y-3">
         <div className="flex justify-between items-center">
@@ -144,8 +144,8 @@ function MockupCommunication({ lang }: { lang: Lang }) {
               <div className="flex justify-between">
                 <span className="text-[#EEEEFF] font-sans font-medium text-[10px]">{row.name}</span>
               </div>
-              <div className="text-[#5A5A7A] truncate">{row.subject}</div>
-              <div className={`text-[9px] mt-0.5 ${row.active ? "text-[#10B981]" : "text-[#5A5A7A]"}`}>{row.status}</div>
+              <div className="text-[#7C7CA0] truncate">{row.subject}</div>
+              <div className={`text-[9px] mt-0.5 ${row.active ? "text-[#10B981]" : "text-[#7C7CA0]"}`}>{row.status}</div>
             </div>
           </div>
         </div>
@@ -218,7 +218,7 @@ function MockupProject({ lang }: { lang: Lang }) {
           {lang === "de" ? "Badezimmer-Renovierung" : "Bathroom Renovation"}
         </div>
         <div>
-          <div className="flex justify-between text-[9px] text-[#5A5A7A] mb-1">
+          <div className="flex justify-between text-[9px] text-[#7C7CA0] mb-1">
             <span>{lang === "de" ? "Fortschritt" : "Progress"}</span>
             <span className="text-[#8B5CF6]">75%</span>
           </div>
@@ -235,14 +235,14 @@ function MockupProject({ lang }: { lang: Lang }) {
                 ? "border-[#8B5CF6]/50 bg-[#8B5CF6]/15"
                 : "border-[#1E1E2E] bg-transparent"
             }`}>
-              <span className={`text-[10px] ${i < doneCount ? "text-[#8B5CF6]" : i === doneCount ? "text-[#8B5CF6]" : "text-[#5A5A7A]"}`}>
+              <span className={`text-[10px] ${i < doneCount ? "text-[#8B5CF6]" : i === doneCount ? "text-[#8B5CF6]" : "text-[#7C7CA0]"}`}>
                 {i < doneCount ? "✓" : i === doneCount ? "◉" : "○"}
               </span>
-              <span className={`font-sans text-[9px] ${i <= doneCount ? "text-[#EEEEFF]" : "text-[#5A5A7A]"}`}>{step}</span>
+              <span className={`font-sans text-[9px] ${i <= doneCount ? "text-[#EEEEFF]" : "text-[#7C7CA0]"}`}>{step}</span>
             </div>
           ))}
         </div>
-        <div className="text-[#5A5A7A] text-[9px]">
+        <div className="text-[#7C7CA0] text-[9px]">
           {lang === "de" ? "Nächster Schritt: Freitag, 14:00" : "Next step: Friday, 2pm"}
         </div>
       </div>
@@ -281,11 +281,11 @@ function MockupRecurrence({ lang }: { lang: Lang }) {
           <div key={i} className={`flex items-center gap-2.5 rounded-lg border px-2.5 py-2 ${
             s.live ? "border-[#06B6D4]/40 bg-[#06B6D4]/8" : "border-[#1E1E2E]"
           }`}>
-            <span className={`text-[11px] ${s.done ? "text-[#10B981]" : s.live ? "text-[#06B6D4]" : "text-[#5A5A7A]"}`}>
+            <span className={`text-[11px] ${s.done ? "text-[#10B981]" : s.live ? "text-[#06B6D4]" : "text-[#7C7CA0]"}`}>
               {s.done ? "✓" : s.live ? "◉" : "○"}
             </span>
-            <span className="text-[#5A5A7A] w-10 shrink-0 text-[9px]">{s.day}</span>
-            <span className={`font-sans text-[10px] flex-1 ${s.live ? "text-[#06B6D4]" : s.done ? "text-[#EEEEFF]" : "text-[#5A5A7A]"}`}>
+            <span className="text-[#7C7CA0] w-10 shrink-0 text-[9px]">{s.day}</span>
+            <span className={`font-sans text-[10px] flex-1 ${s.live ? "text-[#06B6D4]" : s.done ? "text-[#EEEEFF]" : "text-[#7C7CA0]"}`}>
               {s.label}
             </span>
             {s.live && (
@@ -295,7 +295,7 @@ function MockupRecurrence({ lang }: { lang: Lang }) {
             )}
           </div>
         ))}
-        <div className="text-[#5A5A7A] text-[9px] pt-1">
+        <div className="text-[#7C7CA0] text-[9px] pt-1">
           12 {lang === "de" ? "aktive Sequenzen · vollautomatisch" : "active sequences · fully automated"}
         </div>
       </div>

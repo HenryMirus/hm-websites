@@ -40,4 +40,5 @@ Buchholz (Westerwald), Rheinland-Pfalz, Germany — serving the
 Cologne/Bonn–Koblenz region on site and all of DACH remotely.
 
 ## Contact
-https://hm-labs.tech/kontakt
+https://hm-labs.tech/#contact
+info@hm-labs.tech

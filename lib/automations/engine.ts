@@ -26,7 +26,12 @@ export async function dispatchEvent(
   for (const automation of automations) {
     await runAutomation(automation, ctx);
   }
-  const hasEmailAutomation = configured.some((a) => a.steps?.some((s) => s.type === "send_email"));
+  // Nur eine Automation, die an dieselbe Seite schreibt, ersetzt die
+  // Standard-Mail: eine reine Admin-Meldung darf die Kunden-Mail nicht schlucken.
+  const expected = event === "message.created" && facts.sender_role === "client" ? "admins" : "client";
+  const hasEmailAutomation = configured.some((a) =>
+    a.steps?.some((s) => s.type === "send_email" && (s.config?.recipient || "client") === expected)
+  );
   if (!hasEmailAutomation) {
     await sendDefaultPortalNotification(event, facts, ctx, createAdminClient());
   }

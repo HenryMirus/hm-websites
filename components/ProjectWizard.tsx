@@ -136,6 +136,16 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
 
   const l = (obj: I18n) => obj[lang];
 
+  // Escape schließt den Dialog (Tastatur- und Screenreader-Nutzung).
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
   // Reset everything when the modal opens
   useEffect(() => {
     if (open) {
@@ -345,6 +355,9 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
             exit={{ scale: 0.96, opacity: 0, y: 8 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
             className="relative w-full max-w-lg bg-surface border border-border rounded-3xl overflow-hidden shadow-2xl shadow-black/60"
+            role="dialog"
+            aria-modal="true"
+            aria-label={lang === "de" ? "Projektanfrage" : "Project inquiry"}
           >
             {/* Progress bar */}
             <div className="h-0.5 bg-border relative">
@@ -391,7 +404,7 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
                 <button
                   onClick={onClose}
                   className="w-7 h-7 rounded-lg flex items-center justify-center text-text-muted hover:text-text-dim hover:bg-bg transition-colors"
-                  aria-label="Close"
+                  aria-label={lang === "de" ? "Schließen" : "Close"}
                 >
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -534,6 +547,10 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
                           <input
                             ref={firstInputRef}
                             type="text"
+                            autoComplete="name"
+                            aria-label={l(t.wizard.ui.namePlaceholder)}
+                            aria-invalid={!!errors.name}
+                            aria-describedby={errors.name ? "wizard-name-error" : undefined}
                             placeholder={l(t.wizard.ui.namePlaceholder)}
                             value={contact.name}
                             onChange={(e) => setContact((c) => ({ ...c, name: e.target.value }))}
@@ -541,11 +558,15 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
                               errors.name ? "border-accent" : "border-border"
                             }`}
                           />
-                          {errors.name && <p className="text-accent text-[11px] mt-1">{errors.name}</p>}
+                          {errors.name && <p id="wizard-name-error" className="text-accent text-[11px] mt-1">{errors.name}</p>}
                         </div>
                         <div>
                           <input
                             type="email"
+                            autoComplete="email"
+                            aria-label={l(t.wizard.ui.emailPlaceholder)}
+                            aria-invalid={!!errors.email}
+                            aria-describedby={errors.email ? "wizard-email-error" : undefined}
                             placeholder={l(t.wizard.ui.emailPlaceholder)}
                             value={contact.email}
                             onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
@@ -553,13 +574,15 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
                               errors.email ? "border-accent" : "border-border"
                             }`}
                           />
-                          {errors.email && <p className="text-accent text-[11px] mt-1">{errors.email}</p>}
+                          {errors.email && <p id="wizard-email-error" className="text-accent text-[11px] mt-1">{errors.email}</p>}
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <input
                           type="text"
+                          autoComplete="organization"
+                          aria-label={l(t.wizard.ui.companyPlaceholder)}
                           placeholder={l(t.wizard.ui.companyPlaceholder)}
                           value={contact.company}
                           onChange={(e) => setContact((c) => ({ ...c, company: e.target.value }))}
@@ -567,6 +590,8 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
                         />
                         <input
                           type="tel"
+                          autoComplete="tel"
+                          aria-label={l(t.wizard.ui.phonePlaceholder)}
                           placeholder={l(t.wizard.ui.phonePlaceholder)}
                           value={contact.phone}
                           onChange={(e) => setContact((c) => ({ ...c, phone: e.target.value }))}
@@ -576,6 +601,7 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
 
                       <textarea
                         rows={3}
+                        aria-label={l(t.wizard.ui.messagePlaceholder)}
                         placeholder={l(t.wizard.ui.messagePlaceholder)}
                         value={contact.message}
                         onChange={(e) => setContact((c) => ({ ...c, message: e.target.value }))}

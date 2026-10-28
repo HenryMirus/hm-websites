@@ -1,11 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { EMAIL } from "@/lib/config/email";
+import { SITE_URL, MAIN_DOMAIN } from "@/lib/config/site";
 
 export const metadata: Metadata = {
   title: "Impressum | HM Labs",
   description: "Impressum und Anbieterkennzeichnung von HM Labs.",
   robots: { index: false, follow: false },
+  alternates: { canonical: "/impressum" },
 };
 
 export default function ImpressumPage() {
@@ -25,7 +27,7 @@ export default function ImpressumPage() {
           </Link>
           <Link
             href="/"
-            className="flex items-center gap-2 text-[#5A5A7A] text-sm hover:text-[#EEEEFF] transition-colors"
+            className="flex items-center gap-2 text-[#7C7CA0] text-sm hover:text-[#EEEEFF] transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -36,11 +38,11 @@ export default function ImpressumPage() {
       </header>
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-6 py-16">
+      <main id="main" className="max-w-4xl mx-auto px-6 py-16">
         <div className="mb-12">
           <p className="text-[#4F7FFF] font-mono text-xs tracking-widest uppercase mb-3">// Legal</p>
           <h1 className="text-3xl md:text-4xl font-bold text-[#EEEEFF] mb-4">Impressum</h1>
-          <p className="text-[#5A5A7A] text-sm">
+          <p className="text-[#7C7CA0] text-sm">
             Angaben gemäß § 5 DDG
           </p>
         </div>
@@ -51,25 +53,25 @@ export default function ImpressumPage() {
             <p>HM Labs, Inhaber: Henry Mirus</p>
             <p className="mt-1">Pantaleonstraße 20</p>
             <p>53567 Buchholz (Westerwald)</p>
-            <p className="text-[#5A5A7A] text-sm mt-1">
+            <p className="text-[#7C7CA0] text-sm mt-1">
               (Einzelunternehmen)
             </p>
           </Section>
 
           <Section title="Kontakt">
             <InfoRow label="E-Mail" value={<a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>} />
-            <InfoRow label="Website" value={<a href="https://hm-labs.tech" className="text-[#4F7FFF] hover:underline">hm-labs.tech</a>} />
+            <InfoRow label="Website" value={<a href={SITE_URL} className="text-[#4F7FFF] hover:underline">{MAIN_DOMAIN}</a>} />
           </Section>
 
           <Section title="Umsatzsteuer-Identifikationsnummer">
-            <p className="text-[#5A5A7A] text-sm">
+            <p className="text-[#7C7CA0] text-sm">
               Eine Umsatzsteuer-Identifikationsnummer liegt gemäß § 19 UStG derzeit nicht vor (Kleinunternehmerregelung).
             </p>
           </Section>
 
           <Section title="Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV">
             <p>Henry Mirus</p>
-            <p className="text-[#5A5A7A] text-sm mt-1">
+            <p className="text-[#7C7CA0] text-sm mt-1">
               (Anschrift wie oben)
             </p>
           </Section>
@@ -107,17 +109,7 @@ export default function ImpressumPage() {
 
           <Section title="Streitschlichtung">
             <p className="text-sm text-[#EEEEFF]/70 leading-relaxed">
-              Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
-              <a
-                href="https://ec.europa.eu/consumers/odr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#4F7FFF] hover:underline"
-              >
-                https://ec.europa.eu/consumers/odr
-              </a>
-              . Unsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind nicht bereit oder verpflichtet,
-              an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+              Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
             </p>
           </Section>
 
@@ -125,12 +117,12 @@ export default function ImpressumPage() {
 
         {/* Footer */}
         <div className="mt-16 pt-8 border-t border-[#1E1E2E] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="font-mono text-xs text-[#5A5A7A]">
+          <span className="font-mono text-xs text-[#7C7CA0]">
             © {new Date().getFullYear()} HM Labs · Alle Rechte vorbehalten.
           </span>
           <div className="flex gap-6">
             <Link href="/impressum" className="text-xs text-[#4F7FFF]">Impressum</Link>
-            <Link href="/datenschutz" className="text-xs text-[#5A5A7A] hover:text-[#EEEEFF] transition-colors">Datenschutz</Link>
+            <Link href="/datenschutz" className="text-xs text-[#7C7CA0] hover:text-[#EEEEFF] transition-colors">Datenschutz</Link>
           </div>
         </div>
       </main>
@@ -150,7 +142,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex gap-4 text-sm">
-      <span className="text-[#5A5A7A] w-32 shrink-0">{label}</span>
+      <span className="text-[#7C7CA0] w-32 shrink-0">{label}</span>
       <span>{value}</span>
     </div>
   );

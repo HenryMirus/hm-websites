@@ -241,7 +241,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                 onClick={() => handleConvert(selected.id)}
               />
               <a
-                href={`mailto:${selected.email}?subject=Re: Ihr Projekt bei HM Labs`}
+                href={`mailto:${encodeURIComponent(selected.email)}?subject=${encodeURIComponent("Re: Ihr Projekt bei HM Labs")}`}
                 className="ml-auto inline-flex items-center gap-1.5 bg-primary-dark hover:bg-primary-dark/90 text-white font-medium text-sm px-4 py-2 rounded-xl transition-colors"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -284,7 +284,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                 </div>
                 <div>
                   <h2 className="font-display font-bold text-xl text-text-primary">{selected.name}</h2>
-                  <a href={`mailto:${selected.email}`} className="text-primary text-sm hover:underline">
+                  <a href={`mailto:${encodeURIComponent(selected.email)}`} className="text-primary text-sm hover:underline">
                     {selected.email}
                   </a>
                   {selected.phone && (

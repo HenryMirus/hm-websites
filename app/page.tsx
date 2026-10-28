@@ -48,7 +48,7 @@ export default function Home() {
       {/* Gesamter Content z-[1] — sitzt über dem Canvas */}
       <div className="relative z-[1]">
         <Navigation lang={lang} setLang={setLang} onOpenWizard={openWizard} />
-        <main>
+        <main id="main">
           <HeroSection lang={lang} onOpenWizard={openWizard} />
           <ServicesSection lang={lang} />
           <TrustBar lang={lang} />

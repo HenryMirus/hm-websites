@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { writeFile, mkdir, readFile } from "fs/promises";
+import { existsSync } from "fs";
 import path from "path";
 import { EMAIL } from "@/lib/config/email";
 
@@ -62,8 +63,13 @@ export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions
   }
 
   const transporter = createTransport();
-  const attachments = html.includes(`cid:${LOGO_CID}`)
-    ? [{ filename: "hm-labs-logo.png", path: LOGO_PATH, cid: LOGO_CID }]
-    : undefined;
+  // Fehlt das Logo im Deployment, lieber ohne Logo senden als gar nicht.
+  const attachments =
+    html.includes(`cid:${LOGO_CID}`) && existsSync(LOGO_PATH)
+      ? [{ filename: "hm-labs-logo.png", path: LOGO_PATH, cid: LOGO_CID }]
+      : undefined;
+  if (html.includes(`cid:${LOGO_CID}`) && !attachments) {
+    console.warn(`[Email] Logo fehlt (${LOGO_PATH}), Mail geht ohne Logo raus.`);
+  }
   await transporter.sendMail({ from: FROM, to, subject, html, replyTo, attachments });
 }

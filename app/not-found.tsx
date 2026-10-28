@@ -38,6 +38,10 @@ function useGlitch(text: string, active: boolean) {
 
 export default function NotFound() {
   const [glitching, setGlitching] = useState(false);
+  // Erst nach dem Mounten lesen: im Render führte window.location zu einem
+  // Hydration-Mismatch (Server kennt den Pfad nicht).
+  const [path, setPath] = useState("/...");
+  useEffect(() => setPath(window.location.pathname), []);
   const heading = useGlitch("Seite nicht gefunden", glitching);
 
   useEffect(() => {
@@ -119,7 +123,7 @@ export default function NotFound() {
             <p>
               <span className="text-primary">→</span>{" "}
               <span className="text-text-dim">GET</span>{" "}
-              <span className="text-text-primary">{typeof window !== "undefined" ? window.location.pathname : "/..."}</span>
+              <span className="text-text-primary">{path}</span>
             </p>
             <p>
               <span className="text-accent">✗</span>{" "}

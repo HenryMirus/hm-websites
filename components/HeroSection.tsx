@@ -77,7 +77,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
       >
         <picture className="absolute inset-0">
           <source srcSet="/hero-bg.webp" type="image/webp" />
-          <img src="/hero-bg.jpg" alt="" aria-hidden className="w-full h-full object-cover object-center" />
+          <img src="/hero-bg.webp" alt="" aria-hidden className="w-full h-full object-cover object-center" />
         </picture>
         {/* Left gradient fade — blends image into page bg */}
         <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/60 to-transparent" />

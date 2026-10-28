@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { requestPasswordReset } from "./_actions";
+import { EMAIL } from "@/lib/config/email";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -23,8 +24,12 @@ export default function LoginPage() {
     if (params.get("registered") === "1") {
       setSuccessMsg("Konto erfolgreich eingerichtet. Sie können sich jetzt einloggen.");
     }
-    if (params.get("error") === "exchange_failed") {
-      setError("Der Reset-Link ist abgelaufen oder wurde bereits verwendet. Bitte fordere einen neuen an.");
+    const err = params.get("error");
+    if (err === "exchange_failed" || err === "link_expired") {
+      setError("Der Link ist abgelaufen oder wurde bereits verwendet. Bitte fordern Sie einen neuen an.");
+      setForgotMode(true);
+    } else if (err === "missing_code") {
+      setError("Der Link ist unvollständig. Bitte öffnen Sie ihn direkt aus der E-Mail oder fordern Sie einen neuen an.");
       setForgotMode(true);
     }
   }, []);
@@ -90,10 +95,11 @@ export default function LoginPage() {
                   <path d="M3 10l4 4 10-10" stroke="#4F7FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h2 className="font-display font-bold text-xl text-text-primary mb-2">E-Mail gesendet!</h2>
+              <h2 className="font-display font-bold text-xl text-text-primary mb-2">Bitte Postfach prüfen</h2>
               <p className="text-text-dim text-sm">
-                Klicken Sie auf den Link in Ihrer E-Mail an{" "}
-                <span className="text-primary">{email}</span>, um ein neues Passwort zu setzen.
+                Falls zu <span className="text-primary">{email}</span> ein Portal-Zugang besteht, ist ein
+                Link zum Zurücksetzen unterwegs. Kommt nichts an, schreiben Sie mir an{" "}
+                <a href={`mailto:${EMAIL.CONTACT}`} className="text-primary hover:underline">{EMAIL.CONTACT}</a>.
               </p>
               <button
                 onClick={() => { setSent(false); setForgotMode(false); }}
@@ -108,7 +114,7 @@ export default function LoginPage() {
                 Passwort zurücksetzen
               </h1>
               <p className="text-text-dim text-sm mb-6">
-                Geben Sie Ihre E-Mail ein — wir schicken Ihnen einen Reset-Link.
+                Geben Sie Ihre E-Mail-Adresse ein, ich schicke Ihnen einen Link zum Zurücksetzen.
               </p>
               <form onSubmit={handleForgot} className="space-y-4">
                 <input

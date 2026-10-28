@@ -73,7 +73,7 @@
                       <tr>
                         <td style="border-radius:10px;background-color:#4F7FFF;">
                           <a
-                            href="{{ .ConfirmationURL }}"
+                            href="https://clients.hm-labs.tech/auth/callback?token_hash={{ .TokenHash }}&amp;type=email_change"
                             target="_blank"
                             style="display:inline-block;padding:14px 32px;font-size:15px;font-weight:600;color:#FFFFFF;text-decoration:none;letter-spacing:0.1px;border-radius:10px;"
                           >
@@ -93,7 +93,7 @@
                       Funktioniert der Button nicht? Kopieren Sie diesen Link:
                     </p>
                     <p style="margin:6px 0 0;font-size:11px;color:#4F7FFF;word-break:break-all;font-family:'Courier New',Courier,monospace;">
-                      {{ .ConfirmationURL }}
+                      https://clients.hm-labs.tech/auth/callback?token_hash={{ .TokenHash }}&amp;type=email_change
                     </p>
                   </td>
                 </tr>

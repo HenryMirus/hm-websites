@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import MotionProvider from "@/components/MotionProvider";
 import CookieBanner from "@/components/CookieBanner";
 import TrackingScripts from "@/components/TrackingScripts";
 import { ConsentProvider } from "@/lib/consent";
@@ -7,11 +9,17 @@ import { EMAIL } from "@/lib/config/email";
 
 import { SITE_URL } from "@/lib/config/site";
 
+// Schriften werden beim Build heruntergeladen und von hm-labs.tech selbst
+// ausgeliefert: kein Aufruf von fonts.googleapis.com beim Besucher.
+const fontDisplay = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-display", display: "swap" });
+const fontBody = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-body", display: "swap" });
+const fontMono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "HM Labs | KI-Integration & Websites für KMU in Deutschland",
   description:
-    "Mehr Kunden, weniger Aufwand, durch KI die nie schläft. Individuelle Websites, self-hosted KI-Chatbots und Automatisierungen für KMU. Transparente Preisspannen. DSGVO-konform.",
+    "Mehr Kunden, weniger Aufwand, durch KI, die nie schläft. Individuelle Websites, self-hosted KI-Chatbots und Automatisierungen für KMU. Transparente Preisspannen. DSGVO-konform.",
   keywords: [
     "KI Integration KMU",
     "KI Chatbot",
@@ -22,12 +30,11 @@ export const metadata: Metadata = {
     "KI Beratung",
     "Web App Entwicklung",
   ],
+  // Kein hreflang: Englisch gibt es nur clientseitig unter derselben URL, ein
+  // Sprachpaar ohne eigene, serverseitig englische URL ignoriert Google.
+  // Unterseiten setzen ihre eigene Canonical.
   alternates: {
-    canonical: SITE_URL,
-    languages: {
-      "de-DE": SITE_URL,
-      "en-US": `${SITE_URL}?lang=en`,
-    },
+    canonical: "/",
   },
   openGraph: {
     type: "website",
@@ -217,7 +224,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="de" className="scroll-smooth">
+    <html lang="de" className={`scroll-smooth ${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -225,8 +232,14 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary-dark focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        >
+          Zum Inhalt springen
+        </a>
         <ConsentProvider>
-          {children}
+          <MotionProvider>{children}</MotionProvider>
           <CookieBanner />
           <TrackingScripts />
         </ConsentProvider>

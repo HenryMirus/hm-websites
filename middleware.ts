@@ -20,20 +20,27 @@ export async function middleware(request: NextRequest) {
     hostname === MAIN_DOMAIN || hostname === `www.${MAIN_DOMAIN}`;
   const pathname = request.nextUrl.pathname;
 
-  // Hauptdomain + /portal/* → redirect zur Portal-Subdomain
-  if (isMainDomain && pathname.startsWith("/portal")) {
-    const subPath = pathname.replace("/portal", "") || "/";
-    return NextResponse.redirect(`${PORTAL_BASE}${subPath}`);
+  // x-pathname setzt ausschließlich diese Middleware (unten). Ein vom Client
+  // mitgeschickter Wert darf nie beim Layout ankommen.
+  const cleanHeaders = new Headers(request.headers);
+  cleanHeaders.delete("x-pathname");
+
+  // Hauptdomain + /portal/* → redirect zur Portal-Subdomain. Nur echte
+  // Pfadsegmente: "/portal@evil.com" ergäbe sonst clients.hm-labs.tech@evil.com.
+  if (isMainDomain && (pathname === "/portal" || pathname.startsWith("/portal/"))) {
+    const subPath = pathname.slice("/portal".length) || "/";
+    const target = new URL(subPath + request.nextUrl.search, PORTAL_BASE);
+    return NextResponse.redirect(target);
   }
 
   // Keine Portal-Subdomain → durchlassen (inkl. /api/v1/*)
   if (!isPortalSubdomain) {
-    return NextResponse.next({ request });
+    return NextResponse.next({ request: { headers: cleanHeaders } });
   }
 
   // API-Routen auf der Subdomain → durchlassen (eigene Auth via API-Key)
   if (pathname.startsWith("/api/")) {
-    return NextResponse.next({ request });
+    return NextResponse.next({ request: { headers: cleanHeaders } });
   }
 
   const prefix = "/portal";
@@ -89,7 +96,7 @@ export async function middleware(request: NextRequest) {
   // URL intern auf <prefix>/... umschreiben.
   // x-pathname forwarden damit das Layout den Original-Pfad für den
   // server-seitigen Auth-Check lesen kann (headers() in layout.tsx).
-  const requestHeaders = new Headers(request.headers);
+  const requestHeaders = cleanHeaders;
   requestHeaders.set("x-pathname", pathname);
 
   const rewriteUrl = request.nextUrl.clone();
@@ -97,8 +104,10 @@ export async function middleware(request: NextRequest) {
   const rewriteResponse = NextResponse.rewrite(rewriteUrl, {
     request: { headers: requestHeaders },
   });
-  supabaseResponse.cookies.getAll().forEach(({ name, value }) => {
-    rewriteResponse.cookies.set(name, value);
+  // Ganze Cookie-Objekte übernehmen: nur name/value verlöre maxAge, sameSite
+  // und secure, erneuerte Sessions würden zu Sitzungs-Cookies.
+  supabaseResponse.cookies.getAll().forEach((cookie) => {
+    rewriteResponse.cookies.set(cookie);
   });
   return rewriteResponse;
 }
