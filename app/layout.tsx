@@ -71,9 +71,15 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
     },
   },
+  // Google zeigt in den Suchergebnissen nur Favicons mit Seitenlänge als
+  // Vielfaches von 48 px; /favicon.ico ist der Fallback, den Crawler abfragen.
   icons: {
-    icon: "/hm-labs-logo-v3.png",
-    apple: "/hm-labs-logo-v3.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
   },
 };
 
