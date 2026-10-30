@@ -6,11 +6,11 @@ import { loadSystemTemplate } from "./systemTemplates";
 import { getAdminRecipients } from "./recipients";
 
 /**
- * Standard-Benachrichtigung, wenn für ein Portal-Ereignis keine Automation
- * angelegt ist. So geht bei neuer Nachricht oder erreichtem Meilenstein immer
- * eine Mail raus, auch wenn unter Automationen nichts eingerichtet wurde. Wer
- * das Verhalten ändern will, legt dort eine Automation für das Ereignis an
- * (aktiv oder pausiert) — dann übernimmt sie, und dieser Pfad schweigt.
+ * Standard-Benachrichtigung, wenn für ein Portal-Ereignis keine aktive
+ * Automation mailt. So geht bei neuer Nachricht oder erreichtem Meilenstein
+ * immer eine Mail raus. Nutzt dieselben Vorlagen wie die System-Automationen
+ * (im Portal unter Automationen → Vorlagen bearbeitbar); wird eine davon
+ * aktiviert, übernimmt sie, und dieser Pfad schweigt.
  *
  * Wirft nie: die auslösende Aktion ist zu diesem Zeitpunkt schon gespeichert.
  */
@@ -24,13 +24,13 @@ export async function sendDefaultPortalNotification(
   let to: string[];
 
   if (event === "message.created" && facts.sender_role === "admin") {
-    key = "notify_new_message_client";
+    key = "new_message_client";
     to = await clientRecipient(ctx, admin);
   } else if (event === "message.created" && facts.sender_role === "client") {
-    key = "notify_new_message_admin";
+    key = "new_message_admin";
     to = await getAdminRecipients(admin);
   } else if (event === "milestone.completed") {
-    key = "notify_milestone_reached";
+    key = "milestone_reached";
     to = await clientRecipient(ctx, admin);
   } else {
     return;

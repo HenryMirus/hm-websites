@@ -32,6 +32,8 @@ const ContentSecurityPolicy = `
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Für das Docker-Image auf dem VPS (Dockerfile → node server.js).
+  output: "standalone",
   poweredByHeader: false,
   async headers() {
     return [

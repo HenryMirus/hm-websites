@@ -1,11 +1,10 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { EmailTemplateRow } from "./templates";
 
-// Fallbacks für die System-Mails, falls die Zeilen in `email_templates` (noch)
-// fehlen. Inhaltlich identisch mit den Migrationen
-// db/migrations/2026-10-28_contact_email_templates.sql und
-// db/migrations/2026-10-28_portal_notification_templates.sql — im Portal unter
-// Automationen → Vorlagen bearbeitete Fassungen haben Vorrang.
+// Fallbacks für die System-Mails, falls die Zeilen in `email_templates` fehlen.
+// Die Portal-Vorlagen (new_message_*, milestone_reached) gibt es in der DB
+// schon, die Anfrage-Vorlagen legt db/migrations/2026-10-28_contact_email_templates.sql
+// an. Im Portal unter Automationen → Vorlagen bearbeitete Fassungen haben Vorrang.
 const P = `margin:0 0 20px;font-size:15px;color:#8888AA;line-height:1.7;`;
 const ROW = `padding:6px 0;font-size:13px;line-height:1.6;vertical-align:top;`;
 const quote = (border: string) =>
@@ -68,8 +67,8 @@ export const SYSTEM_TEMPLATE_DEFAULTS: Record<string, EmailTemplateRow> = {
     cta_href: "{{site_url}}/leistungen",
     note_text: null,
   },
-  notify_new_message_client: {
-    key: "notify_new_message_client",
+  new_message_client: {
+    key: "new_message_client",
     name: "Neue Nachricht → Kunde",
     subject: "Neue Nachricht von HM Labs",
     heading: "Neue Nachricht von HM Labs",
@@ -83,8 +82,8 @@ export const SYSTEM_TEMPLATE_DEFAULTS: Record<string, EmailTemplateRow> = {
     cta_href: "{{portal_url}}/messages",
     note_text: "Bitte antworten Sie im Portal, nicht auf diese E-Mail, damit alles an einem Ort bleibt.",
   },
-  notify_new_message_admin: {
-    key: "notify_new_message_admin",
+  new_message_admin: {
+    key: "new_message_admin",
     name: "Neue Nachricht → Admins",
     subject: "Neue Nachricht von {{client_name}}",
     heading: "Nachricht von {{client_name}}",
@@ -98,8 +97,8 @@ export const SYSTEM_TEMPLATE_DEFAULTS: Record<string, EmailTemplateRow> = {
     cta_href: "{{portal_url}}/messages/{{client_id}}",
     note_text: null,
   },
-  notify_milestone_reached: {
-    key: "notify_milestone_reached",
+  milestone_reached: {
+    key: "milestone_reached",
     name: "Meilenstein erreicht → Kunde",
     subject: "Meilenstein erreicht: {{milestone_name}}",
     heading: "Meilenstein erreicht",

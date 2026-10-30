@@ -2,8 +2,8 @@
 
 Marketing website + client portal/CRM for **HM Labs** (KI-Integration & Softwareentwicklung), built with Next.js 14 (App Router), Supabase, and Tailwind CSS. Bilingual (DE/EN) public site, plus a private client portal served from a subdomain.
 
-- **Public site:** `hm-labs.de` — single-page marketing site with a lead-capture wizard
-- **Client portal:** `clients.hm-labs.de` — login-gated CRM/project-management dashboard for admins and clients, served from the same Next.js app via host-based middleware routing
+- **Public site:** `hm-labs.tech` — single-page marketing site with a lead-capture wizard
+- **Client portal:** `clients.hm-labs.tech` — login-gated CRM/project-management dashboard for admins and clients, served from the same Next.js app via host-based middleware routing
 
 ---
 
@@ -38,7 +38,7 @@ app/
     v1/clients/[id]/route.ts   # External REST API — get/update a client
     webhooks/new-message/route.ts          # Supabase DB webhook → email notification
     webhooks/milestone-completed/route.ts  # Supabase DB webhook → email notification
-  portal/                      # Everything under clients.hm-labs.de
+  portal/                      # Everything under clients.hm-labs.tech
     layout.tsx                 # Auth gate (reads x-pathname header set by middleware)
     page.tsx                   # Role-based redirect (admin → /leads, client → /projects)
     login/, auth/callback/, auth/update-password/, password/
@@ -89,7 +89,7 @@ Notable pieces:
 
 ---
 
-## 4. Client Portal / CRM (`app/portal/**`, served on `clients.hm-labs.de`)
+## 4. Client Portal / CRM (`app/portal/**`, served on `clients.hm-labs.tech`)
 
 A role-based dashboard with two roles, sourced from `profiles.role`:
 
@@ -99,9 +99,9 @@ A role-based dashboard with two roles, sourced from `profiles.role`:
 ### Routing & auth (`middleware.ts` + `app/portal/layout.tsx`)
 The same Next.js deployment serves both domains:
 1. `middleware.ts` inspects the `Host` header.
-   - Main domain (`hm-labs.de`) hitting `/portal/*` → **redirected** to the portal subdomain.
+   - Main domain (`hm-labs.tech`) hitting `/portal/*` → **redirected** to the portal subdomain.
    - Non-portal hosts → passed through untouched (this is how the public site and `/api/v1/*` stay reachable on the main domain).
-   - Portal subdomain (`clients.hm-labs.de`, or `clients.localhost` in dev) → paths are **rewritten** onto `/portal/...` internally (so `clients.hm-labs.de/projects` serves `app/portal/projects/page.tsx`), after a Supabase session check. Unauthenticated requests to non-public paths are redirected to `/login`.
+   - Portal subdomain (`clients.hm-labs.tech`, or `clients.localhost` in dev) → paths are **rewritten** onto `/portal/...` internally (so `clients.hm-labs.tech/projects` serves `app/portal/projects/page.tsx`), after a Supabase session check. Unauthenticated requests to non-public paths are redirected to `/login`.
    - `/api/*` paths are always passed through, even on the portal subdomain (they use their own Bearer-token auth, not cookies).
 2. `app/portal/layout.tsx` re-checks auth server-side using the `x-pathname` header the middleware forwards, as a defense-in-depth layer for the small set of public paths (`/login`, `/auth/*`, `/password`).
 3. `lib/auth/getRole.ts` exposes `getUserRole()`, `requireAuth()`, `requireAdmin()` — used throughout Server Actions and pages to gate admin-only mutations (client/project CRUD, admin invites, API keys).
@@ -188,7 +188,7 @@ Several tables carry comments referencing an external multi-agent workflow (issu
 | `NEXT_PUBLIC_SUPABASE_URL` | client/server/admin Supabase clients, middleware | |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | browser + SSR (RLS-enforced) client, middleware | |
 | `SUPABASE_SERVICE_ROLE_KEY` | `lib/supabase/admin.ts` (server-only, bypasses RLS) | **never expose to client** |
-| `NEXT_PUBLIC_PORTAL_URL` | links inside emails/invites, default `https://clients.hm-labs.de` | |
+| `NEXT_PUBLIC_PORTAL_URL` | links inside emails/invites, default `https://clients.hm-labs.tech` | |
 | `NEXT_PUBLIC_EMAIL_CONTACT` | `lib/config/email.ts` — single source for displayed contact address | |
 | `EMAIL_FROM`, `EMAIL_INBOX`, `NEXT_PUBLIC_EMAIL_SUPPORT` | optional overrides in `lib/config/email.ts` | |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | `lib/email/send.ts` transactional email | falls back to dev-preview mode if unset |
