@@ -15,7 +15,7 @@
 - **Project type:** Redesign des Contents auf bestehender Website (Single-Page-App + Rechtsseiten)
 - **Live URL:** hm-labs.tech, Portal clients.hm-labs.tech (eine Quelle: `lib/config/site.ts`; hm-labs.de existiert nicht)
 - **GitHub repo:** HenryMirus/hm-websites
-- **Deployment path:** Hostinger-VPS, nginx vor Docker-Container (`hm-agent-os/deploy/docker-compose.yml`, Dienst `website`), gebaut aus dem Git-Checkout. Kundenprojekte-Seiten liegen bis zur Freigabe nur auf Branch `preview/kundenprojekte`.
+- **Deployment path:** Hostinger-VPS, nginx vor zwei Containern `hm-website`/`hm-portal` (`APP_ROLE`), `/opt/hm-labs/docker-compose.yml` + `.env`. Server-Checkout auf Branch `vps/server-setup`, Update per `git merge --ff-only origin/hm-businessgroup`, dann `build` + `up -d`. Kundenprojekte-Seiten bis zur Freigabe nur auf `preview/kundenprojekte`.
 - **Status:** In development — Original-Design mit erneuertem Content, Review Henry ausstehend
 - **Claude Design project:** `HM Labs — Design System` auf claude.ai/design (geseeded aus dem `HM Websites — Design System`-Master — siehe `hm-design-sync`)
 
