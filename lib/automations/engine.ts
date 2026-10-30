@@ -11,25 +11,25 @@ import { sendDefaultPortalNotification } from "@/lib/email/portalNotifications";
  * Supabase-Webhooks UND dem Inline-Fallback in den Server Actions, damit es
  * genau einen Ausführungspfad gibt.
  *
- * Ist für das Ereignis keine Automation mit E-Mail-Schritt eingerichtet (auch
- * keine pausierte), geht die Standard-Benachrichtigung raus — sonst bliebe eine
- * neue Nachricht ohne Mail an die Gegenseite, bloß weil im Portal nichts
- * konfiguriert ist.
+ * Ist für das Ereignis keine AKTIVE Automation mit E-Mail-Schritt an dieselbe
+ * Seite eingerichtet, geht die Standard-Benachrichtigung raus — sonst bliebe
+ * eine neue Nachricht ohne Mail an die Gegenseite. Pausierte Automationen zählen
+ * bewusst nicht: die System-Automationen standen ab Werk auf pausiert, und so
+ * ging bis 30.10.2026 keine einzige Portal-Mail raus.
  */
 export async function dispatchEvent(
   event: string,
   facts: Record<string, string | null | undefined>,
   ctx: RunContext
 ): Promise<{ fired: number }> {
-  const configured = await getMatchingEventAutomations(event, facts, { includeDisabled: true });
-  const automations = configured.filter((a) => a.enabled);
+  const automations = await getMatchingEventAutomations(event, facts);
   for (const automation of automations) {
     await runAutomation(automation, ctx);
   }
   // Nur eine Automation, die an dieselbe Seite schreibt, ersetzt die
   // Standard-Mail: eine reine Admin-Meldung darf die Kunden-Mail nicht schlucken.
   const expected = event === "message.created" && facts.sender_role === "client" ? "admins" : "client";
-  const hasEmailAutomation = configured.some((a) =>
+  const hasEmailAutomation = automations.some((a) =>
     a.steps?.some((s) => s.type === "send_email" && (s.config?.recipient || "client") === expected)
   );
   if (!hasEmailAutomation) {
