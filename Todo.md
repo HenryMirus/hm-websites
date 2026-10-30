@@ -20,7 +20,7 @@ Nach dem Eintragen testen: DevTools → Network → auf Requests zu `google-anal
 - [ ] **E-Mail-Benachrichtigungen auf Resend umstellen**
   - Account auf resend.com anlegen (kostenlos bis 3.000 E-Mails/Monat)
   - API Key generieren → als `RESEND_API_KEY` in `.env.local` eintragen
-  - Domain verifizieren: `portal@hm-labs.de` als Absender (DNS TXT-Eintrag beim Hoster)
+  - Domain verifizieren: `portal@hm-labs.tech` als Absender (DNS TXT-Eintrag beim Hoster)
   - `lib/email/notify.ts` implementieren mit Resend SDK (`npm install resend`)
   - Aktuell: Nur Console-Logs als Platzhalter
 - [ ] **Workflows und Hooks (Admin-Only)**

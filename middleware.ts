@@ -12,13 +12,29 @@ const DEV_PORTAL_SUBDOMAIN = "clients.localhost";
 // Public path suffixes (relative to the subdomain prefix, e.g. /portal).
 const PUBLIC_SUFFIXES = ["/login", "/auth/callback", "/auth/update-password", "/password", "/register"];
 
+// APP_ROLE trennt das eine Repo in zwei unabhängig deploybare Container
+// (website | portal), gesetzt in /opt/hm-labs/docker-compose.yml auf dem VPS.
+// Ohne APP_ROLE (lokale Entwicklung) entscheidet wie bisher der Hostname.
+const APP_ROLE = process.env.APP_ROLE;
+
 export async function middleware(request: NextRequest) {
   const hostname = (request.headers.get("host") || "").replace(/:.*$/, "");
-  const isPortalSubdomain =
+  let isPortalSubdomain =
     hostname === PORTAL_SUBDOMAIN || hostname === DEV_PORTAL_SUBDOMAIN;
-  const isMainDomain =
+  let isMainDomain =
     hostname === MAIN_DOMAIN || hostname === `www.${MAIN_DOMAIN}`;
   const pathname = request.nextUrl.pathname;
+
+  // Rollen-Erzwingung: der Reverse-Proxy schickt jedem Container ohnehin nur
+  // seine eigene Domain, aber so liefert der Portal-Container auch per IP/Port
+  // nie Website-Inhalte aus (und umgekehrt).
+  if (APP_ROLE === "website") {
+    isPortalSubdomain = false;
+    isMainDomain = true;
+  } else if (APP_ROLE === "portal") {
+    isMainDomain = false;
+    isPortalSubdomain = true;
+  }
 
   // x-pathname setzt ausschließlich diese Middleware (unten). Ein vom Client
   // mitgeschickter Wert darf nie beim Layout ankommen.
