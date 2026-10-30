@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Alle 13 Leistungen von HM Labs im Detail: individuelle Websites, self-hosted KI-Chatbots, Webapps, GAIO- & BFSG-Audits, Wartung, mit transparenten Preisspannen.",
   alternates: {
-    canonical: "https://hm-labs.de/leistungen",
+    canonical: "https://hm-labs.tech/leistungen",
   },
 };
 

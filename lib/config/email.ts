@@ -11,25 +11,25 @@
 //
 //  2. CONTACT-FORMULAR EMAILS (momentan nur DB-Speicherung, kein Versand):
 //     → /app/api/contact/route.ts erweitern mit z.B. Resend oder Nodemailer
-//     → EMAIL_FROM (Absender-Adresse, z.B. no-reply@hm-labs.de)
+//     → EMAIL_FROM (Absender-Adresse, z.B. no-reply@hm-labs.tech)
 //     → EMAIL_INBOX (deine private Inbox, wohin Formular-Submissions gehen)
 //     → Beide sind Server-only (kein NEXT_PUBLIC_ Prefix nötig)
 //
 //  3. DNS-RECORDS beim Domain-Anbieter:
 //     → SPF-Record:  "v=spf1 include:_spf.resend.com ~all"
 //     → DKIM-Record: vom Email-Anbieter (Resend, Postmark, etc.) generiert
-//     → DMARC-Record: "v=DMARC1; p=none; rua=mailto:dmarc@hm-labs.de"
+//     → DMARC-Record: "v=DMARC1; p=none; rua=mailto:dmarc@hm-labs.tech"
 //     (verhindert, dass Emails als Spam markiert werden)
 //
 //  4. SUPABASE AUTH → URL Configuration:
-//     → Site URL: https://hm-labs.de
-//     → Redirect URLs: https://hm-labs.de/**, https://portal.hm-labs.de/**
+//     → Site URL: https://hm-labs.tech
+//     → Redirect URLs: https://hm-labs.tech/**, https://portal.hm-labs.tech/**
 //
 //  Sinnvolle Sub-Email-Rollen:
-//    no-reply@hm-labs.de   → Supabase SMTP (Invites, Passwort-Reset)
-//    hello@hm-labs.de      → Haupt-Kontakt (Website, öffentlich)
-//    support@hm-labs.de    → Kunden-Support im Portal (optional)
-//    henry@hm-labs.de      → Persönliche Email für Rechnungen, etc.
+//    no-reply@hm-labs.tech   → Supabase SMTP (Invites, Passwort-Reset)
+//    hello@hm-labs.tech      → Haupt-Kontakt (Website, öffentlich)
+//    support@hm-labs.tech    → Kunden-Support im Portal (optional)
+//    henry@hm-labs.tech      → Persönliche Email für Rechnungen, etc.
 
 export const EMAIL = {
   /** Haupt-Kontakt-Email – auf der Website angezeigt (Footer, CTA, Impressum, Datenschutz) */

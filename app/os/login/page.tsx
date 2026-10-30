@@ -50,7 +50,7 @@ export default function OsLoginPage() {
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="email"
-              placeholder="admin@hm-labs.de"
+              placeholder="admin@hm-labs.tech"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoFocus

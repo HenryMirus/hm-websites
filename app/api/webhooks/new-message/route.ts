@@ -41,7 +41,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const { record } = payload;
-  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
   const admin = createAdminClient();
 
   try {

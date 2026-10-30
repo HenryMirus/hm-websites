@@ -4,7 +4,7 @@ import { CronExpressionParser } from "cron-parser";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { Automation, RunContext } from "./types";
 
-const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
 
 interface DueItem {
   automation: Automation;

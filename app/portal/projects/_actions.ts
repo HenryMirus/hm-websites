@@ -134,7 +134,7 @@ export async function updateMilestoneStatusAction(
   // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
   if (status === "completed" && !process.env.NOTIFY_VIA_WEBHOOK) {
     try {
-      const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+      const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
       const { data: ms } = await admin
         .from("project_milestones")
         .select("title")

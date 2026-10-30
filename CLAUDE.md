@@ -13,7 +13,7 @@
 - **Client:** HM Labs (Eigenmarke, Inhaber Henry Mirus)
 - **Industry:** Web-Studio — individuelle Websites, self-hosted KI-Chatbots, Webapps, GAIO- & BFSG-Audits (B2B, DACH)
 - **Project type:** Redesign des Contents auf bestehender Website (Single-Page-App + Rechtsseiten)
-- **Live URL:** hm-labs.de (Code referenziert diese Domain)
+- **Live URL:** hm-labs.tech (Code referenziert diese Domain)
 - **GitHub repo:** HenryMirus/hm-websites
 - **Deployment path:** bisher Vercel (laut DSE); langfristig VPS mit Docker (KVM2) geplant
 - **Status:** In development — Original-Design mit erneuertem Content, Review Henry ausstehend

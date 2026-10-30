@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
   // Invite-Email senden (optional — body.send_invite: false überspringt es)
   if (body.send_invite !== false) {
-    const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+    const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
     const { error: inviteError } = await admin.auth.admin.inviteUserByEmail(email, {
       redirectTo: `${portalUrl}/auth/callback`,
       data: { name },

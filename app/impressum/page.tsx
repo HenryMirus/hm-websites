@@ -58,7 +58,7 @@ export default function ImpressumPage() {
 
           <Section title="Kontakt">
             <InfoRow label="E-Mail" value={<a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>} />
-            <InfoRow label="Website" value={<a href="https://hm-labs.de" className="text-[#4F7FFF] hover:underline">hm-labs.de</a>} />
+            <InfoRow label="Website" value={<a href="https://hm-labs.tech" className="text-[#4F7FFF] hover:underline">hm-labs.tech</a>} />
           </Section>
 
           <Section title="Umsatzsteuer-Identifikationsnummer">

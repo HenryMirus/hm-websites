@@ -44,7 +44,7 @@ export async function requestPasswordReset(
   );
 
   const portalUrl =
-    process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+    process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
   const { error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, {
     redirectTo: `${portalUrl}/auth/callback?type=recovery`,
   });

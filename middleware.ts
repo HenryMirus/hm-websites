@@ -1,35 +1,58 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const MAIN_DOMAIN = "hm-labs.de";
-const PORTAL_SUBDOMAIN = "clients.hm-labs.de";
+const MAIN_DOMAIN = "hm-labs.tech";
+const PORTAL_SUBDOMAIN = "clients.hm-labs.tech";
 const PORTAL_BASE = `https://${PORTAL_SUBDOMAIN}`;
 const DEV_PORTAL_SUBDOMAIN = "clients.localhost";
-const OS_SUBDOMAIN = "os.hm-labs.de";
+const OS_SUBDOMAIN = "os.hm-labs.tech";
 const OS_BASE = `https://${OS_SUBDOMAIN}`;
 const DEV_OS_SUBDOMAIN = "os.localhost";
+
+// APP_ROLE trennt das eine Repo in zwei unabhängig deploybare Container
+// (website | portal). Gesetzt in docker-compose.yml. Ohne APP_ROLE (z.B.
+// lokale Entwicklung) verhält sich die Middleware wie vorher (Hostname
+// entscheidet). Der OS-Bereich (app/os) wird vorerst in beiden Rollen
+// deaktiviert (404) — kein eigener Container, kein Zugriff über die Domain.
+const APP_ROLE = process.env.APP_ROLE;
 
 // Public path suffixes (relative to the subdomain prefix, e.g. /portal or /os).
 const PUBLIC_SUFFIXES = ["/login", "/auth/callback", "/auth/update-password", "/password"];
 
 export async function middleware(request: NextRequest) {
   const hostname = (request.headers.get("host") || "").replace(/:.*$/, "");
-  const isPortalSubdomain =
-    hostname === PORTAL_SUBDOMAIN || hostname === DEV_PORTAL_SUBDOMAIN;
-  const isOsSubdomain =
-    hostname === OS_SUBDOMAIN || hostname === DEV_OS_SUBDOMAIN;
-  const isMainDomain =
-    hostname === MAIN_DOMAIN || hostname === `www.${MAIN_DOMAIN}`;
   const pathname = request.nextUrl.pathname;
+
+  // OS-Bereich ist vorerst deaktiviert (kein eigener Container/Domain-Setup).
+  if (pathname === "/os" || pathname.startsWith("/os/")) {
+    return new NextResponse("Not Found", { status: 404 });
+  }
+
+  let isPortalSubdomain =
+    hostname === PORTAL_SUBDOMAIN || hostname === DEV_PORTAL_SUBDOMAIN;
+  let isOsSubdomain =
+    hostname === OS_SUBDOMAIN || hostname === DEV_OS_SUBDOMAIN;
+  let isMainDomain =
+    hostname === MAIN_DOMAIN || hostname === `www.${MAIN_DOMAIN}`;
+
+  // Rollen-Erzwingung: der Container bekommt vom Reverse-Proxy ohnehin nur
+  // Traffic für seine eigene Domain, aber wir spiegeln das hier zusätzlich
+  // im Code, damit der Portal-Container niemals Website-Inhalte ausliefert
+  // (und umgekehrt), selbst wenn er direkt per IP/Port angesprochen wird.
+  if (APP_ROLE === "website") {
+    isPortalSubdomain = false;
+    isOsSubdomain = false;
+    isMainDomain = true;
+  } else if (APP_ROLE === "portal") {
+    isMainDomain = false;
+    isOsSubdomain = false;
+    isPortalSubdomain = true;
+  }
 
   // Hauptdomain + /portal/* oder /os/* → redirect zur jeweiligen Subdomain
   if (isMainDomain && pathname.startsWith("/portal")) {
     const subPath = pathname.replace("/portal", "") || "/";
     return NextResponse.redirect(`${PORTAL_BASE}${subPath}`);
-  }
-  if (isMainDomain && pathname.startsWith("/os")) {
-    const subPath = pathname.replace("/os", "") || "/";
-    return NextResponse.redirect(`${OS_BASE}${subPath}`);
   }
 
   // Weder Portal- noch OS-Subdomain → durchlassen (inkl. /api/v1/*)

@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const osBase =
-    process.env.NEXT_PUBLIC_OS_URL ?? "https://os.hm-labs.de";
+    process.env.NEXT_PUBLIC_OS_URL ?? "https://os.hm-labs.tech";
 
   if (!code) {
     return NextResponse.redirect(`${osBase}/login?error=missing_code`);

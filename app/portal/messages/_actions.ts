@@ -20,7 +20,7 @@ export async function sendMessageAction(
   if (!user) return { error: "Nicht angemeldet." };
 
   const role = await getUserRole();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
 
   if (role === "admin") {
     const client_id = formData.get("client_id") as string;

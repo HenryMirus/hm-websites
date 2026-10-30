@@ -18,7 +18,7 @@ export async function inviteAdminAction(
   if (!email) return { error: "E-Mail ist ein Pflichtfeld." };
 
   const admin = createAdminClient();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
 
   const { data, error } = await admin.auth.admin.inviteUserByEmail(email, {
     redirectTo: `${portalUrl}/auth/callback`,

@@ -33,7 +33,7 @@ function createTransport() {
 }
 
 const FROM =
-  process.env.SMTP_FROM ?? `HM Labs <no-reply@hm-labs.de>`;
+  process.env.SMTP_FROM ?? `HM Labs <no-reply@hm-labs.tech>`;
 
 export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions): Promise<void> {
   if (process.env.NODE_ENV === "development" && !process.env.SMTP_HOST) {

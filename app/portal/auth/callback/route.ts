@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
   const type = searchParams.get("type");
 
-  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalBase = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
 
   if (!code) {
     return NextResponse.redirect(`${portalBase}/login?error=missing_code`);

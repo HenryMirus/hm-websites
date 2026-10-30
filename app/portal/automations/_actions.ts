@@ -82,7 +82,7 @@ export async function runAutomationTestAction(
     .single<Automation>();
   if (!automation) return { error: "Automation nicht gefunden." };
 
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
   let ctx: RunContext = { portalUrl, vars: {} };
 
   // Für Datums-Trigger: ersten realen fälligen Kontext suchen (ohne Datum-Check

@@ -34,7 +34,7 @@ export async function createClientAction(
 
   // Invite-Email senden
   const admin = createAdminClient();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
   const { error: inviteError } = await admin.auth.admin.inviteUserByEmail(email, {
     redirectTo: `${portalUrl}/auth/callback`,
     data: { name },
@@ -86,7 +86,7 @@ export async function deleteClientAction(id: string): Promise<void> {
 export async function resendInviteAction(email: string): Promise<{ error?: string }> {
   await requireAdmin();
   const admin = createAdminClient();
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.de";
+  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL ?? "https://clients.hm-labs.tech";
   const { error } = await admin.auth.admin.inviteUserByEmail(email, {
     redirectTo: `${portalUrl}/auth/callback`,
   });

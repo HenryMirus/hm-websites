@@ -70,7 +70,7 @@ export function emailShell({
 
   <!-- Logo -->
   <tr><td align="center" style="padding-bottom:36px;">
-    <a href="https://hm-labs.de" target="_blank" style="text-decoration:none;">
+    <a href="https://hm-labs.tech" target="_blank" style="text-decoration:none;">
       <table cellpadding="0" cellspacing="0" border="0" align="center"><tr>
         <td style="vertical-align:middle;padding-right:10px;">
           <img src="cid:hm-labs-logo" alt="HM Labs" width="36" height="36" style="display:block;border:0;border-radius:8px;"/>
@@ -130,11 +130,11 @@ export function emailShell({
   <tr><td align="center" style="padding-top:28px;">
     <p style="margin:0;font-size:12px;color:#5A5A7A;line-height:2.0;">
       <strong style="color:#8888AA;">HM Labs</strong> &mdash; KI-Integration &amp; Softwareentwicklung<br/>
-      <a href="https://hm-labs.de" style="color:#4F7FFF;text-decoration:none;">hm-labs.de</a>
+      <a href="https://hm-labs.tech" style="color:#4F7FFF;text-decoration:none;">hm-labs.tech</a>
       &nbsp;&middot;&nbsp;
-      <a href="https://hm-labs.de/impressum" style="color:#5A5A7A;text-decoration:none;">Impressum</a>
+      <a href="https://hm-labs.tech/impressum" style="color:#5A5A7A;text-decoration:none;">Impressum</a>
       &nbsp;&middot;&nbsp;
-      <a href="https://hm-labs.de/datenschutz" style="color:#5A5A7A;text-decoration:none;">Datenschutz</a>
+      <a href="https://hm-labs.tech/datenschutz" style="color:#5A5A7A;text-decoration:none;">Datenschutz</a>
     </p>
   </td></tr>
 
