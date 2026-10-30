@@ -80,12 +80,18 @@ export default function Footer({ lang }: FooterProps) {
           <span className="font-mono text-xs text-text-muted">
             © {year} HM Labs · {getText(t.footer.copy, lang)}
           </span>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <a href="/impressum" className="font-mono text-xs text-text-dim hover:text-text-primary transition-colors">
               {getText(t.footer.impressum, lang)}
             </a>
             <a href="/datenschutz" className="font-mono text-xs text-text-dim hover:text-text-primary transition-colors">
               {getText(t.footer.datenschutz, lang)}
+            </a>
+            <a href="/agb" className="font-mono text-xs text-text-dim hover:text-text-primary transition-colors">
+              {getText(t.footer.agb, lang)}
+            </a>
+            <a href="/widerrufsbelehrung" className="font-mono text-xs text-text-dim hover:text-text-primary transition-colors">
+              {getText(t.footer.widerruf, lang)}
             </a>
             <span className="font-mono text-xs text-text-muted">
               Built with Next.js · Powered by AI

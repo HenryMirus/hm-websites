@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { EMAIL } from "@/lib/config/email";
 import { SITE_URL, MAIN_DOMAIN } from "@/lib/config/site";
+import { LegalFooter } from "@/components/legal/LegalShell";
 
 export const metadata: Metadata = {
   title: "Impressum | HM Labs",
@@ -54,7 +55,10 @@ export default function ImpressumPage() {
             <p className="mt-1">Pantaleonstraße 20</p>
             <p>53567 Buchholz (Westerwald)</p>
             <p className="text-[#7C7CA0] text-sm mt-1">
-              (Einzelunternehmen)
+              Einzelunternehmen, nicht im Handelsregister eingetragen.
+            </p>
+            <p className="text-[#7C7CA0] text-sm mt-1">
+              Tätigkeit: Konzeption und Entwicklung von Websites, Webanwendungen und KI-Systemen sowie Beratung, Wartung und Hosting.
             </p>
           </Section>
 
@@ -115,16 +119,7 @@ export default function ImpressumPage() {
 
         </div>
 
-        {/* Footer */}
-        <div className="mt-16 pt-8 border-t border-[#1E1E2E] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="font-mono text-xs text-[#7C7CA0]">
-            © {new Date().getFullYear()} HM Labs · Alle Rechte vorbehalten.
-          </span>
-          <div className="flex gap-6">
-            <Link href="/impressum" className="text-xs text-[#4F7FFF]">Impressum</Link>
-            <Link href="/datenschutz" className="text-xs text-[#7C7CA0] hover:text-[#EEEEFF] transition-colors">Datenschutz</Link>
-          </div>
-        </div>
+        <LegalFooter current="/impressum" />
       </main>
     </div>
   );
