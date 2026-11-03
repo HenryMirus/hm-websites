@@ -101,6 +101,9 @@ export default function TypewriterText({
       <span aria-hidden="true" className={`inline ${className}`}>
         {displayed}
         {cursorVisible && <span className="typewriter-cursor" />}
+        {/* Rest bleibt unsichtbar im Textfluss: Die Überschrift belegt von Anfang an
+            ihren vollen Platz samt Zeilenumbrüchen, die Seite darunter springt nicht. */}
+        <span className="invisible">{text.slice(displayed.length)}</span>
       </span>
     </span>
   );
