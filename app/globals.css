@@ -176,13 +176,15 @@ html {
 }
 
 /* Typewriter cursor */
+/* Absolut, damit der Cursor weder Platz belegt noch mitten im Wort einen
+   Zeilenumbruch erlaubt. */
 .typewriter-cursor {
-  display: inline-block;
+  position: absolute;
   width: 2px;
   height: 0.82em;
   background: var(--primary);
   margin-left: 3px;
-  vertical-align: middle;
+  margin-top: 0.09em;
   border-radius: 1px;
   animation: cursor-blink 0.75s step-end infinite;
 }

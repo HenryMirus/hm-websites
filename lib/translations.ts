@@ -552,6 +552,8 @@ export const t = {
     },
     impressum: { de: "Impressum", en: "Imprint" },
     datenschutz: { de: "Datenschutz", en: "Privacy Policy" },
+    agb: { de: "AGB", en: "Terms" },
+    widerruf: { de: "Widerrufsbelehrung", en: "Cancellation Policy" },
   },
 
   // ─── FAQ Section ─────────────────────────────────────────────────────────────

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { EMAIL } from "@/lib/config/email";
 import { MAIN_DOMAIN } from "@/lib/config/site";
+import { LegalFooter } from "@/components/legal/LegalShell";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung | HM Labs",
@@ -64,6 +65,13 @@ export default function DatenschutzPage() {
           </Section>
 
           <Section title="2. Erhebung und Verarbeitung personenbezogener Daten">
+            <p className="mb-4">
+              Ich verarbeite personenbezogene Daten grundsätzlich nur, soweit dies zur Bereitstellung dieser Website und meiner
+              Leistungen sowie zur Bearbeitung von Anfragen und Aufträgen erforderlich ist. Rechtsgrundlagen sind insbesondere
+              Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung und Vertragserfüllung), Art. 6 Abs. 1 lit. c DSGVO (Erfüllung rechtlicher
+              Verpflichtungen, z. B. steuerrechtliche Aufbewahrungspflichten), Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse)
+              sowie, wo ausdrücklich angegeben, Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).
+            </p>
             <Subsection title="2.1 Server-Logs">
               <p>
                 Beim Besuch dieser Website werden durch den Hosting-Anbieter automatisch Informationen in sogenannten Server-Log-Dateien gespeichert,
@@ -96,6 +104,41 @@ export default function DatenschutzPage() {
               <p>
                 Wenn Sie uns per E-Mail kontaktieren, werden die übermittelten Daten zum Zweck der Bearbeitung Ihrer Anfrage verarbeitet
                 und gespeichert. Eine Weitergabe an Dritte erfolgt nicht. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.
+              </p>
+            </Subsection>
+            <Subsection title="2.4 Kundenportal">
+              <p>
+                Für Auftraggeber betreibe ich unter clients.hm-labs.tech ein Kundenportal. Dort verarbeite ich die Zugangsdaten
+                (E-Mail-Adresse, verschlüsseltes Passwort), Stammdaten des Auftraggebers, Projektdaten wie Meilensteine und
+                Aufgaben, Nachrichten sowie hochgeladene Dateien. Über neue Nachrichten und erreichte Meilensteine informiere ich
+                per E-Mail. Für die Anmeldung werden technisch notwendige Cookies gesetzt, die die Sitzung speichern.
+                Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Die Daten werden bei Supabase (siehe Abschnitt 4) gespeichert und nach
+                Ende der Zusammenarbeit gelöscht, soweit keine Aufbewahrungspflichten bestehen.
+              </p>
+            </Subsection>
+            <Subsection title="2.5 KI-gestützte Funktionen">
+              <p>
+                Für einzelne Funktionen im Kundenportal, etwa das Vorformulieren von Nachrichten, kann ich KI-Modelle der Anthropic,
+                PBC (548 Market Street, San Francisco, CA 94104, USA) einsetzen. Dabei werden die jeweils nötigen Angaben (z. B.
+                Name des Auftraggebers, Projektbezeichnung) an Anthropic übermittelt. Eine Übermittlung in die USA erfolgt auf
+                Grundlage von Standardvertragsklauseln der EU-Kommission. Nach den Bedingungen von Anthropic werden über die
+                Schnittstelle übermittelte Daten nicht zum Training der Modelle verwendet. Rechtsgrundlage: Art. 6 Abs. 1 lit. f
+                DSGVO (effiziente Kommunikation mit Auftraggebern).
+              </p>
+            </Subsection>
+            <Subsection title="2.6 Aufbewahrungsdauer">
+              <p>
+                Ich speichere personenbezogene Daten nur so lange, wie dies für die genannten Zwecke erforderlich ist, oder soweit
+                gesetzliche Aufbewahrungspflichten bestehen. Handels- und steuerrechtliche Unterlagen (z. B. Angebote, Rechnungen)
+                bewahre ich entsprechend §§ 147 AO, 257 HGB grundsätzlich bis zu zehn Jahre auf.
+              </p>
+            </Subsection>
+            <Subsection title="2.7 Weitergabe an Dritte">
+              <p>
+                Eine Weitergabe personenbezogener Daten an Dritte erfolgt nur, soweit dies zur Vertragserfüllung erforderlich ist
+                (z. B. an die in Abschnitt 4 genannten Dienstleister, die in meinem Auftrag tätig sind), Sie eingewilligt haben oder
+                ich gesetzlich dazu verpflichtet bin. Zur Erfüllung steuerlicher Pflichten können Daten an meine Steuerberatung
+                übermittelt werden.
               </p>
             </Subsection>
           </Section>
@@ -151,8 +194,10 @@ export default function DatenschutzPage() {
             </Subsection>
             <Subsection title="Supabase">
               <p>
-                Für Datenbankdienste nutzen wir Supabase (Supabase Inc., San Francisco, CA, USA) mit EU-Hosting (Frankfurt).
-                Supabase verarbeitet Kontaktformulardaten gemäß DSGVO. Weitere Informationen:{" "}
+                Für Datenbank, Anmeldung und Dateiablage nutze ich Supabase (Supabase Inc., 970 Toa Payoh North #07-04, Singapur)
+                mit Serverstandort in der EU (Irland). Supabase verarbeitet die Daten aus Kontaktformular und Kundenportal in meinem
+                Auftrag (Art. 28 DSGVO). Soweit dabei ein Zugriff aus Drittländern nicht ausgeschlossen werden kann, erfolgt er auf
+                Grundlage von Standardvertragsklauseln der EU-Kommission. Weitere Informationen:{" "}
                 <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
                   supabase.com/privacy
                 </a>
@@ -232,7 +277,8 @@ export default function DatenschutzPage() {
             <p className="text-sm text-[#7C7CA0] mt-4">
               Zur Ausübung Ihrer Rechte wenden Sie sich an:{" "}
               <a href={`mailto:${EMAIL.CONTACT}`} className="text-[#4F7FFF] hover:underline">{EMAIL.CONTACT}</a>.
-              Sie haben außerdem das Recht, bei der zuständigen Datenschutzaufsichtsbehörde Beschwerde einzulegen.
+              Sie haben außerdem das Recht, bei einer Datenschutz-Aufsichtsbehörde Beschwerde einzulegen, z. B. beim
+              Landesbeauftragten für den Datenschutz und die Informationsfreiheit Rheinland-Pfalz.
             </p>
           </Section>
 
@@ -240,7 +286,7 @@ export default function DatenschutzPage() {
             <p className="text-sm leading-relaxed text-[#EEEEFF]/70">
               Diese Website nutzt SSL-Verschlüsselung (HTTPS) für die Übertragung Ihrer Daten. Wir ergreifen technische und
               organisatorische Maßnahmen gemäß Art. 32 DSGVO, um Ihre Daten zu schützen. Die Website läuft auf einem eigenen
-              Server bei Hostinger, die Datenbank bei Supabase in der EU (Frankfurt).
+              Server bei Hostinger, die Datenbank bei Supabase in der EU (Irland).
             </p>
           </Section>
 
@@ -261,16 +307,7 @@ export default function DatenschutzPage() {
 
         </div>
 
-        {/* Footer */}
-        <div className="mt-16 pt-8 border-t border-[#1E1E2E] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="font-mono text-xs text-[#7C7CA0]">
-            © {new Date().getFullYear()} HM Labs · Alle Rechte vorbehalten.
-          </span>
-          <div className="flex gap-6">
-            <Link href="/impressum" className="text-xs text-[#7C7CA0] hover:text-[#EEEEFF] transition-colors">Impressum</Link>
-            <Link href="/datenschutz" className="text-xs text-[#4F7FFF]">Datenschutz</Link>
-          </div>
-        </div>
+        <LegalFooter current="/datenschutz" />
       </main>
     </div>
   );
