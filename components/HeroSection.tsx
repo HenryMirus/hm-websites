@@ -160,7 +160,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
 
             {/* Headline — typewriter per line */}
             <h1 className="font-display font-bold leading-[1.0] text-text-primary">
-              <div className="text-6xl lg:text-7xl xl:text-[84px] tracking-tight">
+              <div className="text-[clamp(2.5rem,12.5vw,3.75rem)] lg:text-7xl xl:text-[84px] tracking-tight">
                 <TypewriterText
                   text={getText(t.hero.line1, lang)}
                   startWhen={true}
@@ -169,7 +169,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
                   onComplete={() => setLine2Active(true)}
                 />
               </div>
-              <div className="text-6xl lg:text-7xl xl:text-[84px] mt-1 tracking-tight">
+              <div className="text-[clamp(2.5rem,12.5vw,3.75rem)] lg:text-7xl xl:text-[84px] mt-1 tracking-tight">
                 <TypewriterText
                   text={getText(t.hero.line2, lang)}
                   startWhen={line2Active}
@@ -177,7 +177,7 @@ export default function HeroSection({ lang, onOpenWizard }: HeroProps) {
                   onComplete={() => setLine3Active(true)}
                 />
               </div>
-              <div className="text-5xl lg:text-6xl xl:text-[68px] mt-2">
+              <div className="text-[clamp(2rem,10vw,3rem)] lg:text-6xl xl:text-[68px] mt-2">
                 <TypewriterText
                   text={getText(t.hero.line3, lang)}
                   startWhen={line3Active}
