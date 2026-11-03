@@ -44,7 +44,7 @@ export default function DatenschutzPage() {
           <p className="text-[#4F7FFF] font-mono text-xs tracking-widest uppercase mb-3">// Privacy</p>
           <h1 className="text-3xl md:text-4xl font-bold text-[#EEEEFF] mb-4">Datenschutzerklärung</h1>
           <p className="text-[#7C7CA0] text-sm">
-            Stand: Oktober 2026
+            Stand: November 2026
           </p>
         </div>
 
@@ -160,8 +160,8 @@ export default function DatenschutzPage() {
               <CookieCategory
                 name="Analyse-Cookies"
                 basis="Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)"
-                description="Diese Cookies helfen uns zu verstehen, wie Besucher mit der Website interagieren. Wir nutzen Google Analytics 4 (Google Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Irland). Die IP-Adresse wird anonymisiert (IP-Anonymisierung aktiviert). Mit Google wurde ein Auftragsverarbeitungsvertrag (AV-Vertrag) gem. Art. 28 DSGVO abgeschlossen."
-                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten", "_ga", "_ga_XXXXXXX"]}
+                description="Diese Dienste helfen uns zu verstehen, wie Besucher mit der Website interagieren. Wir nutzen Umami (selbst betrieben, setzt keine Cookies) und Microsoft Clarity (Microsoft Ireland Operations Limited) sowie Google Analytics 4 (Google Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Irland). Bei Google Analytics wird die IP-Adresse anonymisiert (IP-Anonymisierung aktiviert). Mit Google wurde ein Auftragsverarbeitungsvertrag (AV-Vertrag) gem. Art. 28 DSGVO abgeschlossen. Details zu den einzelnen Diensten stehen in Abschnitt 4."
+                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten", "Heatmaps", "Sitzungsaufzeichnungen", "_clck", "_clsk", "_ga", "_ga_XXXXXXX"]}
                 retention="Bis zu 2 Jahre"
                 optional
               />
@@ -207,6 +207,39 @@ export default function DatenschutzPage() {
               <p>
                 Die verwendeten Schriftarten liegen auf dem Server dieser Website. Beim Laden der Seite wird keine Verbindung
                 zu Google oder anderen Schriftanbietern hergestellt.
+              </p>
+            </Subsection>
+            <Subsection title="Umami (nur mit Einwilligung)">
+              <p>
+                Mit Ihrer Einwilligung nutze ich die Open-Source-Webanalyse Umami, die ich selbst auf einem Server bei
+                Hostinger betreibe. Eine Weitergabe an einen Analyseanbieter findet nicht statt. Erfasst werden aufgerufene
+                Seiten, Verweildauer, die vorherige Website sowie Browser, Gerätetyp, Sprache und ungefähre Herkunftsregion.
+                Umami setzt keine Cookies. Um Besuche zusammenzufassen, wird aus Website-Kennung, IP-Adresse,
+                Browser-Kennung und einem monatlich wechselnden Zufallswert eine Kennung errechnet. Die IP-Adresse selbst wird
+                dabei nicht in der Statistik gespeichert. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO,
+                § 25 Abs. 1 TDDDG). Sie können sie jederzeit über das Cookie-Icon rechts unten widerrufen.
+              </p>
+            </Subsection>
+            <Subsection title="Microsoft Clarity (nur mit Einwilligung)">
+              <p>
+                Mit Ihrer Einwilligung setze ich Microsoft Clarity der Microsoft Ireland Operations Limited (One Microsoft
+                Place, South County Business Park, Leopardstown, Dublin 18, D18 P521, Irland) ein. Clarity erstellt Heatmaps
+                und Aufzeichnungen des Nutzungsverhaltens (zum Beispiel Mausbewegungen, Klicks und Scrollen), damit ich die
+                Website verständlicher gestalten kann. Eingaben in den Formularen dieser Website werden maskiert und nicht
+                aufgezeichnet. Dabei können personenbezogene Daten verarbeitet werden (unter anderem IP-Adresse, Geräte- und
+                Browserinformationen, Interaktionen auf der Website). Eine Übermittlung in die USA kann nicht ausgeschlossen
+                werden; Microsoft bietet hierfür Standardvertragsklauseln der EU-Kommission als zusätzliche Garantie an.
+                Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Das Skript wird erst nach
+                Ihrer Zustimmung geladen, und Sie können sie jederzeit über das Cookie-Icon rechts unten widerrufen. Welche
+                Cookies im Einzelnen gesetzt werden und wie lange sie gespeichert bleiben, entnehmen Sie den aktuellen Hinweisen
+                von Microsoft:{" "}
+                <a href="https://learn.microsoft.com/de-de/clarity/faq" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  learn.microsoft.com/de-de/clarity/faq
+                </a>{" "}
+                und{" "}
+                <a href="https://privacy.microsoft.com/de-de/privacystatement" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
+                  privacy.microsoft.com/de-de/privacystatement
+                </a>
               </p>
             </Subsection>
             <Subsection title="Google Analytics 4 (nur mit Einwilligung)">

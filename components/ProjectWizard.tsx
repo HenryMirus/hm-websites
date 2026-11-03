@@ -541,7 +541,7 @@ export default function ProjectWizard({ open, onClose, lang, initialService = nu
                       ))}
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-3" noValidate>
+                    <form data-clarity-mask="true" onSubmit={handleSubmit} className="space-y-3" noValidate>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <input

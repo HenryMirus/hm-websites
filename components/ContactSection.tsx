@@ -120,6 +120,7 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                     key="form"
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
+                    data-clarity-mask="true"
                     onSubmit={handleSubmit}
                     className="space-y-5"
                   >

@@ -4,7 +4,9 @@
 - siehe Implementierungsplan
 
 ## 2. Tracking-IDs eintragen & Scripts testen
-Sobald die Accounts erstellt sind, IDs in `.env.local` eintragen:
+**Umami und Clarity (aktiv vorgesehen):** siehe Vault `To-do Tracking einrichten`, Kennungen in `.env.production`.
+
+Falls später auch die folgenden Dienste laufen sollen, IDs in `.env.production` eintragen (GA4 braucht zusätzlich die CSP-Erweiterung, siehe CLAUDE.md):
 
 - **Google Analytics 4** → analytics.google.com → Property erstellen → Measurement ID (`G-XXXXXXX`) → `NEXT_PUBLIC_GA4_ID=`
   Danach: Admin → Datenverarbeitungsbedingungen → AV-Vertrag akzeptieren (2 Min, 1 Klick)
