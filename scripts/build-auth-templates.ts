@@ -27,6 +27,18 @@ const ALLOWED = [
   /^end$/,
 ];
 
+// Supabases Template-Editor und Vorschau lesen eingefügtes HTML nicht zuverlässig
+// als UTF-8 (Umlaute, ß und Gedankenstriche kommen kaputt an). Nicht-ASCII-Zeichen
+// werden deshalb als numerische Entities geschrieben; die Go-Platzhalter sind ASCII.
+function encodeNonAscii(html: string): string {
+  let out = "";
+  for (const ch of html) {
+    const cp = ch.codePointAt(0)!;
+    out += cp > 127 ? `&#${cp};` : ch;
+  }
+  return out;
+}
+
 async function main() {
   for (const mail of buildAuthMails("url")) {
     const found = Array.from(mail.html.matchAll(/\{\{\s*([^}]*?)\s*\}\}/g), (m) => m[1]);
@@ -39,7 +51,7 @@ async function main() {
     const ends = found.filter((p) => p === "end").length;
     if (opens !== ends) throw new Error(`${mail.file}: {{ if }}/{{ end }} nicht ausgeglichen`);
 
-    await writeFile(path.join(outDir, mail.file), mail.html, "utf-8");
+    await writeFile(path.join(outDir, mail.file), encodeNonAscii(mail.html), "utf-8");
     console.log(`${mail.key.padEnd(18)} ${mail.file}${mail.used ? "" : "  (aktuell ungenutzt)"}`);
   }
 }
