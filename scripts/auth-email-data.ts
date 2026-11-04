@@ -28,15 +28,15 @@ const GREEN = {
 };
 
 // Gültigkeit je Mailtyp. Supabase kennt nur EINEN Wert für alle (Dashboard →
-// Authentication → Sign In / Providers → Email → "Email OTP Expiration"). Die
-// Werte hier stammen aus den alten Dateien und müssen zu dieser Einstellung
-// passen, sonst steht in der Mail etwas Falsches.
+// Authentication → Sign In / Providers → Email → "Email OTP Expiration") und
+// erlaubt höchstens 86400 Sekunden. Dort 86400 einstellen (Entscheidung
+// 04.11.2026); dieselbe Frist steht in allen Mails, sonst steht etwas Falsches drin.
 const VALIDITY = {
-  recovery: "15 Minuten",
-  invite: "48 Stunden",
-  magiclink: "60 Minuten",
-  signup: "60 Minuten",
-  email_change: "60 Minuten",
+  recovery: "24 Stunden",
+  invite: "24 Stunden",
+  magiclink: "24 Stunden",
+  signup: "24 Stunden",
+  email_change: "24 Stunden",
 };
 
 /** Callback-Link der Portal-App (Button-Seite, eingelöst wird erst per POST). */

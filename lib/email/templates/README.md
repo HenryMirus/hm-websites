@@ -21,7 +21,7 @@ Inhalte und Betreffzeilen stehen in `scripts/auth-email-data.ts`. Bilder kommen 
 
 Die Links führen auf `{PORTAL_URL}/auth/callback?token_hash=…&type=…` (Button-Seite, eingelöst wird erst per POST). Verwendet werden nur `{{ .TokenHash }}`, `{{ .Token }}`, `{{ .Email }}`, `{{ .NewEmail }}` und `{{ .Data.name }}`.
 
-Die genannte Gültigkeit (Reset 15 Min., Einladung 48 Std., übrige 60 Min.) muss zu **Authentication → Sign In / Providers → Email → Email OTP Expiration** passen. Das ist ein einziger Wert für alle Typen.
+Alle Mails nennen 24 Stunden. Das muss zu **Authentication → Sign In / Providers → Email → Email OTP Expiration** passen und dort auf `86400` stehen (Supabase erlaubt höchstens 86400 s). Das ist ein einziger Wert für alle Typen, eine Frist je Mailtyp gibt es nicht.
 
 ## SMTP (Authentication → SMTP Settings, Custom SMTP an)
 
