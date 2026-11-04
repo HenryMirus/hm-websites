@@ -3,6 +3,7 @@ import { writeFile, mkdir, readFile } from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
 import { EMAIL } from "@/lib/config/email";
+import { LOGO_CID, PORTRAIT_CID } from "./templates";
 
 interface SendEmailOptions {
   to: string | string[];
@@ -11,8 +12,26 @@ interface SendEmailOptions {
   replyTo?: string;
 }
 
-const LOGO_CID = "hm-labs-logo";
-const LOGO_PATH = path.join(process.cwd(), "public/email/hm-labs-logo-email.png");
+// Bilder hängen als Inline-Anhang (cid:) an der Mail, statt von der Website
+// geladen zu werden: Clients blockieren externe Bilder oft, CID-Anhänge nicht.
+// Das Portrait ist ein eigener Ausschnitt in Mail-Größe (JPEG statt WebP, das
+// Outlook/Gmail nicht durchgängig darstellen).
+const INLINE_IMAGES = [
+  {
+    label: "Logo",
+    cid: LOGO_CID,
+    filename: "hm-labs-logo.png",
+    mime: "image/png",
+    path: path.join(process.cwd(), "public/email/hm-labs-logo-email.png"),
+  },
+  {
+    label: "Portrait",
+    cid: PORTRAIT_CID,
+    filename: "henry-mirus.jpg",
+    mime: "image/jpeg",
+    path: path.join(process.cwd(), "public/email/henry-portrait-email.jpg"),
+  },
+] as const;
 
 function createTransport() {
   const host = process.env.SMTP_HOST;
@@ -46,11 +65,16 @@ export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions
     console.log(`[Email DEV] To: ${Array.isArray(to) ? to.join(", ") : to}`);
     console.log(`[Email DEV] Subject: ${subject}`);
 
+    // Vorschau als Datei: cid-Bilder durch Data-URIs ersetzen, sonst zeigt der
+    // Browser sie nicht an.
     let previewHtml = html;
-    if (html.includes(`cid:${LOGO_CID}`)) {
-      const logoBuffer = await readFile(LOGO_PATH);
-      const dataUri = `data:image/png;base64,${logoBuffer.toString("base64")}`;
-      previewHtml = html.replaceAll(`cid:${LOGO_CID}`, dataUri);
+    for (const img of INLINE_IMAGES) {
+      if (!html.includes(`cid:${img.cid}`)) continue;
+      const buffer = await readFile(img.path);
+      previewHtml = previewHtml.replaceAll(
+        `cid:${img.cid}`,
+        `data:${img.mime};base64,${buffer.toString("base64")}`
+      );
     }
 
     const dir = path.join(process.cwd(), ".dev-emails");
@@ -63,13 +87,22 @@ export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions
   }
 
   const transporter = createTransport();
-  // Fehlt das Logo im Deployment, lieber ohne Logo senden als gar nicht.
-  const attachments =
-    html.includes(`cid:${LOGO_CID}`) && existsSync(LOGO_PATH)
-      ? [{ filename: "hm-labs-logo.png", path: LOGO_PATH, cid: LOGO_CID }]
-      : undefined;
-  if (html.includes(`cid:${LOGO_CID}`) && !attachments) {
-    console.warn(`[Email] Logo fehlt (${LOGO_PATH}), Mail geht ohne Logo raus.`);
+  // Fehlt ein Bild im Deployment, lieber ohne das Bild senden als gar nicht.
+  const attachments = [];
+  for (const img of INLINE_IMAGES) {
+    if (!html.includes(`cid:${img.cid}`)) continue;
+    if (existsSync(img.path)) {
+      attachments.push({ filename: img.filename, path: img.path, cid: img.cid });
+    } else {
+      console.warn(`[Email] ${img.label} fehlt (${img.path}), Mail geht ohne ${img.label} raus.`);
+    }
   }
-  await transporter.sendMail({ from: FROM, to, subject, html, replyTo, attachments });
+  await transporter.sendMail({
+    from: FROM,
+    to,
+    subject,
+    html,
+    replyTo,
+    attachments: attachments.length > 0 ? attachments : undefined,
+  });
 }

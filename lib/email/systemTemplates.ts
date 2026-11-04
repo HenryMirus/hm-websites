@@ -5,10 +5,11 @@ import type { EmailTemplateRow } from "./templates";
 // Die Portal-Vorlagen (new_message_*, milestone_reached) gibt es in der DB
 // schon, die Anfrage-Vorlagen legt db/migrations/2026-10-28_contact_email_templates.sql
 // an. Im Portal unter Automationen → Vorlagen bearbeitete Fassungen haben Vorrang.
+// Slot-Stile passend zur Website: Fließtext = text-dim, Labels = text-muted (#7C7CA0, AA).
 const P = `margin:0 0 20px;font-size:15px;color:#8888AA;line-height:1.7;`;
 const ROW = `padding:6px 0;font-size:13px;line-height:1.6;vertical-align:top;`;
 const quote = (border: string) =>
-  `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;"><tr><td style="background-color:#09090F;border:1px solid #1E1E2E;border-left:3px solid ${border};border-radius:8px;padding:14px 16px;"><p style="margin:0;font-size:13px;color:#8888AA;line-height:1.6;white-space:pre-wrap;">{{preview}}</p></td></tr></table>`;
+  `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;"><tr><td bgcolor="#09090F" style="background-color:#09090F;border:1px solid #1E1E2E;border-left:3px solid ${border};border-radius:8px;padding:14px 16px;"><p style="margin:0;font-size:13px;color:#8888AA;line-height:1.6;white-space:pre-wrap;">{{preview}}</p></td></tr></table>`;
 
 const BLUE = {
   accent: "linear-gradient(90deg,#4F7FFF 0%,#7B9FFF 100%)",
@@ -39,13 +40,13 @@ export const SYSTEM_TEMPLATE_DEFAULTS: Record<string, EmailTemplateRow> = {
     body_html:
       `<p style="${P}"><strong style="color:#EEEEFF;">{{name}}</strong> hat über die Website eine Anfrage gesendet. Eine Antwort auf diese Mail geht direkt an {{email}}.</p>` +
       `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">` +
-      `<tr><td style="${ROW}color:#5A5A7A;width:110px;">E-Mail</td><td style="${ROW}color:#EEEEFF;">{{email}}</td></tr>` +
-      `<tr><td style="${ROW}color:#5A5A7A;">Unternehmen</td><td style="${ROW}color:#EEEEFF;">{{company}}</td></tr>` +
-      `<tr><td style="${ROW}color:#5A5A7A;">Telefon</td><td style="${ROW}color:#EEEEFF;">{{phone}}</td></tr>` +
-      `<tr><td style="${ROW}color:#5A5A7A;">Betreff</td><td style="${ROW}color:#EEEEFF;">{{subject}}</td></tr>` +
-      `<tr><td style="${ROW}color:#5A5A7A;">Lead-Score</td><td style="${ROW}color:#EEEEFF;">{{lead_score}} ({{lead_tier}})</td></tr>` +
+      `<tr><td style="${ROW}color:#7C7CA0;width:110px;">E-Mail</td><td style="${ROW}color:#EEEEFF;">{{email}}</td></tr>` +
+      `<tr><td style="${ROW}color:#7C7CA0;">Unternehmen</td><td style="${ROW}color:#EEEEFF;">{{company}}</td></tr>` +
+      `<tr><td style="${ROW}color:#7C7CA0;">Telefon</td><td style="${ROW}color:#EEEEFF;">{{phone}}</td></tr>` +
+      `<tr><td style="${ROW}color:#7C7CA0;">Betreff</td><td style="${ROW}color:#EEEEFF;">{{subject}}</td></tr>` +
+      `<tr><td style="${ROW}color:#7C7CA0;">Lead-Score</td><td style="${ROW}color:#EEEEFF;">{{lead_score}} ({{lead_tier}})</td></tr>` +
       `</table>` +
-      `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;"><tr><td style="background-color:#09090F;border:1px solid #1E1E2E;border-left:3px solid #FF4D6A;border-radius:8px;padding:14px 16px;"><p style="margin:0;font-size:13px;color:#8888AA;line-height:1.6;white-space:pre-wrap;">{{message}}</p></td></tr></table>`,
+      `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;"><tr><td bgcolor="#09090F" style="background-color:#09090F;border:1px solid #1E1E2E;border-left:3px solid #FF4D6A;border-radius:8px;padding:14px 16px;"><p style="margin:0;font-size:13px;color:#8888AA;line-height:1.6;white-space:pre-wrap;">{{message}}</p></td></tr></table>`,
     ...RED,
     icon_char: "&#x1F4E9;",
     cta_label: "Im Portal öffnen",
