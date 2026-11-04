@@ -36,7 +36,7 @@ export const SYSTEM_TEMPLATE_DEFAULTS: Record<string, EmailTemplateRow> = {
     name: "Neue Website-Anfrage → Admins",
     subject: "Neue Anfrage von {{name}}",
     heading: "Neue Anfrage über die Website",
-    preheader: "{{name}} hat über hm-labs.tech angefragt.",
+    preheader: "{{name}} hat über hm-labs.de angefragt.",
     body_html:
       `<p style="${P}"><strong style="color:#EEEEFF;">{{name}}</strong> hat über die Website eine Anfrage gesendet. Eine Antwort auf diese Mail geht direkt an {{email}}.</p>` +
       `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">` +

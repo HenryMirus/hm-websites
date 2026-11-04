@@ -26,7 +26,7 @@ ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
 ARG NEXT_PUBLIC_PORTAL_URL
 ARG NEXT_PUBLIC_OS_URL
 ARG NEXT_PUBLIC_EMAIL_CONTACT
-# Leer oder nicht gesetzt → Defaults aus lib/config/site.ts (hm-labs.tech).
+# Leer oder nicht gesetzt → Defaults aus lib/config/site.ts (hm-labs.de).
 ARG NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
 ENV NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}

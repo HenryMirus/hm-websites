@@ -13,7 +13,7 @@
 - **Client:** HM Labs (Eigenmarke, Inhaber Henry Mirus)
 - **Industry:** Web-Studio — individuelle Websites, self-hosted KI-Chatbots, Webapps, GAIO- & BFSG-Audits (B2B, DACH)
 - **Project type:** Redesign des Contents auf bestehender Website (Single-Page-App + Rechtsseiten)
-- **Live URL:** hm-labs.tech, Portal clients.hm-labs.tech (eine Quelle: `lib/config/site.ts`). hm-labs.de ist registriert, Umzug geplant, noch nicht vollzogen (Vault: `To-do Domainumzug`)
+- **Live URL:** hm-labs.de, Portal clients.hm-labs.de (eine Quelle: `lib/config/site.ts`). Umzug von hm-labs.tech am 04.11.2026 vollzogen, .tech leitet per 301 weiter und bleibt vorerst Mail-Domain (Vault: `To-do Domainumzug`)
 - **GitHub repo:** HenryMirus/hm-websites
 - **Deployment path:** Hostinger-VPS, nginx vor zwei Containern `hm-website`/`hm-portal` (`APP_ROLE`), `/opt/hm-labs/docker-compose.yml` + `.env`. Server-Checkout auf Branch `vps/server-setup`, Update per `git merge --ff-only origin/hm-businessgroup`, dann `build` + `up -d`. Kundenprojekte-Seiten bis zur Freigabe nur auf `preview/kundenprojekte`.
 - **Status:** In development — Original-Design mit erneuertem Content, Review Henry ausstehend

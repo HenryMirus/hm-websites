@@ -27,7 +27,7 @@ export default function TrackingScripts() {
           src={UMAMI_SRC}
           strategy="afterInteractive"
           data-website-id={UMAMI_WEBSITE_ID}
-          data-domains="hm-labs.tech,hm-labs.de"
+          data-domains="hm-labs.de,hm-labs.de"
         />
       )}
 

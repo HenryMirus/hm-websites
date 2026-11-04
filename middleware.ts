@@ -42,7 +42,7 @@ export async function middleware(request: NextRequest) {
   cleanHeaders.delete("x-pathname");
 
   // Hauptdomain + /portal/* → redirect zur Portal-Subdomain. Nur echte
-  // Pfadsegmente: "/portal@evil.com" ergäbe sonst clients.hm-labs.tech@evil.com.
+  // Pfadsegmente: "/portal@evil.com" ergäbe sonst clients.hm-labs.de@evil.com.
   if (isMainDomain && (pathname === "/portal" || pathname.startsWith("/portal/"))) {
     const subPath = pathname.slice("/portal".length) || "/";
     const target = new URL(subPath + request.nextUrl.search, PORTAL_BASE);

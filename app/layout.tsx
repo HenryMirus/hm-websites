@@ -9,7 +9,7 @@ import { EMAIL } from "@/lib/config/email";
 
 import { SITE_URL } from "@/lib/config/site";
 
-// Schriften werden beim Build heruntergeladen und von hm-labs.tech selbst
+// Schriften werden beim Build heruntergeladen und von hm-labs.de selbst
 // ausgeliefert: kein Aufruf von fonts.googleapis.com beim Besucher.
 const fontDisplay = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-display", display: "swap" });
 const fontBody = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-body", display: "swap" });

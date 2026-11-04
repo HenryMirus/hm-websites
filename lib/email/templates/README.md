@@ -6,7 +6,7 @@ Diese HTML-Dateien werden **von Hand** im Supabase-Dashboard eingefügt. Die App
 node --experimental-strip-types --import ./scripts/register-ts-alias.mjs scripts/build-auth-templates.ts
 ```
 
-Inhalte und Betreffzeilen stehen in `scripts/auth-email-data.ts`. Bilder kommen per `https://hm-labs.tech/email/...`, das Portrait erst nach dem Deploy der Website.
+Inhalte und Betreffzeilen stehen in `scripts/auth-email-data.ts`. Bilder kommen per `https://hm-labs.de/email/...`, das Portrait erst nach dem Deploy der Website.
 
 ## Zuordnung (Supabase → Authentication → Emails → Templates)
 

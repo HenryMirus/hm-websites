@@ -108,7 +108,7 @@ export default function DatenschutzPage() {
             </Subsection>
             <Subsection title="2.4 Kundenportal">
               <p>
-                Für Auftraggeber betreibe ich unter clients.hm-labs.tech ein Kundenportal. Dort verarbeite ich die Zugangsdaten
+                Für Auftraggeber betreibe ich unter clients.hm-labs.de ein Kundenportal. Dort verarbeite ich die Zugangsdaten
                 (E-Mail-Adresse, verschlüsseltes Passwort), Stammdaten des Auftraggebers, Projektdaten wie Meilensteine und
                 Aufgaben, Nachrichten sowie hochgeladene Dateien. Über neue Nachrichten und erreichte Meilensteine informiere ich
                 per E-Mail. Für die Anmeldung werden technisch notwendige Cookies gesetzt, die die Sitzung speichern.

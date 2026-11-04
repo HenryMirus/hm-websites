@@ -281,7 +281,7 @@ export const t = {
       },
       {
         caseId: "LAB_03",
-        client: { de: "hm-labs.tech", en: "hm-labs.tech" },
+        client: { de: "hm-labs.de", en: "hm-labs.de" },
         type: { de: "Website in eigener Sache", en: "Our own website" },
         title: {
           de: "Diese Website: Exponat Nummer eins",
