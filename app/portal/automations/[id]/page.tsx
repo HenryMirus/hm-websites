@@ -30,7 +30,8 @@ function fmt(iso: string | null) {
   });
 }
 
-export default async function AutomationDetailPage({ params }: { params: { id: string } }) {
+export default async function AutomationDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   await requireAdmin();
   const [supabase, role, unreadMessages] = await Promise.all([
     createClient(),
@@ -39,11 +40,11 @@ export default async function AutomationDetailPage({ params }: { params: { id: s
   ]);
 
   const [{ data: automation }, { data: runs }] = await Promise.all([
-    supabase.from("automations").select("*").eq("id", params.id).single(),
+    supabase.from("automations").select("*").eq("id", id).single(),
     supabase
       .from("automation_runs")
       .select("*")
-      .eq("automation_id", params.id)
+      .eq("automation_id", id)
       .order("started_at", { ascending: false })
       .limit(30),
   ]);

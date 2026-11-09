@@ -7,7 +7,8 @@ import EmailTemplateForm from "../../_components/EmailTemplateForm";
 
 export const revalidate = 0;
 
-export default async function EmailTemplateEditorPage({ params }: { params: { key: string } }) {
+export default async function EmailTemplateEditorPage({ params }: { params: Promise<{ key: string }> }) {
+  const { key } = await params;
   await requireAdmin();
   const [supabase, role, unreadMessages] = await Promise.all([
     createClient(),
@@ -18,7 +19,7 @@ export default async function EmailTemplateEditorPage({ params }: { params: { ke
   const { data: template } = await supabase
     .from("email_templates")
     .select("*")
-    .eq("key", params.key)
+    .eq("key", key)
     .single();
 
   if (!template) notFound();

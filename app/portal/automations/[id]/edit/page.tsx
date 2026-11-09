@@ -8,7 +8,8 @@ import type { Automation } from "@/lib/automations/types";
 
 export const revalidate = 0;
 
-export default async function EditAutomationPage({ params }: { params: { id: string } }) {
+export default async function EditAutomationPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   await requireAdmin();
   const [supabase, role, unreadMessages] = await Promise.all([
     createClient(),
@@ -17,7 +18,7 @@ export default async function EditAutomationPage({ params }: { params: { id: str
   ]);
 
   const [{ data: automation }, { data: templates }] = await Promise.all([
-    supabase.from("automations").select("*").eq("id", params.id).single(),
+    supabase.from("automations").select("*").eq("id", id).single(),
     supabase.from("email_templates").select("key, name").order("name"),
   ]);
 

@@ -22,7 +22,7 @@
 ---
 
 ## Tech stack
-- **Framework:** Next.js 14 App Router · TypeScript
+- **Framework:** Next.js 15 (React 19) App Router · TypeScript
 - **Styling:** Tailwind CSS (Farben/Fonts direkt in `tailwind.config.ts`)
 - **Animations:** framer-motion (+ Canvas-ParticleNetwork im Hero-Hintergrund)
 - **Forms:** kontrollierte Komponenten (ContactSection, ProjectWizard) → `/api/contact` (Supabase `contact_submissions`, Honeypot, Rate-Limit)
