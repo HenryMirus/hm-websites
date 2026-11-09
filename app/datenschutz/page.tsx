@@ -216,7 +216,9 @@ export default function DatenschutzPage() {
                 Seiten, Verweildauer, die vorherige Website sowie Browser, Gerätetyp, Sprache und ungefähre Herkunftsregion.
                 Umami setzt keine Cookies. Um Besuche zusammenzufassen, wird aus Website-Kennung, IP-Adresse,
                 Browser-Kennung und einem monatlich wechselnden Zufallswert eine Kennung errechnet. Die IP-Adresse selbst wird
-                dabei nicht in der Statistik gespeichert. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO,
+                dabei nicht in der Statistik gespeichert. Zusätzlich kann Umami bei einem Teil der Besuche (Stichprobe) Heatmaps und
+                Aufzeichnungen des Nutzungsverhaltens erstellen, etwa Mausbewegungen, Klicks und Scrollen. Eingabefelder werden
+                dabei maskiert und nicht aufgezeichnet. Auch diese Daten verbleiben auf meinem Server. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO,
                 § 25 Abs. 1 TDDDG). Sie können sie jederzeit über das Cookie-Icon rechts unten widerrufen.
               </p>
             </Subsection>

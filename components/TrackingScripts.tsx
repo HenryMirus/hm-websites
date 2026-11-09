@@ -10,6 +10,10 @@ const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
 const UMAMI_SRC = process.env.NEXT_PUBLIC_UMAMI_SRC;
 const UMAMI_WEBSITE_ID = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
 const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+// Umami-Recorder (Replays und Heatmaps) liegt auf demselben Host wie script.js.
+// Ob und wie viel aufgezeichnet wird, steht im Umami-Dashboard (Website bearbeiten
+// → Replays & Heatmaps), nicht hier.
+const UMAMI_RECORDER_SRC = UMAMI_SRC?.replace(/script\.js$/, "recorder.js");
 
 export default function TrackingScripts() {
   const { consent } = useConsent();
@@ -27,7 +31,16 @@ export default function TrackingScripts() {
           src={UMAMI_SRC}
           strategy="afterInteractive"
           data-website-id={UMAMI_WEBSITE_ID}
-          data-domains="hm-labs.de,hm-labs.de"
+          data-domains="hm-labs.de"
+        />
+      )}
+
+      {/* ── Umami Replays und Heatmaps (Analytics consent) ── */}
+      {consent.analytics && UMAMI_RECORDER_SRC && UMAMI_WEBSITE_ID && (
+        <Script
+          src={UMAMI_RECORDER_SRC}
+          strategy="afterInteractive"
+          data-website-id={UMAMI_WEBSITE_ID}
         />
       )}
 
