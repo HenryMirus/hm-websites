@@ -160,17 +160,17 @@ export default function DatenschutzPage() {
               <CookieCategory
                 name="Analyse-Cookies"
                 basis="Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)"
-                description="Diese Dienste helfen uns zu verstehen, wie Besucher mit der Website interagieren. Wir nutzen Umami (selbst betrieben, setzt keine Cookies) und Microsoft Clarity (Microsoft Ireland Operations Limited) sowie Google Analytics 4 (Google Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Irland). Bei Google Analytics wird die IP-Adresse anonymisiert (IP-Anonymisierung aktiviert). Mit Google wurde ein Auftragsverarbeitungsvertrag (AV-Vertrag) gem. Art. 28 DSGVO abgeschlossen. Details zu den einzelnen Diensten stehen in Abschnitt 4."
-                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten", "Heatmaps", "Sitzungsaufzeichnungen", "_clck", "_clsk", "_ga", "_ga_XXXXXXX"]}
-                retention="Bis zu 2 Jahre"
+                description="Diese Dienste helfen mir zu verstehen, wie Besucher mit der Website interagieren. Ich nutze Umami (selbst betrieben, setzt keine Cookies) und Microsoft Clarity (Microsoft Ireland Operations Limited). Beide werden erst nach Ihrer Einwilligung geladen. Details zu den einzelnen Diensten stehen in Abschnitt 4."
+                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten", "Heatmaps", "Sitzungsaufzeichnungen", "_clck", "_clsk"]}
+                retention="Bis zu 1 Jahr"
                 optional
               />
               <CookieCategory
                 name="Marketing-Cookies"
                 basis="Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)"
-                description="Diese Cookies werden verwendet, um Besuchern relevante Werbung zu zeigen und Werbekampagnen auszuwerten. Folgende Anbieter werden eingesetzt: Meta Pixel (Meta Platforms Ireland Ltd., 4 Grand Canal Square, Dublin 2, Irland) für Facebook/Instagram-Werbung; Google Ads (Google Ireland Ltd.) für Google-Suchanzeigen und Remarketing; LinkedIn Insight Tag (LinkedIn Ireland Unlimited Company, Wilton Place, Dublin 2, Irland) für B2B-Werbung auf LinkedIn."
-                examples={["_fbp", "_fbc", "fr", "Google Ads ID", "li_sugr"]}
-                retention="Bis zu 1 Jahr"
+                description="Derzeit setzt diese Website keine Marketing-Cookies und bindet keine Werbedienste ein. Die Auswahl im Cookie-Banner ist für künftige Dienste vorgesehen; solange keiner eingesetzt wird, hat sie keine Wirkung."
+                examples={[]}
+                retention="entfällt"
                 optional
               />
             </div>
@@ -212,7 +212,7 @@ export default function DatenschutzPage() {
             <Subsection title="Umami (nur mit Einwilligung)">
               <p>
                 Mit Ihrer Einwilligung nutze ich die Open-Source-Webanalyse Umami, die ich selbst auf einem Server bei
-                Hostinger betreibe. Eine Weitergabe an einen Analyseanbieter findet nicht statt. Erfasst werden aufgerufene
+                Hostinger betreibe (erreichbar unter stats.hm-labs.de). Eine Weitergabe an einen Analyseanbieter findet nicht statt. Erfasst werden aufgerufene
                 Seiten, Verweildauer, die vorherige Website sowie Browser, Gerätetyp, Sprache und ungefähre Herkunftsregion.
                 Umami setzt keine Cookies. Um Besuche zusammenzufassen, wird aus Website-Kennung, IP-Adresse,
                 Browser-Kennung und einem monatlich wechselnden Zufallswert eine Kennung errechnet. Die IP-Adresse selbst wird
@@ -240,50 +240,6 @@ export default function DatenschutzPage() {
                 <a href="https://privacy.microsoft.com/de-de/privacystatement" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
                   privacy.microsoft.com/de-de/privacystatement
                 </a>
-              </p>
-            </Subsection>
-            <Subsection title="Google Analytics 4 (nur mit Einwilligung)">
-              <p>
-                Mit Ihrer Einwilligung setzen wir Google Analytics 4 ein, einen Webanalysedienst der Google Ireland Ltd.
-                (Gordon House, Barrow Street, Dublin 4, Irland). Google Analytics verwendet Cookies, um die Nutzung der
-                Website zu analysieren. Die dabei erzeugten Informationen (inkl. anonymisierter IP-Adresse) werden an
-                Google-Server übertragen. Wir haben IP-Anonymisierung aktiviert und einen AV-Vertrag gem. Art. 28 DSGVO
-                abgeschlossen. Widerspruch: Sie können die Erfassung jederzeit durch Abwahl der Analyse-Cookies verhindern.
-                Weitere Informationen:{" "}
-                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
-                  policies.google.com/privacy
-                </a>
-              </p>
-            </Subsection>
-            <Subsection title="Google Ads (nur mit Einwilligung)">
-              <p>
-                Mit Ihrer Einwilligung nutzen wir Google Ads-Conversion-Tracking (Google Ireland Ltd.). Dabei wird ein
-                Cookie gesetzt, wenn Sie auf eine unserer Anzeigen klicken. So können wir nachvollziehen, ob nach einem
-                Anzeigenklick eine Anfrage auf unserer Website eingegangen ist. Die erhobenen Daten werden pseudonymisiert
-                verarbeitet. Widerspruch: Abwahl der Marketing-Cookies im Cookie-Banner.
-              </p>
-            </Subsection>
-            <Subsection title="Meta Pixel (nur mit Einwilligung)">
-              <p>
-                Mit Ihrer Einwilligung verwenden wir den Meta Pixel der Meta Platforms Ireland Ltd.
-                (4 Grand Canal Square, Dublin 2, Irland). Der Meta Pixel ermöglicht es uns, die Wirksamkeit von
-                Facebook- und Instagram-Werbeanzeigen zu messen und Besuchern dieser Website auf Meta-Plattformen
-                relevante Inhalte zu zeigen (Retargeting). Die Daten werden gemäß den Standardvertragsklauseln der
-                EU verarbeitet. Widerspruch: Abwahl der Marketing-Cookies im Cookie-Banner oder unter{" "}
-                <a href="https://www.facebook.com/settings/?tab=ads" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
-                  facebook.com/settings/?tab=ads
-                </a>.
-              </p>
-            </Subsection>
-            <Subsection title="LinkedIn Insight Tag (nur mit Einwilligung)">
-              <p>
-                Mit Ihrer Einwilligung nutzen wir den LinkedIn Insight Tag der LinkedIn Ireland Unlimited Company
-                (Wilton Place, Dublin 2, Irland). Dieser ermöglicht die Erfolgsmessung von LinkedIn-Kampagnen und
-                Retargeting gegenüber Besuchern dieser Website auf LinkedIn. Widerspruch: Abwahl der Marketing-Cookies
-                im Cookie-Banner oder unter{" "}
-                <a href="https://www.linkedin.com/psettings/guest-controls/retargeting-opt-out" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
-                  LinkedIn Opt-out
-                </a>.
               </p>
             </Subsection>
           </Section>
