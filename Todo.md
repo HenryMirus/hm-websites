@@ -4,7 +4,7 @@
 - siehe Implementierungsplan
 
 ## 2. Tracking-IDs eintragen & Scripts testen
-**Umami und Clarity (aktiv vorgesehen):** siehe Vault `To-do Tracking einrichten`, Kennungen in `.env.production`.
+**Umami (im Einsatz):** siehe Vault `To-do Tracking einrichten`, Kennungen in `.env.production`.
 
 Falls später auch die folgenden Dienste laufen sollen, IDs in `.env.production` eintragen (GA4 braucht zusätzlich die CSP-Erweiterung, siehe CLAUDE.md):
 

@@ -160,9 +160,9 @@ export default function DatenschutzPage() {
               <CookieCategory
                 name="Analyse-Cookies"
                 basis="Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)"
-                description="Diese Dienste helfen mir zu verstehen, wie Besucher mit der Website interagieren. Ich nutze Umami (selbst betrieben, setzt keine Cookies) und Microsoft Clarity (Microsoft Ireland Operations Limited). Beide werden erst nach Ihrer Einwilligung geladen. Details zu den einzelnen Diensten stehen in Abschnitt 4."
-                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten", "Heatmaps", "Sitzungsaufzeichnungen", "_clck", "_clsk"]}
-                retention="Bis zu 1 Jahr"
+                description="Dieser Dienst hilft mir zu verstehen, wie Besucher mit der Website interagieren. Ich nutze Umami, das ich selbst betreibe. Umami setzt keine Cookies und wird erst nach Ihrer Einwilligung geladen. Details stehen in Abschnitt 4."
+                examples={["Seitenaufrufe", "Verweildauer", "Einstiegs-/Ausstiegsseiten", "Heatmaps", "Sitzungsaufzeichnungen"]}
+                retention="Es werden keine Cookies gesetzt"
                 optional
               />
               <CookieCategory
@@ -220,28 +220,6 @@ export default function DatenschutzPage() {
                 Aufzeichnungen des Nutzungsverhaltens erstellen, etwa Mausbewegungen, Klicks und Scrollen. Eingabefelder werden
                 dabei maskiert und nicht aufgezeichnet. Auch diese Daten verbleiben auf meinem Server. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO,
                 § 25 Abs. 1 TDDDG). Sie können sie jederzeit über das Cookie-Icon rechts unten widerrufen.
-              </p>
-            </Subsection>
-            <Subsection title="Microsoft Clarity (nur mit Einwilligung)">
-              <p>
-                Mit Ihrer Einwilligung setze ich Microsoft Clarity der Microsoft Ireland Operations Limited (One Microsoft
-                Place, South County Business Park, Leopardstown, Dublin 18, D18 P521, Irland) ein. Clarity erstellt Heatmaps
-                und Aufzeichnungen des Nutzungsverhaltens (zum Beispiel Mausbewegungen, Klicks und Scrollen), damit ich die
-                Website verständlicher gestalten kann. Eingaben in den Formularen dieser Website werden maskiert und nicht
-                aufgezeichnet. Dabei können personenbezogene Daten verarbeitet werden (unter anderem IP-Adresse, Geräte- und
-                Browserinformationen, Interaktionen auf der Website). Eine Übermittlung in die USA kann nicht ausgeschlossen
-                werden; Microsoft bietet hierfür Standardvertragsklauseln der EU-Kommission als zusätzliche Garantie an.
-                Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Das Skript wird erst nach
-                Ihrer Zustimmung geladen, und Sie können sie jederzeit über das Cookie-Icon rechts unten widerrufen. Welche
-                Cookies im Einzelnen gesetzt werden und wie lange sie gespeichert bleiben, entnehmen Sie den aktuellen Hinweisen
-                von Microsoft:{" "}
-                <a href="https://learn.microsoft.com/de-de/clarity/faq" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
-                  learn.microsoft.com/de-de/clarity/faq
-                </a>{" "}
-                und{" "}
-                <a href="https://privacy.microsoft.com/de-de/privacystatement" target="_blank" rel="noopener noreferrer" className="text-[#4F7FFF] hover:underline">
-                  privacy.microsoft.com/de-de/privacystatement
-                </a>
               </p>
             </Subsection>
           </Section>

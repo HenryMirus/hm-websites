@@ -3,15 +3,13 @@ const isDev = process.env.NODE_ENV === "development";
 // 'unsafe-eval' is required in dev for Next.js hot-reload (react-refresh uses eval).
 // In production it is omitted — no eval needed at runtime.
 // Umami-Host aus der Env, damit ein Umzug des Servers nur an einer Stelle anfällt.
-// Clarity verteilt sich auf wechselnde Subdomains; Hosts laut Microsoft-CSP-Doku.
 const umamiOrigin = process.env.NEXT_PUBLIC_UMAMI_SRC
   ? ` ${new URL(process.env.NEXT_PUBLIC_UMAMI_SRC).origin}`
   : "";
-const clarityHosts = " https://*.clarity.ms https://c.bing.com";
 
 const scriptSrc = isDev
-  ? `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net https://snap.licdn.com${umamiOrigin}${clarityHosts}`
-  : `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://snap.licdn.com${umamiOrigin}${clarityHosts}`;
+  ? `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net https://snap.licdn.com${umamiOrigin}`
+  : `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://snap.licdn.com${umamiOrigin}`;
 
 // The OS cockpit (Chat terminal, graph, action buttons) talks to a LOCAL
 // companion server (agent-os `npm run os:serve` on 127.0.0.1:4517). That is only
@@ -28,10 +26,10 @@ const ContentSecurityPolicy = `
   default-src 'self';
   ${scriptSrc};
   style-src 'self' 'unsafe-inline';
-  img-src 'self' data: blob: https://zoyvsobztyqdaqdffrbo.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://www.facebook.com https://px.ads.linkedin.com${clarityHosts};
+  img-src 'self' data: blob: https://zoyvsobztyqdaqdffrbo.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://www.facebook.com https://px.ads.linkedin.com;
   media-src 'self' blob: https://zoyvsobztyqdaqdffrbo.supabase.co;
   font-src 'self' data:;
-  connect-src 'self' https://zoyvsobztyqdaqdffrbo.supabase.co wss://zoyvsobztyqdaqdffrbo.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://www.facebook.com https://px.ads.linkedin.com${umamiOrigin}${clarityHosts}${localCockpit};
+  connect-src 'self' https://zoyvsobztyqdaqdffrbo.supabase.co wss://zoyvsobztyqdaqdffrbo.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://www.facebook.com https://px.ads.linkedin.com${umamiOrigin}${localCockpit};
   frame-ancestors 'none';
   base-uri 'self';
   form-action 'self';

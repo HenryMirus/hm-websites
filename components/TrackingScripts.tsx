@@ -9,7 +9,6 @@ const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const LINKEDIN_PARTNER_ID = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
 const UMAMI_SRC = process.env.NEXT_PUBLIC_UMAMI_SRC;
 const UMAMI_WEBSITE_ID = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
-const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 // Umami-Recorder (Replays und Heatmaps) liegt auf demselben Host wie script.js.
 // Ob und wie viel aufgezeichnet wird, steht im Umami-Dashboard (Website bearbeiten
 // → Replays & Heatmaps), nicht hier.
@@ -42,20 +41,6 @@ export default function TrackingScripts() {
           strategy="afterInteractive"
           data-website-id={UMAMI_WEBSITE_ID}
         />
-      )}
-
-      {/* ── Microsoft Clarity (Analytics consent) ──
-          Offizielles Snippet. consentv2 ist seit 31.10.2025 für Besucher aus
-          dem EWR Pflicht; ad_Storage bleibt denied, es läuft keine Werbung. */}
-      {consent.analytics && CLARITY_PROJECT_ID && (
-        <Script id="clarity-init" strategy="afterInteractive">{`
-          (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-          })(window,document,"clarity","script","${CLARITY_PROJECT_ID}");
-          window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
-        `}</Script>
       )}
 
       {/* ── Google Analytics 4 (Analytics consent) ── */}

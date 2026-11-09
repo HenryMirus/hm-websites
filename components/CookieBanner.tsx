@@ -72,7 +72,7 @@ export default function CookieBanner() {
                 <p className="text-[#EEEEFF] text-sm font-medium">Diese Website verwendet Cookies</p>
                 <p className="text-[#7C7CA0] text-xs leading-relaxed mt-0.5">
                   Notwendige Cookies sind immer aktiv. Mit Ihrer Zustimmung messe ich zusätzlich, wie die Website genutzt wird
-                  (Umami, Microsoft Clarity), um sie zu verbessern. Formulareingaben werden dabei nicht aufgezeichnet.{" "}
+                  (Umami, auf meinem eigenen Server), um sie zu verbessern. Dazu gehören Heatmaps und Aufzeichnungen bei einem Teil der Besuche. Formulareingaben werden dabei nicht aufgezeichnet.{" "}
                   <Link href="/datenschutz" className="underline hover:text-[#4F7FFF] transition-colors">
                     Datenschutzerklärung
                   </Link>
@@ -145,7 +145,7 @@ export default function CookieBanner() {
                 <div className="w-full h-px bg-[#1E1E2E]" />
                 <ToggleRow
                   label="Analyse-Cookies"
-                  description="Umami: Seitenaufrufe und Verweildauer. Microsoft Clarity: Heatmaps und Sitzungsaufzeichnungen."
+                  description="Umami (eigener Server, keine Cookies): Seitenaufrufe, Verweildauer, Heatmaps und Sitzungsaufzeichnungen."
                   checked={localAnalytics}
                   onChange={setLocalAnalytics}
                 />
