@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import MotionProvider from "@/components/MotionProvider";
 import CookieBanner from "@/components/CookieBanner";
@@ -9,11 +9,39 @@ import { EMAIL } from "@/lib/config/email";
 
 import { SITE_URL } from "@/lib/config/site";
 
-// Schriften werden beim Build heruntergeladen und von hm-labs.de selbst
-// ausgeliefert: kein Aufruf von fonts.googleapis.com beim Besucher.
-const fontDisplay = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-display", display: "swap" });
-const fontBody = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-body", display: "swap" });
-const fontMono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
+// Schriften werden von hm-labs.de selbst ausgeliefert: kein Aufruf von
+// fonts.googleapis.com beim Besucher. Sie liegen im Repo (app/fonts, Lizenzen
+// SIL OFL daneben) statt per next/font/google beim Build geladen zu werden: Der
+// Build braucht kein Netz, und ein Ausfall von fonts.googleapis.com bricht keinen
+// Deploy mehr ab (Build-Abbruch am 09.11.2026). Nur die Latin-Subsets, wie bisher.
+const fontDisplay = localFont({
+  src: [
+    { path: "./fonts/space-grotesk-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/space-grotesk-latin-500-normal.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/space-grotesk-latin-600-normal.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/space-grotesk-latin-700-normal.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-display",
+  display: "swap",
+});
+const fontBody = localFont({
+  src: [
+    { path: "./fonts/inter-latin-300-normal.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/inter-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/inter-latin-500-normal.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/inter-latin-600-normal.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-body",
+  display: "swap",
+});
+const fontMono = localFont({
+  src: [
+    { path: "./fonts/jetbrains-mono-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/jetbrains-mono-latin-500-normal.woff2", weight: "500", style: "normal" },
+  ],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
