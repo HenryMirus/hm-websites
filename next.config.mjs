@@ -40,6 +40,9 @@ const nextConfig = {
   // Für das Docker-Image auf dem VPS (Dockerfile → node server.js).
   output: "standalone",
   poweredByHeader: false,
+  // Die Seite nutzt kein next/image. Ohne den Optimizer entfällt /_next/image
+  // als Angriffsfläche (mehrere Next-14-Advisories hängen genau daran).
+  images: { unoptimized: true },
   async headers() {
     return [
       {

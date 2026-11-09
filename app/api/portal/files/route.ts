@@ -120,7 +120,10 @@ export async function POST(request: NextRequest) {
       contentType: file.type || "application/octet-stream",
       upsert: false,
     });
-  if (uploadError) return bad(`Upload fehlgeschlagen: ${uploadError.message}`, 500);
+  if (uploadError) {
+    console.error("[files] Upload:", uploadError.message);
+    return bad("Upload fehlgeschlagen.", 500);
+  }
 
   const { data: row, error: dbError } = await admin
     .from("client_files")
@@ -143,7 +146,8 @@ export async function POST(request: NextRequest) {
   if (dbError || !row) {
     // Storage nicht mit einer Waise zurücklassen, wenn die Zeile nicht kam
     await admin.storage.from(FILES_BUCKET).remove([storagePath]);
-    return bad(`Speichern fehlgeschlagen: ${dbError?.message ?? "unbekannt"}`, 500);
+    console.error("[files] Insert:", dbError?.message);
+    return bad("Speichern fehlgeschlagen.", 500);
   }
 
   const [withUrl] = await withSignedUrls([row]);
@@ -176,7 +180,10 @@ export async function GET(request: NextRequest) {
   }
 
   const { data, error } = await query;
-  if (error) return bad(error.message, 500);
+  if (error) {
+    console.error("[files] Liste:", error.message);
+    return bad("Dateien konnten nicht geladen werden.", 500);
+  }
 
   const rows = (data ?? []).filter((f) => actor.kind === "admin" || f.client_id === actor.clientId);
   return NextResponse.json({ files: await withSignedUrls(rows) });

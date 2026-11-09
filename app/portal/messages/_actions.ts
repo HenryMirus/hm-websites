@@ -9,6 +9,9 @@ import { PORTAL_URL } from "@/lib/config/site";
 
 export type MessageFormState = { error?: string; messageId?: string };
 
+const MAX_MESSAGE_LENGTH = 10_000;
+const MAX_ATTACHMENTS = 20;
+
 /**
  * Hängt bereits hochgeladene Dateien an die frisch erstellte Nachricht.
  * Die IDs kommen aus dem Client, deshalb wird hier gegengeprüft, dass die
@@ -18,15 +21,20 @@ async function attachFilesToMessage(
   admin: ReturnType<typeof createAdminClient>,
   attachmentIds: string[],
   messageId: string,
-  clientId: string
+  clientId: string,
+  onlyUploadedBy: string | null
 ): Promise<void> {
   if (attachmentIds.length === 0) return;
-  await admin
+  // Für Kunden nur eigene Uploads: ohne den Filter könnte ein Kunde eine vom
+  // Admin bereitgestellte, noch an keiner Nachricht hängende Datei umhängen.
+  let query = admin
     .from("client_files")
     .update({ message_id: messageId, scope: "chat" })
     .in("id", attachmentIds)
     .eq("client_id", clientId)
     .is("message_id", null);
+  if (onlyUploadedBy) query = query.eq("uploaded_by", onlyUploadedBy);
+  await query;
 }
 
 export async function sendMessageAction(
@@ -37,6 +45,12 @@ export async function sendMessageAction(
   const attachmentIds = formData.getAll("attachment_ids").filter((v): v is string => typeof v === "string" && v.length > 0);
   if (!content && attachmentIds.length === 0) {
     return { error: "Nachricht darf nicht leer sein." };
+  }
+  if (content.length > MAX_MESSAGE_LENGTH) {
+    return { error: `Nachricht zu lang (max. ${MAX_MESSAGE_LENGTH} Zeichen).` };
+  }
+  if (attachmentIds.length > MAX_ATTACHMENTS) {
+    return { error: `Höchstens ${MAX_ATTACHMENTS} Dateien pro Nachricht.` };
   }
   const preview = content || `${attachmentIds.length} ${attachmentIds.length === 1 ? "Datei" : "Dateien"}`;
 
@@ -61,7 +75,7 @@ export async function sendMessageAction(
 
     if (error || !message) return { error: error?.message ?? "Senden fehlgeschlagen." };
 
-    await attachFilesToMessage(admin, attachmentIds, message.id, client_id);
+    await attachFilesToMessage(admin, attachmentIds, message.id, client_id, null);
     messageId = message.id;
 
     // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
@@ -104,9 +118,12 @@ export async function sendMessageAction(
       .select("id")
       .single();
 
-    if (error || !message) return { error: error?.message ?? "Senden fehlgeschlagen." };
+    if (error || !message) {
+      if (error) console.error("[messages] Insert:", error.message);
+      return { error: "Senden fehlgeschlagen." };
+    }
 
-    await attachFilesToMessage(admin, attachmentIds, message.id, clientRecord.id);
+    await attachFilesToMessage(admin, attachmentIds, message.id, clientRecord.id, user.id);
     messageId = message.id;
 
     // Automationen feuern (Fallback wenn keine Supabase-Webhooks konfiguriert)
