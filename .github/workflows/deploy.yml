@@ -1,0 +1,100 @@
+# Deploy per SSH-Trigger. Der Server baut selbst (kein Registry).
+#
+#   Branch `test`   -> Test-Server   (Secrets TEST_<DIENST>_*)
+#   Branch `hm-businessgroup` -> Produktion     (Secrets PROD_<DIENST>_*)
+#   alles andere (dev, Feature-Branches) loest keinen Deploy aus.
+#
+# Pro Dienst und Ziel werden gebraucht (Repo-Secrets, Namen siehe unten):
+#   *_SSH_HOST, *_SSH_USER, *_SSH_KEY, *_SSH_KNOWN_HOSTS
+# Optional (Repo-Variablen): *_SSH_PORT (Standard 22), *_URL (Smoke-Check)
+# Fehlen Host oder Key, wird der Lauf uebersprungen statt rot zu werden.
+#
+# Der Key darf auf dem Server nur ein Zwangskommando ausfuehren
+# (authorized_keys: command="..."), das den uebergebenen Commit-Hash prueft
+# und deployt. Der Workflow schickt deshalb nur den Hash, keinen Shell-Befehl.
+name: Deploy
+
+on:
+  push:
+    branches: [test, hm-businessgroup]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [WEBSITE, PORTAL]
+    # Pro Ziel und Dienst hoechstens ein Deploy gleichzeitig; ein neuerer Push
+    # wartet, statt den laufenden Build abzubrechen.
+    concurrency:
+      group: deploy-${{ github.ref_name }}-${{ matrix.service }}
+      cancel-in-progress: false
+    env:
+      TARGET: ${{ github.ref_name == 'test' && 'TEST' || 'PROD' }}
+    steps:
+      - name: Branch pruefen
+        run: |
+          case "$GITHUB_REF_NAME" in
+            test|hm-businessgroup) ;;
+            *) echo "::error::Deploy nur von test oder hm-businessgroup, nicht von $GITHUB_REF_NAME"; exit 1 ;;
+          esac
+
+      - name: Zugangsdaten pruefen
+        id: pre
+        env:
+          HOST: ${{ secrets[format('{0}_{1}_SSH_HOST', env.TARGET, matrix.service)] }}
+          KEY: ${{ secrets[format('{0}_{1}_SSH_KEY', env.TARGET, matrix.service)] }}
+        run: |
+          if [ -z "$HOST" ] || [ -z "$KEY" ]; then
+            echo "::notice::${TARGET}_${{ matrix.service }}: Secrets nicht gesetzt, Deploy uebersprungen."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: SSH vorbereiten
+        if: steps.pre.outputs.run == 'true'
+        env:
+          KEY: ${{ secrets[format('{0}_{1}_SSH_KEY', env.TARGET, matrix.service)] }}
+          KNOWN_HOSTS: ${{ secrets[format('{0}_{1}_SSH_KNOWN_HOSTS', env.TARGET, matrix.service)] }}
+        run: |
+          if [ -z "$KNOWN_HOSTS" ]; then
+            echo "::error::${TARGET}_${{ matrix.service }}_SSH_KNOWN_HOSTS fehlt. Host-Key nie blind akzeptieren."
+            exit 1
+          fi
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Deploy auslosen
+        if: steps.pre.outputs.run == 'true'
+        env:
+          HOST: ${{ secrets[format('{0}_{1}_SSH_HOST', env.TARGET, matrix.service)] }}
+          SSH_USER: ${{ secrets[format('{0}_{1}_SSH_USER', env.TARGET, matrix.service)] }}
+          PORT: ${{ vars[format('{0}_{1}_SSH_PORT', env.TARGET, matrix.service)] }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "${PORT:-22}" \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o ServerAliveInterval=30 \
+            "$SSH_USER@$HOST" "$GITHUB_SHA"
+
+      - name: Smoke-Check
+        if: steps.pre.outputs.run == 'true'
+        env:
+          URL: ${{ vars[format('{0}_{1}_URL', env.TARGET, matrix.service)] }}
+        run: |
+          if [ -z "$URL" ]; then echo "Keine URL hinterlegt, Smoke-Check uebersprungen."; exit 0; fi
+          # 200-399 ist gut; 401 zaehlt als gut (Test-Server liegt hinter Basic Auth).
+          for i in $(seq 1 12); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "$URL" || true)
+            case "$code" in 2??|3??|401) echo "$URL -> $code"; exit 0 ;; esac
+            echo "Versuch $i: $code"; sleep 10
+          done
+          echo "::error::$URL antwortet nicht gesund"; exit 1
